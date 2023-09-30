@@ -3,7 +3,7 @@ For Week3 Design Question
 
 - Description of the **problem domain** your team is tentatively wanting to focus on in the project. (e.g., trivia, finance, real estate, etc…)
 
-- The problem domain that we would like to focus on is a data analysis of stock market data.
+  - The problem domain that we would like to focus on is a data analysis of stock market data.
 
 - A brief, high-level description of **what kind of application your team is thinking of developing**.
 
