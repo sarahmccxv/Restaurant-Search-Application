@@ -3,11 +3,11 @@ For Week3 Design Question
 
 - Description of the **problem domain** your team is tentatively wanting to focus on in the project. (e.g., trivia, finance, real estate, etc…)
 
-- The problem domain that we would like to focus on is a _______________.
+- The problem domain that we would like to focus on is a data analysis of stock market data.
 
 - A brief, high-level description of **what kind of application your team is thinking of developing**.
 
-  - This is mostly just so we can give you some initial feedback on whether your team might want to reconsider your project direction.
+  - We would like to build an application that can take raw data from our API and return calculated statistics and data visualizations. We are also thinking of implementing a watchlist that the user can access, add to, and edit.
 
 - A **link to the documentation for an API** your team can use related to the domain.
 
