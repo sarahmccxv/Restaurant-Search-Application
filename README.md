@@ -9,7 +9,7 @@ For Week3 Design Question
 
 - Below is **screenshot of using a tool to try out the API**
 
-  ![image-20230927222601181](https://i.imgur.com/MOpBqAF.png)
+![image-20230927222601181](https://i.imgur.com/MOpBqAF.png)
 
 - Below is an **Example output of running our Java code**
 
