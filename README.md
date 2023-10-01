@@ -15,7 +15,7 @@ For Week3 Design Question
 
 - A **screenshot of using a tool to try out the API**
 
-  ![image-20230927222601181](https://i.imgur.com/MOpBqAF.png)
+![image-20230927222601181](https://i.imgur.com/MOpBqAF.png)
 
 - **Example output of running your Java code**
 
