@@ -1,0 +1,141 @@
+@startuml
+skinparam dpi 300
+
+class SignupView{
++ String: viewName
+- SignupViewModel signupViewModel
+- JTextField emailInputField
+- JTextField usernameInputField
+- JPasswordField passwordInputField
+- JPasswordField repeatPasswordInputField
+- SignupController signupController
+- JButton signUp
+- JButton cancel
++ SignupView(SignupController controller, SignupViewModel signupViewModel)
++ actionPerformed(ActionEvent evt): void
++ propertyChange(PropertyChangeEvent evt): void
+}
+
+
+class SignupController{
+SignupInputBoundary userSignupUseCaseInteractor
++ SignupController(SignupInputBoundary userSignupUseCaseInteractor)
++ execute(String email, String username, String password, String repeatPassword): void
+}
+
+class SignupInputData{
+- String email
+- String username
+- String password
+- String repeatPassword
++ SignupInputData(String email, String username, String password, String repeatPassword)
++ getEmail(): String
++ getUsername(): String
++ getPassword(): String
++ getRepeatPassword(): String
+}
+
+interface SignupInputBoundary{
+execute(SignupInputData signupInputData)
+}
+
+class SignupInteractor{
+-SignupDataAccessInterface DataAccessObject
+-SignupOutputBoundary userPresenter
+-User user
++ SignupInteractor(SignupDataAccessInterface SignupDataAccessInterface,
+                SignupOutputBoundary signupOutputBoundary, UserFactory userFactory)
++ execute(SignupInputData signupInputData): void
+}
+
+class User {
+- String userID
+- String email
+- String username
+- String password
+- ArrayList<String> preferences
+- ArrayList<Restaurants> favouritesList
+- ArrayList<Revew> reviewList
++ User(String userID, String username, String password)
++ getUserID(): String
++ getUsername(): String
++ getPassword(): String
++ setPassword(): void
++ getEmail(): String
++ getPreferences(): ArrayList<String>
++ getFavourites: ArrayList<Restaurants>
++ getReviews(): ArrayList<Review>
+}
+
+interface SignupDataAccessInterface{
+userExists(String userID): boolean
+save(User user): void
+}
+
+class SignupDataAccessObject{
+
+}
+
+class SignupOutputData{
+- String username
+- boolean useCaseFailed
++ SignupOutputData(String username, boolean useCaseFailed)
++ getUsername(): String
+}
+
+interface SignupOutputBoundary{
+prepareSuccessView(SignupOutputData user): void
+prepareFailView(String error): void
+}
+
+
+class SignupPresenter {
+- SignupViewModel signupViewModel
+- LoginViewModel loginViewModel
++ SignupPresenter(SignupViewModel signupViewModel,
+                           LoginViewModel loginViewModel)
++ prepareSuccessView(SignupOutputData response): void
++ prepareFailView(String error): void
+}
+
+class SignupViewModel{
++String viewName
++String TITLE_LABEL
++String USERNAME_LABEL
++String PASSWORD_LABEL
++String REPEAT_PASSWORD_LABEL
++String SIGNUP_BUTTON_LABEL
++String CANCEL_BUTTON_LABEL
++ SignupViewModel(String viewName)
++ getViewName()
++ firePropertyChanged() void
++ addPropertyChangeListener() void
+}
+
+
+SignupView -up-> SignupController
+SignupController -right-> SignupInputData
+SignupController -right-> SignupInputBoundary
+SignupInteractor -left-> SignupInputData
+SignupInteractor -left-|> SignupInputBoundary
+SignupInteractor -right-> User
+SignupInteractor -down-> SignupDataAccessInterface
+SignupDataAccessObject -up-|> SignupDataAccessInterface
+SignupInteractor -left-> SignupOutputBoundary
+SignupInteractor -left-> SignupOutputData
+SignupPresenter -right-|> SignupOutputBoundary
+SignupPresenter -right-> SignupOutputData
+SignupView -up-> SignupViewModel
+SignupPresenter -down-> SignupViewModel
+
+SignupPresenter -[hidden]up-> SignupController
+SignupPresenter -[hidden]right-> SignupOutputBoundary
+SignupController -[hidden]left-> SignupView
+SignupInputBoundary -[hidden]up-> SignupInputData
+SignupOutputBoundary -[hidden]up-> SignupInputBoundary
+SignupOutputData -[hidden]up-> SignupOutputBoundary
+SignupInteractor -[hidden]right-> SignupOutputBoundary
+
+
+
+@enduml
