@@ -1,8 +1,24 @@
 @startuml
 
 
-class SignupDataAccessObject{
+skinparam dpi 300
 
+
+class LoginView {
+}
+
+class Database {
+}
+
+
+
+class SignupDataAccessObject{
+- File csvFile
+- Map<String, User> accounts
++ FileUserDataAccessObject(String csvPath, UserFactory userFactory)
++ saveToMap(User user): void
++ existsByName(String userID): boolean
+- saveToCSV(): void
 }
 
 class SignupView{
@@ -20,8 +36,11 @@ class SignupView{
 + propertyChange(PropertyChangeEvent evt): void
 }
 
+SignupView-[hidden]right->LoginView
+
 SignupView-up->.interface_adapters.SignupController
 SignupView-up->.interface_adapters.SignupViewModel
+LoginView-up->.interface_adapters.LoginViewModel
 SignupDataAccessObject-up->.use_cases.SignupDataAccessInterface
 .interface_adapters -right[hidden]-> .use_cases
 .interface_adapters -down[hidden]-> SignupView
@@ -43,9 +62,12 @@ class SignupViewModel{
 }
 
 class SignupPresenter {
+- LoginViewModel loginViewModel
+- ViewManagerModel viewManagerModel
 - SignupViewModel signupViewModel
 - LoginViewModel loginViewModel
-+ SignupPresenter(SignupViewModel signupViewModel,
++ SignupPresenter(ViewManagerModel viewManagerModel,
+                           SignupViewModel signupViewModel,
                            LoginViewModel loginViewModel)
 + prepareSuccessView(SignupOutputData response): void
 + prepareFailView(String error): void
@@ -58,13 +80,51 @@ SignupInputBoundary userSignupUseCaseInteractor
 }
 
 
-SignupPresenter-down->SignupViewModel
+class LoginViewModel{
+}
+
+class SignupState {
+- String username
+- String usernameError
+- String password
+- String passwordError
+- String repeatPassword
+- String repeatPasswordError
++ SignupState()
++ SignupState(SignupState copy)
++ getUsername(): String
++ getUsernameError(): String
++ getPassword(): String
++ getPasswordError(): String
++ getRepeatPassword(): String
++ getRepeatPasswordError(): String
++ setUsername(String username): void
++ setUsernameError(String usernameError): void
++ setPassword(String password): void
++ setPasswordError(String passwordError): void
++ setRepeatPassword(String repeatPassword): void
++ setRepeatPasswordError(String repeatPasswordError): void
+}
+
+
+SignupPresenter-left[hidden]->SignupState
 SignupPresenter-[hidden]up->SignupController
+SignupPresenter-down->SignupViewModel
+SignupViewModel-[hidden]right->LoginViewModel
 SignupController-right->.use_cases.SignupInputData
 SignupController-right->.use_cases.SignupInputBoundary
 SignupPresenter-right-|>.use_cases.SignupOutputBoundary
 SignupPresenter-right->.use_cases.SignupOutputData
+SignupViewModel-up->SignupState
+LoginViewModel-right->LoginState
+SignupPresenter-down->LoginViewModel
+SignupDataAccessObject-right->Database
 }
+
+
+
+
+
 
 
 
@@ -86,7 +146,7 @@ class SignupInputData{
 }
 
 interface SignupInputBoundary{
-execute(SignupInputData signupInputData)
+execute(SignupInputData signupInputData): void
 }
 
 interface SignupOutputBoundary{
@@ -128,6 +188,11 @@ SignupInteractor-down->SignupDataAccessInterface
 }
 
 
+
+
+
+
+
 namespace entities {
 class User {
 - String userID
@@ -149,4 +214,9 @@ class User {
 }
 
 }
+
+
+
+
+
 @enduml
