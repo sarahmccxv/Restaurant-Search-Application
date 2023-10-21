@@ -21,6 +21,6 @@ https://api.yelp.com this is the **link of the API** our team can use related to
 JDBC is the API we are going to use for database.
 
 Below are screenshots of using **hoppscotch** to try out the API and reference results using the API.
-  ![Screenshot 2023-10-21 at 08.51.23.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fn6%2F1lqfhwrx2nl1n6rvr90f5mhh0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_HUDFWc%2FScreenshot%202023-10-21%20at%2008.51.23.png)
-  ![Screenshot 2023-10-21 at 08.52.08.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fn6%2F1lqfhwrx2nl1n6rvr90f5mhh0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_XFyd4R%2FScreenshot%202023-10-21%20at%2008.52.08.png)
-  ![Screenshot 2023-10-21 at 08.52.54.png](..%2F..%2F..%2F..%2Fvar%2Ffolders%2Fn6%2F1lqfhwrx2nl1n6rvr90f5mhh0000gn%2FT%2FTemporaryItems%2FNSIRD_screencaptureui_OnMQDT%2FScreenshot%202023-10-21%20at%2008.52.54.png)
+  ![Screenshot 2023-10-21 at 08.58.49.png](..%2F..%2FDesktop%2FScreenshot%202023-10-21%20at%2008.58.49.png)
+  ![Screenshot 2023-10-21 at 08.59.16.png](..%2F..%2FDesktop%2FScreenshot%202023-10-21%20at%2008.59.16.png)
+  ![Screenshot 2023-10-21 at 08.59.29.png](..%2F..%2FDesktop%2FScreenshot%202023-10-21%20at%2008.59.29.png)
