@@ -12,16 +12,16 @@ public class Restaurant implements RestaurantInterface{
     private ArrayList<Dish> menu;
 
     public Restaurant(int restaurantID, String restaurantName, String address, String phoneNumber,
-                      ArrayList<String> categories, ArrayList<Dish> menu){
+                      ArrayList<Review> reviews, ArrayList<String> categories, ArrayList<Dish> menu){
         this.restaurantID = restaurantID;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.reviews = new ArrayList<Review>();
+        this.reviews = reviews;
         this.categories = categories;
         this.menu = menu;
     }
 
-    public void addReviewandRating(Review review){
+    public void addReview(Review review){
         reviews.add(review);
     };
 

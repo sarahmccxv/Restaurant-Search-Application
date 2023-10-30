@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 interface RestaurantInterface {
 
-    void addReviewandRating(Review review);
+    void addReview(Review review);
 
     int getRestaurantID();
 
