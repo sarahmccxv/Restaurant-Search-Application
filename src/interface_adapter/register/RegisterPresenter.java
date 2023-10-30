@@ -1,6 +1,6 @@
 package interface_adapter.register;
 
-import interface_adapter.register.RegisterState;
+import interface_adapter.login.LoginState;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.ViewManagerModel;
 import use_case.register.RegisterOutputBoundary;
