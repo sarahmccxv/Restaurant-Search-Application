@@ -19,6 +19,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
     private final Map<String, User> accounts = new HashMap<>();
+    private final Map<Integer, User> accountsID = new HashMap<>();
 
     private UserFactory userFactory;
 
@@ -26,9 +27,12 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         this.userFactory = userFactory;
 
         csvFile = new File(csvPath);
-        headers.put("username", 0);
-        headers.put("password", 1);
-        headers.put("creation_time", 2);
+        headers.put("userID", 0);
+        headers.put("username", 1);
+        headers.put("password", 2);
+        headers.put("location", 3);
+        // Add creation time?
+        headers.put("creation_time", 4);
 
         if (csvFile.length() == 0) {
             save();
@@ -37,18 +41,22 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                // For later: clean this up by creating a new Exception subclass and handling it in the UI.
-                assert header.equals("username,password,creation_time");
+                //Add creation_time?
+                assert header.equals("userID, username, password, location, creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
+                    int userID = Integer.parseInt(col[headers.get("userID")]);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
+                    String location = String.valueOf(col[headers.get("location")]);
                     String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
                     LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-                    User user = userFactory.create(username, password, ldt);
+
+                    User user = userFactory.create(userID, username, password, location, ldt);
                     accounts.put(username, user);
+                    accountsID.put(userID, user);
                 }
             }
         }
@@ -56,7 +64,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     @Override
     public void save(User user) {
-        accounts.put(user.getName(), user);
+        accounts.put(user.getUsername(), user);
         this.save();
     }
 
@@ -73,8 +81,10 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s",
-                        user.getName(), user.getPassword(), user.getCreationTime());
+                String line = String.format("%s,%s,%s, %s",
+                        user.getUserID(), user.getUsername(),
+                        user.getPassword(), user.getLocation());
+                        // add creation time?
                 writer.write(line);
                 writer.newLine();
             }
@@ -97,4 +107,12 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return accounts.containsKey(identifier);
     }
 
+    /**
+     * Return whether a userID exists with username identifier.
+     * @param userID the userID to check.
+     */
+    @Override
+    public boolean duplicatedID(int userID) {
+        return accountsID.containsKey(userID);
+    }
 }

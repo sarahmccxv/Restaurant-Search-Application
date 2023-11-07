@@ -1,8 +1,8 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
-import entity.CommonUserFactory;
 import entity.UserFactory;
+import entity.UserInterface;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
@@ -46,14 +46,11 @@ public class RegisterUseCaseFactory {
         // Notice how we pass this method's parameters to the Presenter.
         RegisterOutputBoundary registerOutputBoundary = new RegisterPresenter(viewManagerModel, registerViewModel, loginViewModel);
 
-        UserFactory userFactory = new CommonUserFactory();
+        UserFactory userFactory = new UserFactory();
 
         RegisterInputBoundary userRegisterInteractor = new RegisterInteractor(
                 userDataAccessObject, registerOutputBoundary, userFactory);
 
         return new RegisterController(userRegisterInteractor);
-    }
-
-    public static RegisterView create(ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, RegisterViewModel registerViewModel, FileUserDataAccessObject userDataAccessObject) {
     }
 }

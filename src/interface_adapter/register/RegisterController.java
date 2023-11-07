@@ -9,9 +9,9 @@ public class RegisterController {
         this.registerInteractor = registerInteractor;
     }
 
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2, String location) {
         RegisterInputData registerInputData = new RegisterInputData(
-                username, password1, password2);
+                username, password1, password2, location);
 
         registerInteractor.execute(registerInputData);
     }

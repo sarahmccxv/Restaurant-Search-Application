@@ -20,9 +20,11 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
     private final JTextField usernameInputField = new JTextField(15);
     private final JPasswordField passwordInputField = new JPasswordField(15);
     private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+
+    private final JTextField locationInputField = new JTextField(15);
     private final RegisterController registerController;
 
-    private final JButton signUp;
+    private final JButton register;
     private final JButton cancel;
 
     public RegisterView(RegisterController controller, RegisterViewModel registerViewModel) {
@@ -40,24 +42,27 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                 new JLabel(RegisterViewModel.PASSWORD_LABEL), passwordInputField);
         LabelTextPanel repeatPasswordInfo = new LabelTextPanel(
                 new JLabel(RegisterViewModel.REPEAT_PASSWORD_LABEL), repeatPasswordInputField);
+        LabelTextPanel locationInfo = new LabelTextPanel(
+                new JLabel(RegisterViewModel.LOCATION_LABEL), locationInputField);
 
         JPanel buttons = new JPanel();
-        signUp = new JButton(RegisterViewModel.SIGNUP_BUTTON_LABEL);
-        buttons.add(signUp);
+        register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
+        buttons.add(register);
         cancel = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
 
-        signUp.addActionListener(
+        register.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(signUp)) {
+                        if (evt.getSource().equals(register)) {
                             RegisterState currentState = registerViewModel.getState();
 
                             registerController.execute(
                                     currentState.getUsername(),
                                     currentState.getPassword(),
-                                    currentState.getRepeatPassword()
+                                    currentState.getRepeatPassword(),
+                                    currentState.getLocation()
                             );
                         }
                     }
@@ -130,6 +135,26 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+
+        locationInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        RegisterState currentState = registerViewModel.getState();
+                        String text = locationInputField.getText() + e.getKeyChar();
+                        currentState.setUsername(text);
+                        registerViewModel.setState(currentState);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
