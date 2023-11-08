@@ -31,7 +31,7 @@ public class Main {
             throw new RuntimeException(e);
         }
 
-//        ViewFavouritesView viewFavouritesView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loginViewModel, signupViewModel, userDataAccessObject);
+        ViewFavouritesView viewFavouritesView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loginViewModel, viewViewModel, userDataAccessObject);
         views.add(viewFavouritesView, viewFavouritesView.viewName);
         viewManagerModel.setActiveView(viewFavouritesView.viewName);
         viewManagerModel.firePropertyChanged();
