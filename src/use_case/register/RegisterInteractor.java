@@ -30,6 +30,12 @@ public class RegisterInteractor implements RegisterInputBoundary {
             LocalDateTime now = LocalDateTime.now();
             // Generate a random 6 digits number using the helper function
             int userID = createUserID();
+            // Below are codes to check for bugs
+            //System.out.println("This is register interactor. Here we create a user with ID " + userID +
+                    //", username " + registerInputData.getUsername() +
+                    //", password " + registerInputData.getPassword() +
+                    //", location" + registerInputData.getLocation() +
+                    //"and time " + now);
             User user = userFactory.create(userID, registerInputData.getUsername(), registerInputData.getPassword(),
                     registerInputData.getLocation(), now);
             userDataAccessObject.save(user);

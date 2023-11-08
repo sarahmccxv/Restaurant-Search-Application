@@ -142,7 +142,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     public void keyTyped(KeyEvent e) {
                         RegisterState currentState = registerViewModel.getState();
                         String text = locationInputField.getText() + e.getKeyChar();
-                        currentState.setUsername(text);
+                        currentState.setLocation(text);
                         registerViewModel.setState(currentState);
                     }
 
@@ -162,6 +162,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         this.add(usernameInfo);
         this.add(passwordInfo);
         this.add(repeatPasswordInfo);
+        this.add(locationInfo);
         this.add(buttons);
     }
 
