@@ -8,38 +8,42 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
-import interface_adapter.view_favourites.ViewFavouritesController;
+import java.beans.PropertyChangeListener;
+
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_favourites.ViewFavouritesState;
 
-public class ViewFavouritesView extends JPanel{
-    public static String viewName = "view favourites";
-    private final JButton viewFavourites;
-    private final ViewFavouritesController viewFavouritesController;
-    private final ViewFavouritesViewModel viewFavouritesViewModel;
+public class ViewFavouritesView extends JPanel implements ActionListener, PropertyChangeListener{
+    public final String viewName = "view favourites";
+    final JButton returnBack;
+    final JPanel favourites;
 
-    public ViewFavouritesView(ViewFavouritesController viewFavouritesController, ViewFavouritesViewModel
-            viewFavouritesViewModel){
-        this.viewFavouritesController = viewFavouritesController;
-        this.viewFavouritesViewModel = viewFavouritesViewModel;
-
+    public ViewFavouritesView(ViewFavouritesViewModel viewFavouritesViewModel){
+        viewFavouritesViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(ViewFavouritesViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JPanel buttons = new JPanel();
-        viewFavourites = new JButton(ViewFavouritesViewModel.VIEW_FAVOURITES_BUTTON_LABEL);
-        buttons.add(viewFavourites);
+        favourites = new JPanel();
+        favourites.setLayout(new BoxLayout(favourites, BoxLayout.Y_AXIS));
 
-        viewFavourites.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(viewFavourites)) {
-                            ViewFavouritesState currentState = viewFavouritesViewModel.getState();
-                            viewFavouritesController.execute(currentState.getUserID());
-                        }
-                    }
-                }
-        );
+        JPanel buttons = new JPanel();
+        returnBack = new JButton(ViewFavouritesViewModel.RETURN_LABEL);
+        buttons.add(returnBack);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.add(title);
+        this.add(favourites);
+        this.add(buttons);
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        ViewFavouritesState state = (ViewFavouritesState) evt.getNewValue();
+        for (String favourite : state.getFavourites()) {
+            favourites.add(new JLabel("<html>" + favourite.replace("\n", "<br>") + "</html>"));
+        }
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+    }
 }

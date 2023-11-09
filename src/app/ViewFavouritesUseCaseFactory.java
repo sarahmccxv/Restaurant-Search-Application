@@ -1,9 +1,19 @@
 package app;
 
+import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginController;
+import interface_adapter.view_favourites.ViewFavouritesController;
+import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
+import use_case.view_favourites.ViewFavouritesInputBoundary;
+import use_case.view_favourites.ViewFavouritesInteractor;
+import use_case.view_favourites.ViewFavouritesOutputBoundary;
+import view.LoggedInView;
+import view.LoginView;
 import view.ViewFavouritesView;
 
 import javax.swing.*;
@@ -14,33 +24,31 @@ public class ViewFavouritesUseCaseFactory {
     /** Prevent instantiation. */
     private ViewFavouritesUseCaseFactory() {}
 
-    public static ViewFavouritesView create(ViewManagerModel viewManagerModel,
-                                            LoggedInViewModel loggedINViewModel,
-                                            ViewFavouritesViewModel viewFavouritesViewModel,
-                                            ViewFavouritesDataAccessInterface userDataAccessObject) {
+    public static LoggedInView create(ViewManagerModel viewManagerModel,
+                                      LoggedInViewModel loggedInViewModel,
+                                      ViewFavouritesViewModel viewFavouritesViewModel,
+                                      ViewFavouritesDataAccessInterface userDataAccessObject) {
 
         try {
-            ClearViewModel clearViewModel = new ClearViewModel();
-            SignupController signupController = createUserSignupUseCase(viewManagerModel, signupViewModel, loginViewModel, userDataAccessObject);
-            ClearController clearController = createClearController(clearViewModel, viewManagerModel, (ClearUserDataAccessInterface) userDataAccessObject);
-            return new SignupView(signupController, signupViewModel, clearController, clearViewModel);
+            ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel, loggedInViewModel,
+                    viewFavouritesViewModel, userDataAccessObject);
+            return new LoggedInView(loggedInViewModel, viewFavouritesViewModel, viewFavouritesController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
         return null;
     }
 
-    private static SignupController createUserSignupUseCase(ViewManagerModel viewManagerModel, SignupViewModel signupViewModel, LoginViewModel loginViewModel, SignupUserDataAccessInterface userDataAccessObject) throws IOException {
+    private static ViewFavouritesController createViewFavouritesUseCase(ViewManagerModel viewManagerModel,
+                                                                        LoggedInViewModel loggedInViewModel,
+                                                                        ViewFavouritesViewModel viewFavouritesViewModel,
+                                                                        ViewFavouritesDataAccessInterface userDataAccessObject) throws IOException {
 
-        // Notice how we pass this method's parameters to the Presenter.
-        SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
+        ViewFavouritesOutputBoundary viewFavouritesOutputBoundary = new ViewFavouritesPresenter(viewManagerModel, viewFavouritesViewModel);
+        ViewFavouritesInputBoundary viewFavouritesInteractor = new ViewFavouritesInteractor(
+                userDataAccessObject, viewFavouritesOutputBoundary);
 
-        UserFactory userFactory = new CommonUserFactory();
-
-        SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
-
-        return new SignupController(userSignupInteractor);
+        return new ViewFavouritesController(viewFavouritesInteractor);
     }
 
 }

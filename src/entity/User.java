@@ -9,7 +9,7 @@ public class User implements UserInterface {
     private final String password;
     private final LocalDateTime creationTime;
     private String location;
-    private final ArrayList<Restaurant> favouritesList = new ArrayList<>();
+    private final FavouritesList favouritesList = new FavouritesList();
     private final ArrayList<Review> reviewsList = new ArrayList<>();
 
     public User(int userID, String username, String password, String location,
@@ -37,7 +37,7 @@ public class User implements UserInterface {
         return location;
     }
 
-    public ArrayList<Restaurant> getFavouritesList() {
+    public FavouritesList getFavouritesList() {
         return favouritesList;
     }
 
@@ -53,8 +53,8 @@ public class User implements UserInterface {
         favouritesList.add(restaurant);
     }
 
-    public void removeToFavourites(Restaurant restaurant){
-        favouritesList.remove(restaurant);
+    public void removeFavourite(String restaurantID){
+        favouritesList.remove(restaurantID);
     }
 
     public void addReview(Review review){

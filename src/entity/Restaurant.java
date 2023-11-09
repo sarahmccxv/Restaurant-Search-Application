@@ -3,29 +3,27 @@ package entity;
 import java.util.ArrayList;
 
 public class Restaurant implements RestaurantInterface{
-    private int restaurantID;
+    private String restaurantID;
     private String restaurantName;
     private String address;
     private String phoneNumber;
     private ArrayList<Review> reviews;
     private ArrayList<String> categories;
-    private ArrayList<Dish> menu;
 
-    public Restaurant(int restaurantID, String restaurantName, String address, String phoneNumber,
-                      ArrayList<String> categories, ArrayList<Dish> menu){
+    public Restaurant(String restaurantID, String restaurantName, String address, String phoneNumber,
+                      ArrayList<String> categories){
         this.restaurantID = restaurantID;
+        this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
-        this.reviews = new ArrayList<Review>();
         this.categories = categories;
-        this.menu = menu;
     }
 
-    public void addReviewandRating(Review review){
+    public void addReview(Review review){
         reviews.add(review);
     };
 
-    public int getRestaurantID() {
+    public String getRestaurantID() {
         return restaurantID;
     }
 
@@ -49,7 +47,10 @@ public class Restaurant implements RestaurantInterface{
         return categories;
     }
 
-    public ArrayList<Dish> getMenu() {
-        return menu;
+    @Override
+    public String toString(){
+        return restaurantName +
+                "\nPhone Number: " + phoneNumber +
+                "\nAddress: " + address;
     }
 }

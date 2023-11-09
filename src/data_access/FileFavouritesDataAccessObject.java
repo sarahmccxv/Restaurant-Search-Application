@@ -20,38 +20,45 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
 
     public FileFavouritesDataAccessObject(String csvPath, RestaurantFactory restaurantFactory) throws IOException {
         csvFile = new File(csvPath);
-        headers.put("userID", 0);
+        headers.put("username", 0);
         headers.put("favourites", 1);
         if (csvFile.length() == 0) {
             save();
         } else {
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
-                assert header.equals("userID:favourites");
+                assert header.equals("username:favourites");
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(":");
-                    String userID = String.valueOf(col[headers.get("userID")]);
+                    String username = col[headers.get("username")];
                     String favouritesIDList = String.valueOf(col[headers.get("favourites")]);
                     FavouritesList favouritesList = new FavouritesList();
                     for (String restaurantID : favouritesIDList.split(",")){
                         favouritesList.add(restaurantFactory.create(restaurantID));
                     }
-                    favouritesMap.put(userID, favouritesList);
+                    favouritesMap.put(username, favouritesList);
                 }
             }
         }
     }
 
     @Override
+    public boolean hasFavourites(String username){
+        if (favouritesMap.get(username) == null) {
+            return false;
+        } else return !favouritesMap.get(username).getFavourites().isEmpty();
+    }
+
+    @Override
     public void saveFavourites(User user) {
-        favouritesMap.put(String.valueOf(user.getUserID()), user.getFavouritesList());
+        favouritesMap.put(user.getUsername(), user.getFavouritesList());
         this.save();
     }
 
     @Override
-    public FavouritesList getFavouritesList(String userID) {
-        return favouritesMap.get(userID);
+    public FavouritesList getFavouritesList(String username) {
+        return favouritesMap.get(username);
     }
 
     private void save() {
@@ -60,9 +67,9 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
             writer = new BufferedWriter(new FileWriter(csvFile));
             writer.write(String.join(":", headers.keySet()));
             writer.newLine();
-            for (String userID : favouritesMap.keySet()) {
+            for (String username : favouritesMap.keySet()) {
                 String line = String.format("%s,%s",
-                        userID, favouritesMap.get(userID).toString());
+                        username, favouritesMap.get(username).toString());
                 writer.write(line);
                 writer.newLine();
             }

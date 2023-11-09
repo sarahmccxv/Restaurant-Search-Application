@@ -11,7 +11,7 @@ public interface UserInterface {
 
     String getLocation();
 
-    ArrayList<Restaurant> getFavouritesList();
+    FavouritesList getFavouritesList();
 
     ArrayList<Review> getReviewsList();
 
@@ -19,7 +19,7 @@ public interface UserInterface {
 
     void addToFavourites(Restaurant restaurant);
 
-    void removeToFavourites(Restaurant restaurant);
+    void removeFavourite(String restaurantID);
 
     void addReview(Review review);
 

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class FavouritesList {
-    private ArrayList<Restaurant> favouritesList;
+    private ArrayList<Restaurant> favouritesList = new ArrayList<>();
     public FavouritesList(){
 
     }
@@ -13,7 +13,7 @@ public class FavouritesList {
         favouritesList.add(favourite);
     }
 
-    public ArrayList<Restaurant> getFavouritesID(){
+    public ArrayList<Restaurant> getFavourites(){
         return favouritesList;
     }
 

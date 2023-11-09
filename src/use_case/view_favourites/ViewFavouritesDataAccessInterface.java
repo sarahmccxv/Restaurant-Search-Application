@@ -13,4 +13,5 @@ public interface ViewFavouritesDataAccessInterface {
 
     FavouritesList getFavouritesList(String userID);
 
+    boolean hasFavourites(String username);
 }

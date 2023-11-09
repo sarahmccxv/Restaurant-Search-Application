@@ -1,15 +1,15 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.FileFavouritesDataAccessObject;
+import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
-import view.LoggedInView;
-import view.LoginView;
-import view.RegisterView;
-import view.ViewManager;
+import interface_adapter.view_favourites.ViewFavouritesViewModel;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,7 +21,7 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
-        JFrame application = new JFrame("Login Example");
+        JFrame application = new JFrame("Restaurant Search Application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         CardLayout cardLayout = new CardLayout();
@@ -42,10 +42,18 @@ public class Main {
         LoginViewModel loginViewModel = new LoginViewModel();
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         RegisterViewModel registerViewModel = new RegisterViewModel();
+        ViewFavouritesViewModel viewFavouritesViewModel = new ViewFavouritesViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserFactory());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        FileFavouritesDataAccessObject fileFavouritesDataAccessObject;
+        try {
+            fileFavouritesDataAccessObject = new FileFavouritesDataAccessObject("./favourites.csv", new RestaurantFactory());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,9 +65,12 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
+        LoggedInView loggedInView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+                viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
+        ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel);
+        views.add(viewFavouritesView, viewFavouritesView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

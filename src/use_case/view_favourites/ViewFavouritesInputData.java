@@ -4,12 +4,12 @@ import javax.swing.text.View;
 import interface_adapter.view_favourites.ViewFavouritesState;
 
 public class ViewFavouritesInputData {
-    private final int userID;
-    public ViewFavouritesInputData(int userID){
-        this.userID = userID;
+    private final String username;
+    public ViewFavouritesInputData(String username){
+        this.username = username;
     };
 
-    public int getUserID() {
-        return userID;
+    public String getUsername() {
+        return username;
     }
 }
