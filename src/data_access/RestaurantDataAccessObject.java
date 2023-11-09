@@ -7,6 +7,7 @@ import entity.Review;
 import okhttp3.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class RestaurantDataAccessObject {
     }
 
 
-    public ArrayList<Restaurant> getLocalRestaurant(String locationName) throws IOException {
+    public ArrayList<Restaurant> getLocalRestaurant(String locationName) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -34,31 +35,37 @@ public class RestaurantDataAccessObject {
                 .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-            Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
-            List<Map<String, Object>> businessesList = (List<Map<String, Object>>) restaurantMap.get("businesses");
-            for (Map<String, Object> businessMap : businessesList) {
-                String restaurantID = (String) businessMap.get("id");
-                String restaurantName = (String) businessMap.get("name");
+            if (response.code() == 200) {
+                ArrayList<Restaurant> restaurantsList = new ArrayList<>();
+                Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
+                List<Map<String, Object>> businessesList = (List<Map<String, Object>>) restaurantMap.get("businesses");
+                for (Map<String, Object> businessMap : businessesList) {
+                    String restaurantID = (String) businessMap.get("id");
+                    String name = (String) businessMap.get("name");
 
-                Map<String, String> addressMap = (Map<String, String>) businessMap.get("address");
-                String address = addressMap.get("address1");
+                    Map<String, String> addressMap = (Map<String, String>) businessMap.get("location");
+                    String address = addressMap.get("address1");
 
-                String phoneNumber = (String) businessMap.get("display_phone");
+                    String phoneNumber = (String) businessMap.get("display_phone");
 
-                List<Map<String, String>> categoriesList = (List<Map<String, String>>) businessMap.get("categories");
-                ArrayList<String> categories = new ArrayList<>();
-                for (Map<String, String> categoriesMap : categoriesList) {
-                    categories.add(categoriesMap.get("title"));
+                    List<Map<String, String>> categoriesList = (List<Map<String, String>>) businessMap.get("categories");
+                    ArrayList<String> categories = new ArrayList<>();
+                    for (Map<String, String> categoriesMap : categoriesList) {
+                        categories.add(categoriesMap.get("title"));
+                    }
+
+                    restaurantsList.add(restaurantFactory.create(restaurantID, name, address, phoneNumber, categories));
                 }
-
-                restaurantsList.add(restaurantFactory.create(restaurantID, restaurantName ,address, phoneNumber, categories));
+                return restaurantsList;
+            } else {
+                return new ArrayList<>();
             }
-            return restaurantsList;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public Restaurant getRestaurantByID(String restaurantID) throws IOException {
+    public Restaurant getRestaurantByID(String restaurantID) {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -66,26 +73,32 @@ public class RestaurantDataAccessObject {
                 .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                 .build();
         try (Response response = client.newCall(request).execute()) {
-            Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
-            String restaurantName = (String) restaurantMap.get("name");
-            String phoneNumber = (String) restaurantMap.get("display_phone");
+            if (response.code() == 200) {
+                Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
+                String restaurantName = (String) restaurantMap.get("name");
+                String phoneNumber = (String) restaurantMap.get("display_phone");
 
-            Map<String, String> addressMap = (Map<String, String>) restaurantMap.get("address");
-            String address = addressMap.get("address1");
+                Map<String, String> addressMap = (Map<String, String>) restaurantMap.get("location");
+                String address = addressMap.get("address1");
 
-            List<Map<String, String>> categoriesList = (List<Map<String, String>>) restaurantMap.get("categories");
-            ArrayList<String> categories = new ArrayList<>();
-            for (Map<String, String> categoriesMap : categoriesList) {
-                categories.add(categoriesMap.get("title"));
+                List<Map<String, String>> categoriesList = (List<Map<String, String>>) restaurantMap.get("categories");
+                ArrayList<String> categories = new ArrayList<>();
+                for (Map<String, String> categoriesMap : categoriesList) {
+                    categories.add(categoriesMap.get("title"));
+                }
+
+                return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
+            } else {
+                return null;
             }
-
-            return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
      private static Map<String, Object> convertJsonToMap(String jsonString) {
         Gson gson = new Gson();
-        TypeToken<Map<String, Object>> token = new TypeToken<Map<String, Object>>() {};
+        TypeToken<Map<String, Object>> token = new TypeToken<>() {};
         return gson.fromJson(jsonString, token.getType());
     }
 }
