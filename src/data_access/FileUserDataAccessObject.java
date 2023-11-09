@@ -64,29 +64,22 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                     String[] categories = String.valueOf(col[headers.get("categories")]).split("\\|");
                     String[] menus = String.valueOf(col[headers.get("menu")]).split("\\|");
 
-                    // Convert restaurantIDs to ints
-                    int[] restaurantIDsIntArray = new int[restaurantIDs.length];
-                    for (int i = 0; i < restaurantIDs.length; i++) {
-                        restaurantIDsIntArray[i] = Integer.parseInt(restaurantIDs[i]);
-                    }
-
                     // Create list of restaurants corresponding to the user
                     ArrayList<Restaurant> restaurants = new ArrayList<>();
-                    for (int i = 0; i < restaurantIDsIntArray.length; i++) {
+                    for (int i = 0; i < restaurantIDs.length; i++) {
                         List<String> categoryList = Arrays.asList(categories[i].split(","));
                         ArrayList<String> menuForEachRestaurant = new ArrayList<>(categoryList);
-                        restaurantFactory.create(restaurantIDsIntArray[i],
+                        restaurantFactory.create(restaurantIDs[i],
                                                  restaurantNames[i],
                                                  addresses[i],
                                                  phoneNumbers[i],
-                                                 menuForEachRestaurant,
-                                                 new Dish(menus[i]));
+                                                 menuForEachRestaurant);
                     }
 
                     this.restaurants.put(userID, restaurants);
 
 
-                    User user = userFactory.create(userID, username, password, location);
+                    User user = this.userFactory.create(userID, username, password, location);
                     accounts.put(userID, user);
                 }
             }

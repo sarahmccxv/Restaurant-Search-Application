@@ -6,7 +6,7 @@ interface RestaurantInterface {
 
     void addReviewandRating(Review review);
 
-    int getRestaurantID();
+    String getRestaurantID();
 
     String getRestaurantName();
 
@@ -17,7 +17,5 @@ interface RestaurantInterface {
     ArrayList<Review> getReviews();
 
     ArrayList<String> getCategories();
-
-    ArrayList<Dish> getMenu();
 
 }
