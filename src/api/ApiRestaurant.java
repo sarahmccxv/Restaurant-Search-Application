@@ -14,7 +14,7 @@ import java.util.Map;
 
 public class ApiRestaurant implements ApiRestaurantInterface {
     private static final String API_URL = "https://api.yelp.com/v3/businesses/";
-    private static final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
+    private static final String API_TOKEN = System.getenv("API_KEY");
     public RestaurantFactory restaurantFactory;
 
     public ApiRestaurant(RestaurantFactory restaurantFactory) {
