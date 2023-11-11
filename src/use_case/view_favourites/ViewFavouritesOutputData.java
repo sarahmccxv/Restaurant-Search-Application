@@ -7,10 +7,13 @@ import java.util.ArrayList;
 
 public class ViewFavouritesOutputData {
     private String username;
-    private ArrayList<String> favouritesListString = new ArrayList<String>();
+    private String password;
 
-    public ViewFavouritesOutputData(String username, FavouritesList favouritesList) {
+    private ArrayList<String> favouritesListString = new ArrayList<>();
+
+    public ViewFavouritesOutputData(String username, String password, FavouritesList favouritesList) {
         this.username = username;
+        this.password = password;
         for(Restaurant restaurant : favouritesList.getFavourites()){
             favouritesListString.add(restaurant.toString());
         }
@@ -24,5 +27,7 @@ public class ViewFavouritesOutputData {
         return favouritesListString;
     }
 
-
+    public String getPassword() {
+        return password;
+    }
 }

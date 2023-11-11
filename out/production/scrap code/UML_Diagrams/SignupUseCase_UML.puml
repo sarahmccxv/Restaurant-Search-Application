@@ -1,0 +1,222 @@
+@startuml
+
+
+skinparam dpi 300
+
+
+class LoginView {
+}
+
+class Database {
+}
+
+
+
+class SignupDataAccessObject{
+- File csvFile
+- Map<String, User> accounts
++ FileUserDataAccessObject(String csvPath, UserFactory userFactory)
++ saveToMap(User user): void
++ existsByName(String userID): boolean
+- saveToCSV(): void
+}
+
+class SignupView{
++ String: viewName
+- SignupViewModel signupViewModel
+- JTextField emailInputField
+- JTextField usernameInputField
+- JPasswordField passwordInputField
+- JPasswordField repeatPasswordInputField
+- SignupController signupController
+- JButton signUp
+- JButton cancel
++ SignupView(SignupController controller, SignupViewModel signupViewModel)
++ actionPerformed(ActionEvent evt): void
++ propertyChange(PropertyChangeEvent evt): void
+}
+
+SignupView-[hidden]right->LoginView
+
+SignupView-up->.interface_adapters.SignupController
+SignupView-up->.interface_adapters.SignupViewModel
+LoginView-up->.interface_adapters.LoginViewModel
+SignupDataAccessObject-up->.use_cases.SignupDataAccessInterface
+.interface_adapters -right[hidden]-> .use_cases
+.interface_adapters -down[hidden]-> SignupView
+
+namespace interface_adapters {
+
+class SignupViewModel{
++String viewName
++String TITLE_LABEL
++String USERNAME_LABEL
++String PASSWORD_LABEL
++String REPEAT_PASSWORD_LABEL
++String SIGNUP_BUTTON_LABEL
++String CANCEL_BUTTON_LABEL
++ SignupViewModel(String viewName)
++ getViewName()
++ firePropertyChanged() void
++ addPropertyChangeListener() void
+}
+
+class SignupPresenter {
+- LoginViewModel loginViewModel
+- ViewManagerModel viewManagerModel
+- SignupViewModel signupViewModel
+- LoginViewModel loginViewModel
++ SignupPresenter(ViewManagerModel viewManagerModel,
+                           SignupViewModel signupViewModel,
+                           LoginViewModel loginViewModel)
++ prepareSuccessView(SignupOutputData response): void
++ prepareFailView(String error): void
+}
+
+class SignupController{
+SignupInputBoundary userSignupUseCaseInteractor
++ SignupController(SignupInputBoundary userSignupUseCaseInteractor)
++ execute(String email, String username, String password, String repeatPassword): void
+}
+
+
+class LoginViewModel{
+}
+
+class SignupState {
+- String username
+- String usernameError
+- String password
+- String passwordError
+- String repeatPassword
+- String repeatPasswordError
++ SignupState()
++ SignupState(SignupState copy)
++ getUsername(): String
++ getUsernameError(): String
++ getPassword(): String
++ getPasswordError(): String
++ getRepeatPassword(): String
++ getRepeatPasswordError(): String
++ setUsername(String username): void
++ setUsernameError(String usernameError): void
++ setPassword(String password): void
++ setPasswordError(String passwordError): void
++ setRepeatPassword(String repeatPassword): void
++ setRepeatPasswordError(String repeatPasswordError): void
+}
+
+
+SignupPresenter-left[hidden]->SignupState
+SignupPresenter-[hidden]up->SignupController
+SignupPresenter-down->SignupViewModel
+SignupViewModel-[hidden]right->LoginViewModel
+SignupController-right->.use_cases.SignupInputData
+SignupController-right->.use_cases.SignupInputBoundary
+SignupPresenter-right-|>.use_cases.SignupOutputBoundary
+SignupPresenter-right->.use_cases.SignupOutputData
+SignupViewModel-up->SignupState
+LoginViewModel-right->LoginState
+SignupPresenter-down->LoginViewModel
+SignupDataAccessObject-right->Database
+}
+
+
+
+
+
+
+
+
+
+
+
+
+namespace use_cases {
+class SignupInputData{
+- String email
+- String username
+- String password
+- String repeatPassword
++ SignupInputData(String email, String username, String password, String repeatPassword)
++ getEmail(): String
++ getUsername(): String
++ getPassword(): String
++ getRepeatPassword(): String
+}
+
+interface SignupInputBoundary{
+execute(SignupInputData signupInputData): void
+}
+
+interface SignupOutputBoundary{
+prepareSuccessView(SignupOutputData user): void
+prepareFailView(String error): void
+}
+
+class SignupOutputData{
+- String username
+- boolean useCaseFailed
++ SignupOutputData(String username, boolean useCaseFailed)
++ getUsername(): String
+}
+
+class SignupInteractor{
+-SignupDataAccessInterface DataAccessObject
+-SignupOutputBoundary userPresenter
+-User user
++ SignupInteractor(SignupDataAccessInterface SignupDataAccessInterface,
+                SignupOutputBoundary signupOutputBoundary, UserFactory userFactory)
++ execute(SignupInputData signupInputData): void
+}
+
+interface SignupDataAccessInterface{
+userExists(String userID): boolean
+save(User user): void
+}
+
+SignupInputData-[hidden]down->SignupInputBoundary
+SignupInputBoundary-[hidden]down->SignupOutputBoundary
+SignupOutputBoundary-[hidden]down->SignupOutputData
+
+SignupInteractor-left->SignupInputData
+SignupInteractor-left-|>SignupInputBoundary
+SignupInteractor-left->SignupOutputData
+SignupInteractor-left->SignupOutputBoundary
+SignupInteractor-right->.entities.User
+SignupInteractor-down->SignupDataAccessInterface
+}
+
+
+
+
+
+
+
+namespace entities {
+class User {
+- String userID
+- String email
+- String username
+- String password
+- ArrayList<String> preferences
+- ArrayList<Restaurants> favouritesList
+- ArrayList<Revew> reviewList
++ User(String userID, String username, String password)
++ getUserID(): String
++ getUsername(): String
++ getPassword(): String
++ setPassword(): void
++ getEmail(): String
++ getPreferences(): ArrayList<String>
++ getFavourites: ArrayList<Restaurants>
++ getReviews(): ArrayList<Review>
+}
+
+}
+
+
+
+
+
+@enduml

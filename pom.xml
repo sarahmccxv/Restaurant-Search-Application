@@ -10,12 +10,21 @@
 
     <dependencies>
 
+        <!-- Dependency 1: com.squareup.okhttp3:okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.10.0</version>
         </dependency>
 
+        <!-- Dependency 2: org.json:json (version 20210307) -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20230618</version>
+        </dependency>
+
+        <!-- Dependency 3: org.json:json (version 20230618) -->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

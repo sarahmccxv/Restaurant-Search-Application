@@ -8,4 +8,6 @@ public interface RegisterUserDataAccessInterface {
     boolean duplicatedID(int userID);
 
     void save(User user);
+
+    User get(String username);
 }

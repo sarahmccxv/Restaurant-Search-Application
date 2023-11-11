@@ -81,7 +81,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             writer.newLine();
 
             for (User user : accounts.values()) {
-                String line = String.format("%s,%s,%s, %s",
+                String line = String.format("%s,%s,%s,%s",
                         user.getUserID(), user.getUsername(),
                         user.getPassword(), user.getLocation());
                         // add creation time?

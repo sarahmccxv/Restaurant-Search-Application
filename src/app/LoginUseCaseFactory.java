@@ -37,7 +37,7 @@ public class LoginUseCaseFactory {
         return null;
     }
 
-    private static LoginController createLoginUseCase(
+    public static LoginController createLoginUseCase(
             ViewManagerModel viewManagerModel,
             LoginViewModel loginViewModel,
             LoggedInViewModel loggedInViewModel,

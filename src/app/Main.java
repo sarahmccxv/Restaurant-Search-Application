@@ -16,7 +16,7 @@ import java.awt.*;
 import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // Build the main program window, the main panel containing the
         // various cards, and the layout, and stitch them together.
 
@@ -66,10 +66,11 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
         LoggedInView loggedInView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject);
+                viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
-        ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel);
+        ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel,
+                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject));
         views.add(viewFavouritesView, viewFavouritesView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);

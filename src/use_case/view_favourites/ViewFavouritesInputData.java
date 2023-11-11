@@ -5,6 +5,7 @@ import interface_adapter.view_favourites.ViewFavouritesState;
 
 public class ViewFavouritesInputData {
     private final String username;
+
     public ViewFavouritesInputData(String username){
         this.username = username;
     };
@@ -12,4 +13,5 @@ public class ViewFavouritesInputData {
     public String getUsername() {
         return username;
     }
+
 }

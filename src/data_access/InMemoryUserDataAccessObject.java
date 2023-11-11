@@ -36,4 +36,8 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
     private void clear() {
         users.clear();
     }
+
+    public User get(String username){
+        return users.get(username);
+    }
 }
