@@ -30,7 +30,7 @@ public class RestaurantDataAccessObjectTest {
 
     @Test
     void getLocalRestaurantTest() {
-        ArrayList<Restaurant> restaurantArrayList = restaurantDataAccessObject.getLocalRestaurants(location);
+        ArrayList<Restaurant> restaurantArrayList = restaurantDataAccessObject.getLocalRestaurants(location, 1);
 
         assertEquals(expectedRestaurantID, restaurantArrayList.get(0).getRestaurantID());
         assertEquals(expectedRestaurantName, restaurantArrayList.get(0).getRestaurantName());
