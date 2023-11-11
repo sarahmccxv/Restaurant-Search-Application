@@ -4,31 +4,30 @@ import entity.RestaurantFactory;
 import entity.Restaurant;
 
 import okhttp3.*;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
-public class ApiRestaurant implements ApiRestaurantInterface {
+public class ApiRestaurant implements ApiRestaurantInterface{
     private static final String API_URL = "https://api.yelp.com/v3/businesses/";
-    private static final String API_TOKEN = System.getenv("API_KEY");
-    public RestaurantFactory restaurantFactory;
+    private static final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
+    private RestaurantFactory restaurantFactory;
 
-    public ApiRestaurant(RestaurantFactory restaurantFactory) {
-        this.restaurantFactory = restaurantFactory;
+    public ApiRestaurant() {
+        this.restaurantFactory = new RestaurantFactory();
     }
 
     /**
      * Get a list of restaurants based on the location.
      *
-     * @param locationName The name of the locaiton
-     * @return A list of restaurant objects with the specified location, or an empty Arraylist if
-     * the api request is unsuccessful.
+     * @param locationName The name of the location
+     * @param limit The number of restaurants
+     * @return A list of restaurant objects with the specified location
      */
-    public ArrayList<Restaurant> getLocalRestaurants(String locationName) {
+    public ArrayList<Restaurant> getLocalRestaurants(String locationName, int limit) throws JSONException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -36,38 +35,54 @@ public class ApiRestaurant implements ApiRestaurantInterface {
                 .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
                 ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-                Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
-                @SuppressWarnings("unchecked")
-                List<Map<String, Object>> businessesList = (List<Map<String, Object>>) restaurantMap.get("businesses");
+                JSONArray businessesArray = responseBody.getJSONArray("businesses");
 
-                for (Map<String, Object> businessMap : businessesList) {
-                    String restaurantID = (String) businessMap.get("id");
-                    String name = (String) businessMap.get("name");
-                    String address = getAddress(businessMap.get("location"));
-                    String phoneNumber = (String) businessMap.get("phone");
-                    ArrayList<String> categories = getCategories(businessMap.get("categories"));
+                for (int i = 0; i < Math.min(businessesArray.length(), limit); i++) {
+                    String restaurantID = businessesArray.getJSONObject(i).getString("id");
+                    String restaurantName = businessesArray.getJSONObject(i).getString("name");
+                    String phoneNumber = businessesArray.getJSONObject(i).getString("phone");
 
-                    restaurantsList.add(restaurantFactory.create(restaurantID, name, address, phoneNumber, categories));
+                    JSONArray addressArray = businessesArray.getJSONObject(i).getJSONObject("location").getJSONArray("display_address");
+                    String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
+
+                    ArrayList<String> categories = new ArrayList<>();
+                    JSONArray categoriesArray = businessesArray.getJSONObject(i).getJSONArray("categories");
+                    for (int j = 0; j < categoriesArray.length(); j++) {
+                        categories.add(categoriesArray.getJSONObject(j).getString("alias"));
+                    }
+
+                    restaurantsList.add(restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories));
                 }
+
                 return restaurantsList;
             } else {
-                return new ArrayList<>();
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("description"));
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    /**
+     * Get a list of 5 restaurants based on the location.
+     *
+     * @param locationName The name of the location
+     * @return A list of restaurant objects with the specified location
+     */
+    public ArrayList<Restaurant> getLocalRestaurants(String locationName) {
+        return getLocalRestaurants(locationName, 5);
     }
 
     /**
      * Get the restaurant by a unique ID
      *
      * @param restaurantID The ID to the restaurant
-     * @return A restaurant object with the specified ID, or null if
-     * the api request is unsuccessful.
+     * @return A restaurant object with the specified ID
      */
-    public Restaurant getRestaurantByID(String restaurantID) {
+    public Restaurant getRestaurantByID(String restaurantID) throws JSONException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -75,19 +90,25 @@ public class ApiRestaurant implements ApiRestaurantInterface {
                 .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
-                Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
+                String restaurantName = responseBody.getString("name");
+                String phoneNumber = responseBody.getString("phone");
 
-                String restaurantName = (String) restaurantMap.get("name");
-                String phoneNumber = (String) restaurantMap.get("phone");
-                String address = getAddress(restaurantMap.get("location"));
-                ArrayList<String> categories = getCategories(restaurantMap.get("categories"));
+                JSONArray addressArray = responseBody.getJSONObject("location").getJSONArray("display_address");
+                String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
+
+                ArrayList<String> categories = new ArrayList<>();
+                JSONArray categoriesArray = responseBody.getJSONArray("categories");
+                for (int i = 0; i < categoriesArray.length(); i++) {
+                    categories.add(categoriesArray.getJSONObject(i).getString("alias"));
+                }
 
                 return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
             } else {
-                return null;
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("description"));
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
     }
@@ -97,9 +118,9 @@ public class ApiRestaurant implements ApiRestaurantInterface {
      *
      * @param phoneNumber The phone number to the restaurant
      * @return A restaurant object with the specified phone number, or null if
-     * the api request is unsuccessful or the phone number isn't for any restaurants.
+     * the phone number isn't for any restaurants.
      */
-    public Restaurant getRestaurantByPhoneNumber(String phoneNumber) {
+    public Restaurant getRestaurantByPhoneNumber(String phoneNumber) throws JSONException {
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .build();
         Request request = new Request.Builder()
@@ -107,48 +128,28 @@ public class ApiRestaurant implements ApiRestaurantInterface {
                 .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                 .build();
         try (Response response = client.newCall(request).execute()) {
+            JSONObject responseBody = new JSONObject(response.body().string());
             if (response.code() == 200) {
-               Map<String, Object> restaurantMap = convertJsonToMap(response.body().string());
-                @SuppressWarnings("unchecked")
-                List<Map<String, Object>> businessesList = (List<Map<String, Object>>) restaurantMap.get("businesses");
-                if (businessesList.isEmpty()) {
-                    return null;
+                JSONObject info = responseBody.getJSONArray("businesses").getJSONObject(0);
+
+                String restaurantID = info.getString("id");
+                String restaurantName = info.getString("name");
+
+                JSONArray addressArray = info.getJSONObject("location").getJSONArray("display_address");
+                String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
+
+                ArrayList<String> categories = new ArrayList<>();
+                JSONArray categoriesArray = info.getJSONArray("categories");
+                for (int i = 0; i < categoriesArray.length(); i++) {
+                    categories.add(categoriesArray.getJSONObject(i).getString("alias"));
                 }
 
-                Map<String, Object> businessMap = businessesList.get(0);
-                String restaurantID = (String) businessMap.get("id");
-                String name = (String) businessMap.get("name");
-                String address = getAddress(businessMap.get("location"));
-                ArrayList<String> categories = getCategories(businessMap.get("categories"));
-
-                return restaurantFactory.create(restaurantID, name, address, phoneNumber, categories);
+                return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
             } else {
-                return null;
+                throw new RuntimeException(responseBody.getJSONObject("error").getString("description"));
             }
-        } catch (IOException e) {
+        } catch (IOException | JSONException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String getAddress(Object location) {
-        @SuppressWarnings("unchecked")
-        Map<String, String> addressMap = (Map<String, String>) location;
-        return addressMap.get("address1");
-    }
-
-    private ArrayList<String> getCategories(Object restaurantMap) {
-        @SuppressWarnings("unchecked")
-        List<Map<String, String>> categoriesList = (List<Map<String, String>>) restaurantMap;
-        ArrayList<String> categories = new ArrayList<>();
-        for (Map<String, String> categoriesMap : categoriesList) {
-            categories.add(categoriesMap.get("title"));
-        }
-        return categories;
-    }
-
-    private static Map<String, Object> convertJsonToMap(String jsonString) {
-        Gson gson = new Gson();
-        TypeToken<Map<String, Object>> token = new TypeToken<>() {};
-        return gson.fromJson(jsonString, token.getType());
     }
 }

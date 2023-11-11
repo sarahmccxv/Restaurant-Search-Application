@@ -18,14 +18,14 @@ public class RestaurantDataAccessObjectTest {
     private final String location = "Toronto";
     private final String expectedRestaurantID = "r_BrIgzYcwo1NAuG9dLbpg";
     private final String expectedRestaurantName = "Pai Northern Thai Kitchen";
-    private final String expectedRestaurantAddress = "18 Duncan Street";
+    private final String expectedRestaurantAddress = "18 Duncan Street, Toronto, ON M5H 3G8";
     private final String expectedPhoneNumber = "+14169014724";
-    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("Thai"));
+    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("thai"));
 
 
     @BeforeAll
     static void SetUp() {
-        restaurantDataAccessObject = new ApiRestaurant(new RestaurantFactory());
+        restaurantDataAccessObject = new ApiRestaurant();
     }
 
     @Test

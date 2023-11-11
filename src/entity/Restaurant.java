@@ -13,6 +13,7 @@ public class Restaurant implements RestaurantInterface{
     public Restaurant(String restaurantID, String restaurantName, String address, String phoneNumber,
                       ArrayList<String> categories){
         this.restaurantID = restaurantID;
+        this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.reviews = new ArrayList<Review>();
