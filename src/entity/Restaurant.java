@@ -7,15 +7,18 @@ public class Restaurant implements RestaurantInterface{
     private String restaurantName;
     private String address;
     private String phoneNumber;
+    private double consumptionPerPerson;
     private ArrayList<Review> reviews;
     private ArrayList<String> categories;
     private ArrayList<Dish> menu;
 
-    public Restaurant(int restaurantID, String restaurantName, String address, String phoneNumber,
+    public Restaurant(int restaurantID, String restaurantName, String address, String phoneNumber, double consumptionPerPerson,
                       ArrayList<String> categories, ArrayList<Dish> menu){
         this.restaurantID = restaurantID;
+        this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.consumptionPerPerson = consumptionPerPerson;
         this.reviews = new ArrayList<Review>();
         this.categories = categories;
         this.menu = menu;
@@ -47,6 +50,9 @@ public class Restaurant implements RestaurantInterface{
 
     public ArrayList<String> getCategories() {
         return categories;
+    }
+    public double getConsumptionPerPerson(){
+        return consumptionPerPerson;
     }
 
     public ArrayList<Dish> getMenu() {
