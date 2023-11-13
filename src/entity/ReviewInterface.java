@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 public interface ReviewInterface {
 
-    int getReviewID();
+    String getReviewID();
 
     User getAuthor();
 
