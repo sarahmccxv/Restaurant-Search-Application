@@ -8,6 +8,8 @@ public class RegisterState {
     private String repeatPassword = "";
     private String repeatPasswordError = null;
 
+    private String location = "";
+
     public RegisterState(RegisterState copy) {
         username = copy.username;
         usernameError = copy.usernameError;
@@ -15,6 +17,7 @@ public class RegisterState {
         passwordError = copy.passwordError;
         repeatPassword = copy.repeatPassword;
         repeatPasswordError = copy.repeatPasswordError;
+        location = copy.location;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -45,6 +48,8 @@ public class RegisterState {
         return repeatPasswordError;
     }
 
+    public String getLocation() {return location;}
+
     public void setUsername(String username) {
         this.username = username;
     }
@@ -69,9 +74,11 @@ public class RegisterState {
         this.repeatPasswordError = repeatPasswordError;
     }
 
+    public void setLocation(String newLocation) {this.location = newLocation;}
+
     @Override
     public String toString() {
-        return "SignupState{" +
+        return "RegisterState{" +
                 "username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", repeatPassword='" + repeatPassword + '\'' +

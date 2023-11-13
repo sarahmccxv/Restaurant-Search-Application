@@ -6,10 +6,14 @@ public class RegisterInputData {
     final private String password;
     final private String repeatPassword;
 
-    public RegisterInputData(String username, String password, String repeatPassword) {
+    private String location;
+
+    public RegisterInputData(String username, String password, String repeatPassword,
+                             String location) {
         this.username = username;
         this.password = password;
         this.repeatPassword = repeatPassword;
+        this.location = location;
     }
 
     String getUsername() {
@@ -23,4 +27,6 @@ public class RegisterInputData {
     public String getRepeatPassword() {
         return repeatPassword;
     }
+
+    public String getLocation() { return location; }
 }

@@ -2,6 +2,7 @@ package use_case.register;
 
 import entity.User;
 import entity.UserFactory;
+import java.util.Random;
 
 import java.time.LocalDateTime;
 
@@ -27,11 +28,32 @@ public class RegisterInteractor implements RegisterInputBoundary {
         } else {
 
             LocalDateTime now = LocalDateTime.now();
-            User user = userFactory.create(registerInputData.getUsername(), registerInputData.getPassword(), now);
+            // Generate a random 6 digits number using the helper function
+            int userID = createUserID();
+            // Below are codes to check for bugs
+            //System.out.println("This is register interactor. Here we create a user with ID " + userID +
+                    //", username " + registerInputData.getUsername() +
+                    //", password " + registerInputData.getPassword() +
+                    //", location" + registerInputData.getLocation() +
+                    //"and time " + now);
+            User user = userFactory.create(userID, registerInputData.getUsername(), registerInputData.getPassword(),
+                    registerInputData.getLocation(), now);
             userDataAccessObject.save(user);
 
-            RegisterOutputData registerOutputData = new RegisterOutputData(user.getName(), now.toString(), false);
+            RegisterOutputData registerOutputData = new RegisterOutputData(user.getUsername(), now.toString(),false);
             userPresenter.prepareSuccessView(registerOutputData);
+        }
+    }
+
+    private int createUserID() {
+        Random random = new Random();
+        int userID = 100000 + random.nextInt(900000);
+        // Check if this random number is already taken
+        if (!userDataAccessObject.duplicatedID(userID)) {
+            return userID;
+        }
+        else {
+            return createUserID();
         }
     }
 }

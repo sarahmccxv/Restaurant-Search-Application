@@ -9,9 +9,14 @@ public class RegisterController {
         this.registerInteractor = registerInteractor;
     }
 
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password1, String password2, String location) {
         RegisterInputData registerInputData = new RegisterInputData(
-                username, password1, password2);
+                username, password1, password2, location);
+        // Below are codes to check for bugs
+        //System.out.println("This is Register controller. Here we initiate a register input data" +
+                //"where username name is " + username +
+                //", password is " + password1 +
+                //", location is " + location);
 
         registerInteractor.execute(registerInputData);
     }

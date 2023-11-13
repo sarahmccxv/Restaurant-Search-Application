@@ -1,11 +1,9 @@
-package use_case.register;
+package use_case.login;
 
 import entity.User;
 
-public interface RegisterUserDataAccessInterface {
+public interface LoginUserDataAccessInterface {
     boolean existsByName(String identifier);
-
-    boolean duplicatedID(int userID);
 
     void save(User user);
 
