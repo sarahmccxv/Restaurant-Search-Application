@@ -5,6 +5,8 @@ import entity.User;
 public interface RegisterUserDataAccessInterface {
     boolean existsByID(int identifier);
 
+    boolean existsByName(String username);
+
     boolean duplicatedID(int userID);
 
     void save(User user);

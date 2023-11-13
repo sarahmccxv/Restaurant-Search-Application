@@ -21,6 +21,11 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
     }
 
     @Override
+    public boolean existsByID(int identifier) {
+        return users.containsValue(identifier);
+    }
+
+    @Override
     public boolean duplicatedID(int userID) {
         return usersID.containsKey(userID);
     }

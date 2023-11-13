@@ -107,6 +107,11 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return accounts.containsKey(identifier);
     }
 
+    @Override
+    public boolean existsByID(int identifier) {
+        return accounts.containsValue(identifier);
+    }
+
     /**
      * Return whether a userID exists with username identifier.
      * @param userID the userID to check.
