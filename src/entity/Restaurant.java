@@ -16,10 +16,11 @@ public class Restaurant implements RestaurantInterface{
         this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
+        this.reviews = new ArrayList<Review>();
         this.categories = categories;
     }
 
-    public void addReview(Review review){
+    public void addReviewandRating(Review review){
         reviews.add(review);
     };
 
@@ -45,12 +46,5 @@ public class Restaurant implements RestaurantInterface{
 
     public ArrayList<String> getCategories() {
         return categories;
-    }
-
-    @Override
-    public String toString(){
-        return restaurantName +
-                "\nPhone Number: " + phoneNumber +
-                "\nAddress: " + address;
     }
 }
