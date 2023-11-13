@@ -45,6 +45,11 @@ public class User implements UserInterface {
         return reviewsList;
     }
 
+    @Override
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
     public void setLocation(String location) {
         this.location = location;
     }

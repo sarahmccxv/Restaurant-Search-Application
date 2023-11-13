@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface UserInterface {
@@ -14,6 +15,8 @@ public interface UserInterface {
     FavouritesList getFavouritesList();
 
     ArrayList<Review> getReviewsList();
+
+    LocalDateTime getCreationTime();
 
     void setLocation(String location);
 
