@@ -1,5 +1,6 @@
 package data_access;
 
+import api.ApiRestaurant;
 import entity.*;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
 
@@ -35,7 +36,9 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
                     String favouritesIDList = String.valueOf(col[headers.get("favourites")]);
                     FavouritesList favouritesList = new FavouritesList();
                     for (String restaurantID : favouritesIDList.split(",")){
-                        favouritesList.add(restaurantFactory.create(restaurantID));
+                        ApiRestaurant apiRestaurant = new ApiRestaurant();
+                        Restaurant restaurant = apiRestaurant.getRestaurantByID(restaurantID);
+                        favouritesList.add(restaurant);
                     }
                     favouritesMap.put(username, favouritesList);
                 }
