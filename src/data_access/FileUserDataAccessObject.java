@@ -73,6 +73,11 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return accounts.get(username);
     }
 
+    @Override
+    public User get(int userID) {
+        return accounts.get(userID);
+    }
+
     private void save() {
         BufferedWriter writer;
         try {

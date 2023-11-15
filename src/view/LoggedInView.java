@@ -24,6 +24,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
     final JButton logOut;
     final JButton viewFavourites;
+    final JButton viewRestaurant;
 
     /**
      * A window with a title and a JButton.
@@ -46,12 +47,25 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         buttons.add(logOut);
         viewFavourites = new JButton(loggedInViewModel.VIEW_FAVOURITES_BUTTON_LABEL);
         buttons.add(viewFavourites);
+        viewRestaurant = new JButton(loggedInViewModel.VIEW_RESTAURANT_BUTTON_LABEL);
 
         logOut.addActionListener(this);
         viewFavourites.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(viewFavourites)) {
+                            String username = loggedInViewModel.getState().getUsername();
+                            viewFavouritesController.execute(username);
+                        }
+                    }
+                }
+        );
+
+        viewRestaurant.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(viewRestaurant)) {
+                            // TODO: Change these
                             String username = loggedInViewModel.getState().getUsername();
                             viewFavouritesController.execute(username);
                         }

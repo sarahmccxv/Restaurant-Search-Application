@@ -11,6 +11,7 @@ public class LoggedInViewModel extends ViewModel {
     private LoggedInState state = new LoggedInState();
     public static final String LOGOUT_BUTTON_LABEL = "Log out";
     public static final String VIEW_FAVOURITES_BUTTON_LABEL = "View Favourites";
+    public static final String VIEW_RESTAURANT_BUTTON_LABEL = "View Restaurants";
     private String loggedInUser;
 
     public LoggedInViewModel() {

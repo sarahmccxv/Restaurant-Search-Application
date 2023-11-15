@@ -12,4 +12,6 @@ public interface RegisterUserDataAccessInterface {
     void save(User user);
 
     User get(String username);
+
+    User get(int userID);
 }
