@@ -5,6 +5,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesState;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,6 +20,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
     private final ViewFavouritesViewModel viewFavouritesViewModel;
     private final ViewFavouritesController viewFavouritesController;
+
+    private final ViewRestaurantController viewRestaurantController;
+
+    private final ViewFavouritesViewModel viewRestaurantViewModel;
 
     JLabel username;
 
@@ -67,7 +72,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                         if (evt.getSource().equals(viewRestaurant)) {
                             // TODO: Change these
                             String username = loggedInViewModel.getState().getUsername();
-                            viewFavouritesController.execute(username);
+                            viewRestaurantController.
                         }
                     }
                 }
