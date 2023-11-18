@@ -47,4 +47,11 @@ public class Restaurant implements RestaurantInterface{
     public ArrayList<String> getCategories() {
         return categories;
     }
+
+    @Override
+    public String toString(){
+        return restaurantName +
+                "\nPhone Number: " + phoneNumber +
+                "\nAddress: " + address;
+    }
 }

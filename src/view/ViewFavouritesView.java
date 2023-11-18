@@ -53,12 +53,12 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         ViewFavouritesState state = (ViewFavouritesState) evt.getNewValue();
-        if (state.getNoFavouritesMessage() != null){
+        favourites.removeAll();
+        favourites.revalidate();
+        favourites.repaint();
+        if (!state.getNoFavouritesMessage().isEmpty()){
             favourites.add(new JLabel(state.getNoFavouritesMessage()));
         } else {
-            favourites.removeAll();
-            favourites.revalidate();
-            favourites.repaint();
             for (String favourite : state.getFavourites()) {
                 String text = "<html><b>" + favourite.split("\n")[0] + "</b><br>" +
                         favourite.split("\n")[1] + "<br>" + favourite.split("\n")[2] + "</html>";

@@ -9,12 +9,12 @@ public class ViewFavouritesState {
     private ArrayList<String> favourites;
     private String noFavouritesMessage;
 
-    public ViewFavouritesState(){};
-
-    public ViewFavouritesState(ViewFavouritesState copy) {
-        username = copy.username;
-        password = copy.password;
-    }
+    public ViewFavouritesState(){
+        username = "";
+        password = "";
+        favourites = new ArrayList<>();
+        noFavouritesMessage = "";
+    };
 
     public String getUsername() {
         return username;
@@ -34,6 +34,7 @@ public class ViewFavouritesState {
     public ArrayList<String> getFavourites() {
         return favourites;
     }
+
     public void setFavourites(ArrayList<String> favourites) {
         this.favourites = favourites;
     }
@@ -41,7 +42,7 @@ public class ViewFavouritesState {
     public String getNoFavouritesMessage() {
         return noFavouritesMessage;
     }
-    public void setNoFavourites(String noFavouritesMessage){
+    public void setNoFavouritesMessage(String noFavouritesMessage){
         this.noFavouritesMessage = noFavouritesMessage;
     }
 
