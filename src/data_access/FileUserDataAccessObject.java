@@ -23,6 +23,8 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     private UserFactory userFactory;
 
+    private Integer length = 0;
+
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
 
@@ -56,7 +58,10 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
                     User user = userFactory.create(userID, username, password, location, ldt);
                     accounts.put(username, user);
+                    //System.out.println("user named: " + username + " is in the factory");
                     accountsID.put(userID, user);
+                    //System.out.println("user id: " + userID + " is in the factory");
+                    length ++;
                 }
             }
         }
@@ -74,8 +79,8 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     }
 
     @Override
-    public User get(int userID) {
-        return accounts.get(userID);
+    public User get(Integer userID) {
+        return accountsID.get(userID);
     }
 
     private void save() {
@@ -89,8 +94,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                 String line = String.format("%s,%s,%s,%s,%s",
                         user.getUserID(), user.getUsername(),
                         user.getPassword(), user.getLocation(),
-                        user.getCreationTime());
-                        // add creation time?
+                        user.getCreationTime().toString());
                 writer.write(line);
                 writer.newLine();
             }
@@ -125,5 +129,62 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     @Override
     public boolean duplicatedID(int userID) {
         return accountsID.containsKey(userID);
+    }
+
+    /**
+     * Update the data access object file in order to save new users into the attributes
+     */
+    @Override
+    public void update() {
+        //System.out.println("Length of current object is " + length);
+        //System.out.println("Length of csv file is " + countRows(csvFile));
+        if (length < countRows(csvFile)) {
+            readFromNthRow(csvFile, length);
+        }
+    }
+
+    private int countRows(File csvFile) {
+        int rowCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            while (reader.readLine() != null) {
+                rowCount++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return rowCount;
+    }
+
+        private void readFromNthRow(File csvFile, int n) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            // Skip the first n-1 lines
+            for (int i = 0; i < n - 1; i++) {
+                reader.readLine();
+            }
+
+            // Read from the n-th line
+            String newRow;
+            while ((newRow = reader.readLine()) != null) {
+                // Process the line
+                String[] col = newRow.split(",");
+                int userID = Integer.parseInt(col[headers.get("userID")]);
+                String username = String.valueOf(col[headers.get("username")]);
+                String password = String.valueOf(col[headers.get("password")]);
+                String location = String.valueOf(col[headers.get("location")]);
+                String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+
+                User user = userFactory.create(userID, username, password, location, ldt);
+                accounts.put(username, user);
+                //System.out.println("user named: " + username + " is in the factory");
+                accountsID.put(userID, user);
+                //System.out.println("user id: " + userID + " is in the factory");
+                length ++;
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

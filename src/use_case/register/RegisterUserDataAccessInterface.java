@@ -13,5 +13,7 @@ public interface RegisterUserDataAccessInterface {
 
     User get(String username);
 
-    User get(int userID);
+    User get(Integer userID);
+
+    void update();
 }

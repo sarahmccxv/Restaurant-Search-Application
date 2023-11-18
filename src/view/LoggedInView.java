@@ -6,6 +6,7 @@ import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesState;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,10 +21,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final LoggedInViewModel loggedInViewModel;
     private final ViewFavouritesViewModel viewFavouritesViewModel;
     private final ViewFavouritesController viewFavouritesController;
-
+    private final ViewRestaurantViewModel viewRestaurantViewModel;
     private final ViewRestaurantController viewRestaurantController;
 
-    private final ViewFavouritesViewModel viewRestaurantViewModel;
 
     JLabel username;
 
@@ -34,12 +34,17 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     /**
      * A window with a title and a JButton.
      */
-    public LoggedInView(LoggedInViewModel loggedInViewModel, ViewFavouritesViewModel viewFavouritesViewModel,
-                        ViewFavouritesController viewFavouritesController) {
+    public LoggedInView(LoggedInViewModel loggedInViewModel,
+                        ViewFavouritesViewModel viewFavouritesViewModel,
+                        ViewFavouritesController viewFavouritesController,
+                        ViewRestaurantViewModel viewRestaurantViewModel,
+                        ViewRestaurantController viewRestaurantController) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
         this.viewFavouritesViewModel = viewFavouritesViewModel;
         this.viewFavouritesController = viewFavouritesController;
+        this.viewRestaurantViewModel = viewRestaurantViewModel;
+        this.viewRestaurantController = viewRestaurantController;
 
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -48,11 +53,12 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         username = new JLabel();
 
         JPanel buttons = new JPanel();
-        logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
-        buttons.add(logOut);
+        viewRestaurant = new JButton(loggedInViewModel.VIEW_RESTAURANT_BUTTON_LABEL);
+        buttons.add(viewRestaurant);
         viewFavourites = new JButton(loggedInViewModel.VIEW_FAVOURITES_BUTTON_LABEL);
         buttons.add(viewFavourites);
-        viewRestaurant = new JButton(loggedInViewModel.VIEW_RESTAURANT_BUTTON_LABEL);
+        logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
+        buttons.add(logOut);
 
         logOut.addActionListener(this);
         viewFavourites.addActionListener(
@@ -71,8 +77,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(viewRestaurant)) {
                             // TODO: Change these
-                            String username = loggedInViewModel.getState().getUsername();
-                            viewRestaurantController.
+                            int userID = loggedInViewModel.getState().getUserID();
+                            viewRestaurantController.execute(userID);
                         }
                     }
                 }

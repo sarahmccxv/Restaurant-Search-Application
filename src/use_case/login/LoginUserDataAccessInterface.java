@@ -8,4 +8,6 @@ public interface LoginUserDataAccessInterface {
     void save(User user);
 
     User get(String username);
+
+    User get(Integer userID);
 }
