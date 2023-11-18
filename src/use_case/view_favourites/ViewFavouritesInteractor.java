@@ -32,7 +32,7 @@ public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
             ViewFavouritesOutputData viewFavouritesOutputData = new ViewFavouritesOutputData(username, password, favouritesList);
             viewFavouritesPresenter.prepareSuccessView(viewFavouritesOutputData);
         } else {
-            viewFavouritesPresenter.prepareFailView("No Favourites");
+            viewFavouritesPresenter.prepareFailView(username, password, "No Favourites");
         }
     }
 }

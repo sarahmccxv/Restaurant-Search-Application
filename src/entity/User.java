@@ -1,5 +1,6 @@
 package entity;
 
+import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -9,7 +10,7 @@ public class User implements UserInterface {
     private final String password;
     private final LocalDateTime creationTime;
     private String location;
-    private final FavouritesList favouritesList = new FavouritesList();
+    private FavouritesList favouritesList = new FavouritesList();
     private final ArrayList<Review> reviewsList = new ArrayList<>();
 
     public User(int userID, String username, String password, String location,
@@ -19,6 +20,7 @@ public class User implements UserInterface {
         this.password = password;
         this.location = location;
         this.creationTime = creationTime;
+        this.favouritesList = new FavouritesList();
     }
 
     public int getUserID() {
