@@ -28,9 +28,11 @@ public class ViewFavouritesPresenter implements ViewFavouritesOutputBoundary {
     }
 
     @Override
-    public void prepareFailView(String noFavouritesMessage){
+    public void prepareFailView(String username, String password, String noFavouritesMessage){
         ViewFavouritesState viewFavouritesState = viewFavouritesViewModel.getState();
-        viewFavouritesState.setNoFavourites(noFavouritesMessage);
+        viewFavouritesState.setUsername(username);
+        viewFavouritesState.setPassword(password);
+        viewFavouritesState.setNoFavouritesMessage(noFavouritesMessage);
         this.viewFavouritesViewModel.setState(viewFavouritesState);
         this.viewFavouritesViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(viewFavouritesViewModel.getViewName());

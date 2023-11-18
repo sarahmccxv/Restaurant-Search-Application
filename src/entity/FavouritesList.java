@@ -5,8 +5,9 @@ import java.util.Objects;
 
 public class FavouritesList {
     private ArrayList<Restaurant> favouritesList = new ArrayList<>();
-    public FavouritesList(){
 
+    public FavouritesList(){
+        this.favouritesList = new ArrayList<Restaurant>();
     }
 
     public void add(Restaurant favourite){

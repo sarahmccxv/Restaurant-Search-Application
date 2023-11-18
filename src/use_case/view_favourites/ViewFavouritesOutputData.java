@@ -8,13 +8,12 @@ import java.util.ArrayList;
 public class ViewFavouritesOutputData {
     private String username;
     private String password;
-
     private ArrayList<String> favouritesListString = new ArrayList<>();
 
     public ViewFavouritesOutputData(String username, String password, FavouritesList favouritesList) {
         this.username = username;
         this.password = password;
-        for(Restaurant restaurant : favouritesList.getFavourites()){
+        for (Restaurant restaurant : favouritesList.getFavourites()){
             favouritesListString.add(restaurant.toString());
         }
     }
