@@ -33,7 +33,7 @@ public class SearchCriteria {
         private String location = "";
         private int limit = 10;
         private String sortingMethod = "best_match";
-        private String category = "";
+        private String category;
 
         public Builder setLocation(String location) {
             this.location = location;

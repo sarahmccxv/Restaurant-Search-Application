@@ -6,8 +6,13 @@ public class YelpURLs {
     private final String API_URL = "https://api.yelp.com/v3/businesses/";
 
     public String getURLByLocation(SearchCriteria criteria) {
-        return String.format("%ssearch?location=%s&limit=%s&sort_by=%s",
+        String url = String.format("%ssearch?location=%s&limit=%s&sort_by=%s",
                 API_URL, criteria.getLocation(), criteria.getLimit(), criteria.getSortingMethod());
+        if (criteria.getCategory() != null) {
+            url = url + "&categories=" + criteria.getCategory();
+        }
+
+        return url;
     }
 
     public String getURLByID(String id) {
