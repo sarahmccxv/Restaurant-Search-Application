@@ -3,16 +3,24 @@ package api.Search;
 import java.util.ArrayList;
 
 public class SearchCriteria {
+    private String name;
     private String location;
     private int limit;
-    private String sortingMethod;
+    private SearchSortingMethods sortingMethod;
+    private SearchPriceLevel priceLevel;
     private ArrayList<String> category;
 
     public SearchCriteria(Builder builder) {
+        this.name = builder.name;
         this.location = builder.location;
         this.limit = builder.limit;
         this.sortingMethod = builder.sortingMethod;
         this.category = builder.category;
+        this.priceLevel = builder.priceLevel;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getLocation() {
@@ -24,7 +32,11 @@ public class SearchCriteria {
     }
 
     public String getSortingMethod() {
-        return sortingMethod;
+        return sortingMethod.toString();
+    }
+
+    public String getPriceLevel() {
+        return priceLevel.level;
     }
 
     public ArrayList<String> getCategory() {
@@ -32,10 +44,17 @@ public class SearchCriteria {
     }
 
     public static class Builder {
+        private String name;
         private String location = "";
         private int limit = 10;
-        private String sortingMethod = "best_match";
+        private SearchSortingMethods sortingMethod = SearchSortingMethods.BEST_MATCH;
+        private SearchPriceLevel priceLevel = SearchPriceLevel.CHEAP;
         private ArrayList<String> category;
+
+        public Builder setName(String name) {
+            this.name = name;
+            return this;
+        }
 
         public Builder setLocation(String location) {
             this.location = location;
@@ -47,8 +66,13 @@ public class SearchCriteria {
             return this;
         }
 
-        public Builder setSortingMethod(String sortingMethod) {
+        public Builder setSortingMethod(SearchSortingMethods sortingMethod) {
             this.sortingMethod = sortingMethod;
+            return this;
+        }
+
+        public Builder setPriceLevel(SearchPriceLevel priceLevel) {
+            this.priceLevel = priceLevel;
             return this;
         }
 

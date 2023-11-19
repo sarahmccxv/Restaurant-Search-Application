@@ -2,16 +2,14 @@ package api.yelp;
 
 import api.Search.SearchCriteria;
 import entity.Restaurant;
+import entity.Review;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public interface YelpApiServices {
-    ArrayList<Restaurant> getLocalRestaurants(SearchCriteria criteria);
+    ArrayList<Restaurant> getRestaurants(SearchCriteria criteria);
+    ArrayList<Restaurant> getLocalRestaurants(String location);
     Restaurant getRestaurantByID(String id);
 
-    static ArrayList<String> getSortingMethods() {
-        return new ArrayList<>(Arrays.asList("best_match", "rating", "review_count", "distance"));
-    }
+//    ArrayList<Review> getReviewsByID(String id);
 }

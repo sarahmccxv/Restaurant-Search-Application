@@ -15,10 +15,16 @@ public class YelpAPI implements YelpApiServices {
     private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURLs());
 
     @Override
-    public ArrayList<Restaurant> getLocalRestaurants(SearchCriteria criteria) {
+    public ArrayList<Restaurant> getRestaurants(SearchCriteria criteria) {
         yelpAPIClient.allRestaurantsMatching(criteria);
         MultipleRestaurantResponse multipleRestaurantResponse = new MultipleRestaurantResponse(yelpAPIClient.getResponseBody());
         return multipleRestaurantResponse.getRestaurants();
+    }
+
+    @Override
+    public ArrayList<Restaurant> getLocalRestaurants(String location) {
+        SearchCriteria criteria = new SearchCriteria.Builder().setLocation(location).build();
+        return getRestaurants(criteria);
     }
 
     @Override

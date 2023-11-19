@@ -18,7 +18,7 @@ public class YelpAPIClient implements YelpAPIClientInterface {
 
     @Override
     public void allRestaurantsMatching(SearchCriteria criteria) {
-        getFrom(yelpURLs.getURLByLocation(criteria));
+        getFrom(yelpURLs.getURLWithCriteria(criteria));
     }
 
     @Override
