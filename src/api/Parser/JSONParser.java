@@ -23,6 +23,6 @@ public class JSONParser implements Parser {
 
     @Override
     public String parseError(String response) {
-        return ErrorParser.parseFrom(new JSONObject(response));
+        return ExceptionParser.parseFrom(new JSONObject(response));
     }
 }

@@ -4,11 +4,13 @@ public class SearchCriteria {
     private String location;
     private int limit;
     private String sortingMethod;
+    private String category;
 
     public SearchCriteria(Builder builder) {
         this.location = builder.location;
         this.limit = builder.limit;
         this.sortingMethod = builder.sortingMethod;
+        this.category = builder.category;
     }
 
     public String getLocation() {
@@ -23,10 +25,15 @@ public class SearchCriteria {
         return sortingMethod;
     }
 
+    public String getCategory() {
+        return category;
+    }
+
     public static class Builder {
         private String location = "";
         private int limit = 10;
         private String sortingMethod = "best_match";
+        private String category = "";
 
         public Builder setLocation(String location) {
             this.location = location;
@@ -40,6 +47,11 @@ public class SearchCriteria {
 
         public Builder setSortingMethod(String sortingMethod) {
             this.sortingMethod = sortingMethod;
+            return this;
+        }
+
+        public Builder setCategory(String category) {
+            this.category = category;
             return this;
         }
 
