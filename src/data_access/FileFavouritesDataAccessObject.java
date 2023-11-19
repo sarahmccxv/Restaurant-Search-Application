@@ -1,13 +1,10 @@
 package data_access;
 
-import api.ApiRestaurant;
+import api.yelp.YelpAPI;
 import entity.*;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
 
-import java.beans.FeatureDescriptor;
 import java.io.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -36,8 +33,8 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
                     String favouritesIDList = String.valueOf(col[headers.get("favourites")]);
                     FavouritesList favouritesList = new FavouritesList();
                     for (String restaurantID : favouritesIDList.split(",")){
-                        ApiRestaurant apiRestaurant = new ApiRestaurant();
-                        Restaurant restaurant = apiRestaurant.getRestaurantByID(restaurantID);
+                        YelpAPI yelpAPI = new YelpAPI();
+                        Restaurant restaurant = yelpAPI.getRestaurantByID(restaurantID);
                         favouritesList.add(restaurant);
                     }
                     favouritesMap.put(username, favouritesList);

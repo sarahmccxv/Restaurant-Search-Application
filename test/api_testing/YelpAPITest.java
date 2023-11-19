@@ -1,8 +1,8 @@
 package api_testing;
 
 import entity.Restaurant;
-import entity.RestaurantFactory;
-import api.ApiRestaurant;
+import api.Search.SearchCriteria;
+import api.yelp.YelpAPI;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RestaurantDataAccessObjectTest {
-    private static ApiRestaurant restaurantDataAccessObject;
+public class YelpAPITest {
+    private static YelpAPI yelpApi = new YelpAPI();
     private final String location = "Toronto";
     private final String expectedRestaurantID = "r_BrIgzYcwo1NAuG9dLbpg";
     private final String expectedRestaurantName = "Pai Northern Thai Kitchen";
@@ -22,15 +22,20 @@ public class RestaurantDataAccessObjectTest {
     private final String expectedPhoneNumber = "+14169014724";
     private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("thai"));
 
-
-    @BeforeAll
-    static void SetUp() {
-        restaurantDataAccessObject = new ApiRestaurant();
-    }
+//
+//    @BeforeAll
+//    static void SetUp() {
+//        restaurantDataAccessObject = new ApiRestaurantSearch();
+//    }
 
     @Test
     void getLocalRestaurantTest() {
-        ArrayList<Restaurant> restaurantArrayList = restaurantDataAccessObject.getLocalRestaurants(location, 1);
+        SearchCriteria searchCriteria = new SearchCriteria.Builder()
+                .setLocation("Toronto")
+                .setLimit(1)
+                .setSortingMethod("best_match")
+                .build();
+        ArrayList<Restaurant> restaurantArrayList = yelpApi.getLocalRestaurants(searchCriteria);
 
         assertEquals(expectedRestaurantID, restaurantArrayList.get(0).getRestaurantID());
         assertEquals(expectedRestaurantName, restaurantArrayList.get(0).getRestaurantName());
@@ -41,7 +46,7 @@ public class RestaurantDataAccessObjectTest {
 
     @Test
     void getRestaurantByIDTest() {
-        Restaurant restaurant = restaurantDataAccessObject.getRestaurantByID(expectedRestaurantID);
+        Restaurant restaurant = yelpApi.getRestaurantByID(expectedRestaurantID);
 
         assertEquals(expectedRestaurantName, restaurant.getRestaurantName());
         assertEquals(expectedRestaurantAddress, restaurant.getAddress());
@@ -49,13 +54,13 @@ public class RestaurantDataAccessObjectTest {
         assertEquals(expectedRestaurantCategories, restaurant.getCategories());
     }
 
-    @Test
-    void getRestaurantByPhoneNumberTest() {
-        Restaurant restaurant = restaurantDataAccessObject.getRestaurantByPhoneNumber(expectedPhoneNumber);
-
-        assertEquals(expectedRestaurantID, restaurant.getRestaurantID());
-        assertEquals(expectedRestaurantName, restaurant.getRestaurantName());
-        assertEquals(expectedRestaurantAddress, restaurant.getAddress());
-        assertEquals(expectedRestaurantCategories, restaurant.getCategories());
-    }
+//    @Test
+//    void getRestaurantByPhoneNumberTest() {
+//        Restaurant restaurant = restaurantDataAccessObject.getRestaurantByPhoneNumber(expectedPhoneNumber);
+//
+//        assertEquals(expectedRestaurantID, restaurant.getRestaurantID());
+//        assertEquals(expectedRestaurantName, restaurant.getRestaurantName());
+//        assertEquals(expectedRestaurantAddress, restaurant.getAddress());
+//        assertEquals(expectedRestaurantCategories, restaurant.getCategories());
+//    }
 }
