@@ -8,8 +8,9 @@ public class YelpURLs {
     public String getURLByLocation(SearchCriteria criteria) {
         String url = String.format("%ssearch?location=%s&limit=%s&sort_by=%s",
                 API_URL, criteria.getLocation(), criteria.getLimit(), criteria.getSortingMethod());
+
         if (criteria.getCategory() != null) {
-            url = url + "&categories=" + criteria.getCategory();
+            url = String.format("%s&categories=%s", url, String.join(",", criteria.getCategory()));
         }
 
         return url;

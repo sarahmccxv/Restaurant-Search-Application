@@ -1,10 +1,12 @@
 package api.Search;
 
+import java.util.ArrayList;
+
 public class SearchCriteria {
     private String location;
     private int limit;
     private String sortingMethod;
-    private String category;
+    private ArrayList<String> category;
 
     public SearchCriteria(Builder builder) {
         this.location = builder.location;
@@ -25,7 +27,7 @@ public class SearchCriteria {
         return sortingMethod;
     }
 
-    public String getCategory() {
+    public ArrayList<String> getCategory() {
         return category;
     }
 
@@ -33,7 +35,7 @@ public class SearchCriteria {
         private String location = "";
         private int limit = 10;
         private String sortingMethod = "best_match";
-        private String category;
+        private ArrayList<String> category;
 
         public Builder setLocation(String location) {
             this.location = location;
@@ -50,7 +52,7 @@ public class SearchCriteria {
             return this;
         }
 
-        public Builder setCategory(String category) {
+        public Builder setCategory(ArrayList<String> category) {
             this.category = category;
             return this;
         }

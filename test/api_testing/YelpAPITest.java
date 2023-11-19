@@ -11,6 +11,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -35,6 +36,7 @@ public class YelpAPITest {
                 .setLocation("Toronto")
                 .setLimit(1)
                 .setSortingMethod("best_match")
+                .setCategory(new ArrayList<>(Arrays.asList("italian", "pizza")))
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getLocalRestaurants(searchCriteria);
 
