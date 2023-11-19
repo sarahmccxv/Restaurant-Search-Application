@@ -1,5 +1,6 @@
 package api_testing;
 
+import api.yelp.YelpApiServices;
 import entity.Restaurant;
 import api.Search.SearchCriteria;
 import api.yelp.YelpAPI;
@@ -14,7 +15,7 @@ import java.util.List;
 
 
 public class YelpAPITest {
-    private static YelpAPI yelpApi = new YelpAPI();
+    private static YelpApiServices yelpApiServices = new YelpAPI();
     private final String location = "Toronto";
     private final String expectedRestaurantID = "r_BrIgzYcwo1NAuG9dLbpg";
     private final String expectedRestaurantName = "Pai Northern Thai Kitchen";
@@ -35,7 +36,7 @@ public class YelpAPITest {
                 .setLimit(1)
                 .setSortingMethod("best_match")
                 .build();
-        ArrayList<Restaurant> restaurantArrayList = yelpApi.getLocalRestaurants(searchCriteria);
+        ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getLocalRestaurants(searchCriteria);
 
         assertEquals(expectedRestaurantID, restaurantArrayList.get(0).getRestaurantID());
         assertEquals(expectedRestaurantName, restaurantArrayList.get(0).getRestaurantName());
@@ -46,7 +47,7 @@ public class YelpAPITest {
 
     @Test
     void getRestaurantByIDTest() {
-        Restaurant restaurant = yelpApi.getRestaurantByID(expectedRestaurantID);
+        Restaurant restaurant = yelpApiServices.getRestaurantByID(expectedRestaurantID);
 
         assertEquals(expectedRestaurantName, restaurant.getRestaurantName());
         assertEquals(expectedRestaurantAddress, restaurant.getAddress());

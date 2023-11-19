@@ -3,7 +3,7 @@ package api.yelp;
 import api.Search.SearchCriteria;
 
 public class YelpURLs {
-    private static final String API_URL = "https://api.yelp.com/v3/businesses/";
+    private final String API_URL = "https://api.yelp.com/v3/businesses/";
 
     public String getURLByLocation(SearchCriteria criteria) {
         return String.format("%ssearch?location=%s&limit=%s&sort_by=%s",
