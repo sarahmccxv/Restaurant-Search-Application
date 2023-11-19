@@ -14,12 +14,14 @@ import java.util.ArrayList;
 public class YelpAPI implements YelpApiServices {
     private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURLs());
 
+    @Override
     public ArrayList<Restaurant> getLocalRestaurants(SearchCriteria criteria) {
         yelpAPIClient.allRestaurantsMatching(criteria);
         MultipleRestaurantResponse multipleRestaurantResponse = new MultipleRestaurantResponse(yelpAPIClient.getResponseBody());
         return multipleRestaurantResponse.getRestaurants();
     }
 
+    @Override
     public Restaurant getRestaurantByID(String id) {
         yelpAPIClient.RestaurantIDMatching(id);
         SingleRestaurantResponse singleRestaurantResponse = new SingleRestaurantResponse(yelpAPIClient.getResponseBody());

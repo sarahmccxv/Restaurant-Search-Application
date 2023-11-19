@@ -16,14 +16,17 @@ public class YelpAPIClient implements YelpAPIClientInterface {
         this.yelpURLs = yelpURLs;
     }
 
+    @Override
     public void allRestaurantsMatching(SearchCriteria criteria) {
         getFrom(yelpURLs.getURLByLocation(criteria));
     }
 
+    @Override
     public void RestaurantIDMatching(String id) {
         getFrom(yelpURLs.getURLByID(id));
     }
 
+    @Override
     public String getResponseBody() {
         try {
             if (response.body() != null) {
@@ -35,6 +38,7 @@ public class YelpAPIClient implements YelpAPIClientInterface {
         }
     }
 
+    @Override
     public void getFrom(String API_URL) throws YelpRequestException {
         try {
             OkHttpClient client = new OkHttpClient();
