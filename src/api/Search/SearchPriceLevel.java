@@ -17,10 +17,10 @@ public enum SearchPriceLevel {
     }
 
     public ArrayList<String> getPriceLevels() {
-        ArrayList<String> sortingMethods = new ArrayList<>();
+        ArrayList<String> priceLevelsList = new ArrayList<>();
         for (SearchPriceLevel price : SearchPriceLevel.values()) {
-            sortingMethods.add(price.range);
+            priceLevelsList.add(price.range);
         }
-        return sortingMethods;
+        return priceLevelsList;
     }
 }

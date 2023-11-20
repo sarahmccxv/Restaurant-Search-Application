@@ -6,21 +6,24 @@ public class YelpURLs {
     private final String API_URL = "https://api.yelp.com/v3/businesses/";
 
     public String getURLWithCriteria(SearchCriteria criteria) {
-        String url = String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price%s",
+        StringBuilder url = new StringBuilder(String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price%s",
                 API_URL,
                 criteria.getLocation(),
                 criteria.getLimit(),
                 criteria.getSortingMethod(),
-                criteria.getPriceLevel());
+                criteria.getPriceLevel()));
 
         if (criteria.getName() != null)  {
-            url = url + "&term=" + criteria.getName();
-        }
-        if (criteria.getCategory() != null) {
-            url = String.format("%s&categories=%s", url, String.join(",", criteria.getCategory()));
+            url.append("&term=").append(criteria.getName());
         }
 
-        return url;
+        if (criteria.getCategory() != null) {
+            for (String category : criteria.getCategory()) {
+                url.append("&categories").append(category);
+            }
+        }
+
+        return url.toString();
     }
 
     public String getURLByID(String id) {
