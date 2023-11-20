@@ -1,5 +1,8 @@
 package use_case.sortandfilter;
 
+import api.Search.SearchPriceLevel;
+import api.Search.SearchSortingMethods;
+
 import java.util.ArrayList;
 
 public class SortAndFilterResaturantInputData {
@@ -8,13 +11,13 @@ public class SortAndFilterResaturantInputData {
     final private int limit;
     final private SearchSortingMethods sortingMethod;
     final private SearchPriceLevel priceLevel;
-    final private ArrayList<String> category;
+    final private String category;
 
 
 
 
 
-    public SortAndFilterResaturantInputData(String name, String location, int limit, SearchSortingMethods sortingMethod, SearchPriceLevel priceLevel, ArrayList<String> category){
+    public SortAndFilterResaturantInputData(String name, String location, int limit, SearchSortingMethods sortingMethod, SearchPriceLevel priceLevel, String category){
         this.name = name;
         this.location = location;
         this.limit = limit;
@@ -30,5 +33,5 @@ public class SortAndFilterResaturantInputData {
     int getLimit(){return limit;}
     SearchSortingMethods getSortingMethod(){return sortingMethod;}
     SearchPriceLevel getPriceLevel(){return priceLevel;}
-    ArrayList<String> getCategory(){return category;}
+    String getCategory(){return category;}
 }
