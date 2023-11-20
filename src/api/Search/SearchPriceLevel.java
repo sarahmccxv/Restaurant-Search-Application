@@ -16,7 +16,7 @@ public enum SearchPriceLevel {
         this.range = range;
     }
 
-    public ArrayList<String> getPriceLevels() {
+    public static ArrayList<String> getPriceLevels() {
         ArrayList<String> priceLevelsList = new ArrayList<>();
         for (SearchPriceLevel price : SearchPriceLevel.values()) {
             priceLevelsList.add(price.range);

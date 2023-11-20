@@ -21,7 +21,7 @@ public class SearchSortingMethodsTest {
         ArrayList<String> expectedMethods = new ArrayList<>(Arrays.asList(
                 "Best Match", "Highest Rated", "Most Reviewed", "Closest"));
 
-        ArrayList<String> actualMethods = SearchSortingMethods.BEST_MATCH.getSortingMethods();
+        ArrayList<String> actualMethods = SearchSortingMethods.getSortingMethods();
         assertEquals(expectedMethods.size(), actualMethods.size(), "Size mismatch");
 
         for (int i = 0; i < expectedMethods.size(); i++) {
