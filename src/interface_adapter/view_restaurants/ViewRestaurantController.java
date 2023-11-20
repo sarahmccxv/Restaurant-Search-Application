@@ -10,8 +10,9 @@ public class ViewRestaurantController {
         this.viewRestaurantsInteractor = viewRestaurantsInteractor;
     }
 
-    public void execute(int UserID) {
-        ViewRestaurantInputData viewRestaurantInputData = new ViewRestaurantInputData(UserID);
+    public void execute(Integer userID, String username, String password) {
+        ViewRestaurantInputData viewRestaurantInputData = new ViewRestaurantInputData(
+                userID, username, password);
         viewRestaurantsInteractor.execute(viewRestaurantInputData);
     }
 }

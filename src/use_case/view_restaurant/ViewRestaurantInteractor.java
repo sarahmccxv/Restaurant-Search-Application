@@ -24,13 +24,16 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
 
     @Override
     public void execute(ViewRestaurantInputData viewRestaurantInputData) {
-        int userID = viewRestaurantInputData.getUserID();
+        Integer userID = viewRestaurantInputData.getUserID();
+        String username = viewRestaurantInputData.getUsername();
+        String password = viewRestaurantInputData.getPassword();
         //System.out.println("UserID is " + userID);
         fileUserDataAccessObject.update();
         User user = fileUserDataAccessObject.get(userID);
         String location = user.getLocation();
         ArrayList<Restaurant> local_restaurants = viewRestaurantDataAccessObject.getLocalRestaurants(location);
-        ViewRestaurantOutputData viewRestaurantOutputData = new ViewRestaurantOutputData(local_restaurants);
+        ViewRestaurantOutputData viewRestaurantOutputData = new ViewRestaurantOutputData(
+                userID, username, password, local_restaurants);
         viewRestaurantPresenter.prepareSuccessView(viewRestaurantOutputData);
     }
 }

@@ -2,11 +2,13 @@ package interface_adapter.logged_in;
 
 public class LoggedInState {
     private String username = "";
-    private int userID = 0;
+    private Integer userID = 0;
+    private String password = "";
 
     public LoggedInState(LoggedInState copy) {
         username = copy.username;
         userID = copy.userID;
+        password = copy.password;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -15,11 +17,17 @@ public class LoggedInState {
     public String getUsername() {
         return username;
     }
-    public int getUserID() {return userID;}
-    public void setUsername(String username) {
-        this.username = username;
+    public Integer getUserID() {return userID;}
+    public String getPassword() {
+        return password;
     }
-    public void setUerID(int newUserID) {
+    public void setUsername(String newUsername) {
+        this.username = newUsername;
+    }
+    public void setUerID(Integer newUserID) {
         this.userID = newUserID;
+    }
+    public void setPassword(String newPassword) {
+        this.password = newPassword;
     }
 }

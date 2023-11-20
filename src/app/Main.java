@@ -79,8 +79,15 @@ public class Main {
         views.add(loggedInView, loggedInView.viewName);
 
         ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel,
-                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject));
+                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
+                        userDataAccessObject));
         views.add(viewFavouritesView, viewFavouritesView.viewName);
+
+        ViewRestaurantView viewRestaurantView = ViewRestaurantUseCaseFactory.create(viewManagerModel,
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
+                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
+                        userDataAccessObject));
+        views.add(viewRestaurantView, viewRestaurantView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

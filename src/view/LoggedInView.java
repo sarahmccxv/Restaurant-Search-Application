@@ -77,8 +77,10 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(viewRestaurant)) {
                             // TODO: Change these
-                            int userID = loggedInViewModel.getState().getUserID();
-                            viewRestaurantController.execute(userID);
+                            Integer userID = loggedInViewModel.getState().getUserID();
+                            String username = loggedInViewModel.getState().getUsername();
+                            String password = loggedInViewModel.getState().getPassword();
+                            viewRestaurantController.execute(userID, username, password);
                         }
                     }
                 }

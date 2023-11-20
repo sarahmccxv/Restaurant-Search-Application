@@ -23,7 +23,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     private UserFactory userFactory;
 
-    private Integer length = 0;
+    private Integer length = 1; // By default, the csv file should contain the row of column names
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
@@ -136,11 +136,12 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
      */
     @Override
     public void update() {
-        //System.out.println("Length of current object is " + length);
+        //System.out.println("Length of current account in memory is " + length);
         //System.out.println("Length of csv file is " + countRows(csvFile));
         if (length < countRows(csvFile)) {
-            readFromNthRow(csvFile, length);
+            readFromNthRow(csvFile, length+1);
         }
+        //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
     }
 
     private int countRows(File csvFile) {
@@ -156,7 +157,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return rowCount;
     }
 
-        private void readFromNthRow(File csvFile, int n) {
+    private void readFromNthRow(File csvFile, int n) {
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
             // Skip the first n-1 lines
             for (int i = 0; i < n - 1; i++) {
@@ -168,6 +169,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             while ((newRow = reader.readLine()) != null) {
                 // Process the line
                 String[] col = newRow.split(",");
+                System.out.println("The new line read has UserID" + col[headers.get("userID")]);
                 int userID = Integer.parseInt(col[headers.get("userID")]);
                 String username = String.valueOf(col[headers.get("username")]);
                 String password = String.valueOf(col[headers.get("password")]);

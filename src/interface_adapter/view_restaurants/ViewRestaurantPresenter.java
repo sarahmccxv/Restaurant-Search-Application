@@ -18,6 +18,10 @@ public class ViewRestaurantPresenter implements ViewRestaurantOutputBoundary {
     @Override
     public void prepareSuccessView(ViewRestaurantOutputData viewRestaurantOutputData) {
         ViewRestaurantState viewRestaurantState = viewRestaurantViewModel.getState();
+        viewRestaurantState.setUserID(viewRestaurantState.getUserID());
+        viewRestaurantState.setUsername(viewRestaurantOutputData.getUsername());
+        System.out.println("Password received at ViewRestaurant Presentor is " + viewRestaurantOutputData.getPassword());
+        viewRestaurantState.setPassword(viewRestaurantOutputData.getPassword());
         viewRestaurantState.setRestaurants(viewRestaurantOutputData.getLocalRestaurants());
         this.viewRestaurantViewModel.setState(viewRestaurantState);
         this.viewRestaurantViewModel.firePropertyChanged();
