@@ -2,13 +2,13 @@ package entity;
 import java.time.LocalDateTime;
 
 public class Review implements ReviewInterface {
-    private final String reviewID;
-    private final User author;
+    private final String reviewID; // Random generate 6 digits in string
+    private final CommonUser author;
     private Float rating;
     private String content;
     private LocalDateTime creationTime;
 
-    public Review(String reviewID, User author, Float rating,
+    public Review(String reviewID, CommonUser author, Float rating,
                   String content, LocalDateTime creationTime) {
         this.reviewID = reviewID;
         this.author = author;
