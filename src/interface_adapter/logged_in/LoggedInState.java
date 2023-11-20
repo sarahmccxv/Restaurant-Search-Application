@@ -24,7 +24,7 @@ public class LoggedInState {
     public void setUsername(String newUsername) {
         this.username = newUsername;
     }
-    public void setUerID(Integer newUserID) {
+    public void setUserID(Integer newUserID) {
         this.userID = newUserID;
     }
     public void setPassword(String newPassword) {

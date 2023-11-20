@@ -43,7 +43,6 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                //Add creation_time?
                 assert header.equals("userID, username, password, location, creation_time");
 
                 String row;
@@ -139,10 +138,40 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         //System.out.println("Length of current account in memory is " + length);
         //System.out.println("Length of csv file is " + countRows(csvFile));
         if (length < countRows(csvFile)) {
-            readFromNthRow(csvFile, length+1);
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String header = reader.readLine();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Process the line
+                    String[] col = line.split(",");
+                    //System.out.println("Reading csv file again to check updates");
+                    //System.out.println("The user read has ID of " + col[headers.get("userID")]);
+                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    // Identify the new user and put into accounts
+                    if (!accountsID.containsKey(userID)) {
+                        String username = String.valueOf(col[headers.get("username")]);
+                        //System.out.println("New user named " + username + "found");
+                        String password = String.valueOf(col[headers.get("password")]);
+                        String location = String.valueOf(col[headers.get("location")]);
+                        String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                        LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+
+                        User user = userFactory.create(userID, username, password, location, ldt);
+                        accounts.put(username, user);
+                        //System.out.println("user named: " + username + " is in the factory");
+                        accountsID.put(userID, user);
+                        //System.out.println("user id: " + userID + " is in the factory");
+                        length++;
+                    }
+                }
+            }
+                catch (IOException e) {
+                throw new RuntimeException();
+                }
+            }
+            //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
         }
-        //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
-    }
+
 
     private int countRows(File csvFile) {
         int rowCount = 0;
@@ -157,36 +186,4 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return rowCount;
     }
 
-    private void readFromNthRow(File csvFile, int n) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-            // Skip the first n-1 lines
-            for (int i = 0; i < n - 1; i++) {
-                reader.readLine();
-            }
-
-            // Read from the n-th line
-            String newRow;
-            while ((newRow = reader.readLine()) != null) {
-                // Process the line
-                String[] col = newRow.split(",");
-                System.out.println("The new line read has UserID" + col[headers.get("userID")]);
-                int userID = Integer.parseInt(col[headers.get("userID")]);
-                String username = String.valueOf(col[headers.get("username")]);
-                String password = String.valueOf(col[headers.get("password")]);
-                String location = String.valueOf(col[headers.get("location")]);
-                String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
-                LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-
-                User user = userFactory.create(userID, username, password, location, ldt);
-                accounts.put(username, user);
-                //System.out.println("user named: " + username + " is in the factory");
-                accountsID.put(userID, user);
-                //System.out.println("user id: " + userID + " is in the factory");
-                length ++;
-            }
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

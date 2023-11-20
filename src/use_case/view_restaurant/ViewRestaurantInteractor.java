@@ -27,7 +27,7 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
         Integer userID = viewRestaurantInputData.getUserID();
         String username = viewRestaurantInputData.getUsername();
         String password = viewRestaurantInputData.getPassword();
-        //System.out.println("UserID is " + userID);
+        //System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
         fileUserDataAccessObject.update();
         User user = fileUserDataAccessObject.get(userID);
         String location = user.getLocation();
