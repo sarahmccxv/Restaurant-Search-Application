@@ -76,15 +76,14 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
-        System.out.println("This is propertyChange at ViewRestaurantView. I've updated state with userID: " + state.getUserID());
+        //System.out.println("This is propertyChange at ViewRestaurantView. I've updated state with userID: " + state.getUserID());
         for (Restaurant restaurant:state.getRestaurants()) {
             String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
             JButton button = new JButton(buttonText);
             button.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                    // TODO: Navigate the user to the Restaurant Page
-                    System.out.println("Go to restaurant " + restaurant.getRestaurantName());
+                    //System.out.println("Go to restaurant " + restaurant.getRestaurantName());
                     String restaurantID = restaurant.getRestaurantID();
                     Integer userID = state.getUserID();
                     String username = state.getUsername();

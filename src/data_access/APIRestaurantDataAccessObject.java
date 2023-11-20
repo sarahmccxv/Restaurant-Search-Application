@@ -1,17 +1,23 @@
 package data_access;
 
-import api.ApiRestaurant;
-import api.ApiRestaurantInterface;
+import api.Search.SearchCriteria;
+import api.yelp.YelpAPI;
+import api.yelp.YelpApiServices;
 import entity.Restaurant;
 import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
 
 import java.util.ArrayList;
 
-public class APIRestaurantDataAccessObject implements ApiRestaurantInterface, ViewRestaurantDataAccessInterface {
+public class APIRestaurantDataAccessObject implements YelpApiServices, ViewRestaurantDataAccessInterface {
 
-    private final ApiRestaurant apiRestaurant;
+    private final YelpApiServices apiRestaurant;
     public APIRestaurantDataAccessObject(){
-        this.apiRestaurant = new ApiRestaurant();
+        this.apiRestaurant = new YelpAPI();
+    }
+
+    @Override
+    public ArrayList<Restaurant> getRestaurants(SearchCriteria criteria) {
+        return null;
     }
 
     @Override
@@ -24,8 +30,4 @@ public class APIRestaurantDataAccessObject implements ApiRestaurantInterface, Vi
         return apiRestaurant.getRestaurantByID(restaurantID);
     }
 
-    @Override
-    public Restaurant getRestaurantByPhoneNumber(String phoneNumber) {
-        return apiRestaurant.getRestaurantByPhoneNumber(phoneNumber);
-    }
 }

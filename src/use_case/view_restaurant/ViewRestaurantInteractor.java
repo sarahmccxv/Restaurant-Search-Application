@@ -1,6 +1,6 @@
 package use_case.view_restaurant;
 
-import api.ApiRestaurant;
+import api.yelp.YelpAPI;
 import entity.Restaurant;
 import entity.User;
 import use_case.register.RegisterUserDataAccessInterface;
@@ -25,7 +25,7 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
         Integer userID = viewRestaurantInputData.getUserID();
         String username = viewRestaurantInputData.getUsername();
         String password = viewRestaurantInputData.getPassword();
-        System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
+        //System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
         fileUserDataAccessObject.update();
         User user = fileUserDataAccessObject.get(userID);
         String location = user.getLocation();
