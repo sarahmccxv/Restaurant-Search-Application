@@ -1,13 +1,12 @@
 package api.Search;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public enum SearchSortingMethods {
     BEST_MATCH("Best Match"),
     RATING("Highest Rated"),
     REVIEW_COUNT("Most Reviewed"),
-    Distance("Closest");
+    DISTANCE("Closest");
 
     public final String description;
 

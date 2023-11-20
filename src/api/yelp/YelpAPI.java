@@ -1,14 +1,10 @@
 package api.yelp;
 
 import api.Search.SearchCriteria;
-import api.response.ExceptionResponse;
 import api.response.MultipleRestaurantResponse;
 import api.response.SingleRestaurantResponse;
 import entity.Restaurant;
-import okhttp3.Response;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class YelpAPI implements YelpApiServices {

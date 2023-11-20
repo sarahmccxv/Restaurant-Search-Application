@@ -19,7 +19,7 @@ public class YelpURLs {
 
         if (criteria.getCategory() != null) {
             for (String category : criteria.getCategory()) {
-                url.append("&categories").append(category);
+                url.append("&categories=").append(category);
             }
         }
 
