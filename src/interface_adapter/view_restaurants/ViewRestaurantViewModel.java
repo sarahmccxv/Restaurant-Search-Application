@@ -10,6 +10,7 @@ public class ViewRestaurantViewModel extends ViewModel {
     public static final String TITLE_LABEL = "View Restaurants";
     public static final String MESSAGE_LABEL = "Matched Results: ";
     public static final String RETURN_LABEL = "Return";
+    public static final String SORTANDFILTER_LABEL = "Sort and filter";
     private ViewRestaurantState state = new ViewRestaurantState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

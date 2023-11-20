@@ -39,7 +39,7 @@ public class SortAndFilterRestaurantInteractor implements SortAndFilterRestauran
             ArrayList<Restaurant> sorted = yelpApiServices.getRestaurants(criteria);
             SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData = new SortAndFilterRestaurantOutputData(sorted, false);
             sortAndFilterRestaurantPresenter.prepareSuccessView(sortAndFilterRestaurantOutputData);
-        } catch (YelpRequestException e){
+        } catch (RuntimeException e){
             sortAndFilterRestaurantPresenter.prepareFailView("No restaurant satisfies such filter and sort.");
         }
     }

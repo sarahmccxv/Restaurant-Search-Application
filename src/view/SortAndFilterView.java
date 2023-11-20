@@ -19,6 +19,7 @@ import java.beans.PropertyChangeListener;
 public class SortAndFilterView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "filter and sort restaurants";
     private final SortAndFilterViewModel sortAndFilterViewModel;
+    private final ViewRestaurantView viewRestaurantView;
     final JButton returnBack;
     final JPanel sorted;
     final JComboBox sortingMethods;
@@ -27,9 +28,10 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     final JButton search;
     private SortAndFilterController sortAndFilterController;
 
-    public SortAndFilterView(SortAndFilterController sortAndFilterController, SortAndFilterViewModel sortAndFilterViewModel){
+    public SortAndFilterView(SortAndFilterController sortAndFilterController, SortAndFilterViewModel sortAndFilterViewModel, ViewRestaurantView viewRestaurantView){
         this.sortAndFilterViewModel = sortAndFilterViewModel;
         this.sortAndFilterController = sortAndFilterController;
+        this.viewRestaurantView = viewRestaurantView;
         sortAndFilterViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(SortAndFilterViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -68,16 +70,15 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == returnBack) {
-            // Handle the returnBack button click
             System.out.println("Return button clicked");
+            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+            cardLayout.show(getParent(), viewRestaurantView.viewName);
         } else if (e.getSource() == search) {
-            // Handle the search button click
             System.out.println("Search button clicked");
             SearchSortingMethods selectedSortingMethod = (SearchSortingMethods) sortingMethods.getSelectedItem();
             SearchPriceLevel selectedPriceLevel = (SearchPriceLevel) priceLevel.getSelectedItem();
             String enteredCategory = categoryInputField.getText();
 
-            // Perform actions based on the selected options
             System.out.println("Selected Sorting Method: " + selectedSortingMethod);
             System.out.println("Selected Price Level: " + selectedPriceLevel);
             System.out.println("Entered Category: " + enteredCategory);
