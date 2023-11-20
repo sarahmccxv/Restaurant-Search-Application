@@ -1,14 +1,20 @@
 package app;
 
+import data_access.APIRestaurantDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
+import interface_adapter.restaurant.RestaurantController;
+import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import view.*;
 
 import javax.swing.*;
@@ -43,6 +49,8 @@ public class Main {
         LoggedInViewModel loggedInViewModel = new LoggedInViewModel();
         RegisterViewModel registerViewModel = new RegisterViewModel();
         ViewFavouritesViewModel viewFavouritesViewModel = new ViewFavouritesViewModel();
+        ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
+        RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -50,6 +58,8 @@ public class Main {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+
+        APIRestaurantDataAccessObject apiRestaurantDataAccessObject = new APIRestaurantDataAccessObject();
 
         FileFavouritesDataAccessObject fileFavouritesDataAccessObject;
         try {
@@ -65,13 +75,36 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+        // Sarah's code:
+        // LoggedInView loggedInView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+                //viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
+        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+                viewRestaurantViewModel, apiRestaurantDataAccessObject,
                 viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
         ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel,
-                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject));
+                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
+                        userDataAccessObject));
         views.add(viewFavouritesView, viewFavouritesView.viewName);
+
+        LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
+                userDataAccessObject);
+
+        RestaurantController restaurantController = RestaurantUseCaseFactory.createRestaurantUseCase(
+                viewManagerModel, restaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject);
+
+        ViewRestaurantView viewRestaurantView = ViewRestaurantUseCaseFactory.create(viewManagerModel,
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
+                loginController, restaurantController);
+        views.add(viewRestaurantView, viewRestaurantView.viewName);
+
+        ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
+                apiRestaurantDataAccessObject, userDataAccessObject);
+
+        RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
+                apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController);
+        views.add(restaurantView, restaurantView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();
