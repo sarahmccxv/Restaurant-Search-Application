@@ -19,7 +19,6 @@ import java.io.IOException;
 
 public class ViewRestaurantUseCaseFactory {
     private ViewRestaurantUseCaseFactory() {}
-    // TODO: Change this
     public static ViewRestaurantView create(ViewManagerModel viewManagerModel,
                                             ViewRestaurantViewModel viewRestaurantViewModel,
                                             ViewRestaurantDataAccessInterface viewRestaurantDataAccessObject,
