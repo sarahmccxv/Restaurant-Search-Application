@@ -1,27 +1,25 @@
-package api.Search;
+package api.Review;
 
 import java.util.ArrayList;
 
-public enum SearchSortingMethods {
-    BEST_MATCH("Best Match"),
-    RATING("Highest Rated"),
-    REVIEW_COUNT("Most Reviewed"),
-    DISTANCE("Closest");
+public enum ReviewSortingMethods {
+    AUTOMATIC("Best"),
+    NEWEST("New");
 
     public final String description;
 
-    SearchSortingMethods(String description) {
+    ReviewSortingMethods(String description) {
         this.description = description;
     }
 
     @Override
     public String toString() {
-        return super.toString().toLowerCase();
+        return super.toString();
     }
 
     public static ArrayList<String> getSortingMethods() {
         ArrayList<String> sortingMethods = new ArrayList<>();
-        for (SearchSortingMethods method : SearchSortingMethods.values()) {
+        for (ReviewSortingMethods method : ReviewSortingMethods.values()) {
             sortingMethods.add(method.description);
         }
         return sortingMethods;

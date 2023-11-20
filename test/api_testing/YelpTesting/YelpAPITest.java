@@ -32,7 +32,7 @@ public class YelpAPITest {
                 .setLimit(1)
                 .setSortingMethod(SearchSortingMethods.BEST_MATCH)
                 .setPriceLevel(SearchPriceLevel.CHEAP)
-//                .setCategory(new ArrayList<>(Arrays.asList("italian", "pizza")))
+                .setCategory("italian")
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getRestaurants(searchCriteria);
 
