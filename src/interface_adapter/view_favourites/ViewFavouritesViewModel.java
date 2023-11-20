@@ -5,7 +5,7 @@ import interface_adapter.logged_in.LoggedInState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ViewFavouritesViewModel extends ViewModel{
+public class ViewFavouritesViewModel extends ViewModel {
 
     public static final String TITLE_LABEL = "View Favourites";
     public static final String RETURN_LABEL = "Return";

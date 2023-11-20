@@ -9,9 +9,7 @@ import java.util.ArrayList;
 
 public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
     final RegisterUserDataAccessInterface fileUserDataAccessObject;
-
     final ViewRestaurantDataAccessInterface viewRestaurantDataAccessObject;
-
     final ViewRestaurantOutputBoundary viewRestaurantPresenter;
 
     public ViewRestaurantInteractor(ViewRestaurantOutputBoundary viewRestaurantOutputBoundary,
@@ -27,7 +25,7 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
         Integer userID = viewRestaurantInputData.getUserID();
         String username = viewRestaurantInputData.getUsername();
         String password = viewRestaurantInputData.getPassword();
-        //System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
+        System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
         fileUserDataAccessObject.update();
         User user = fileUserDataAccessObject.get(userID);
         String location = user.getLocation();

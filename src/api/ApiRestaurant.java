@@ -7,12 +7,13 @@ import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.lang.Math;
 
-public class ApiRestaurant implements ApiRestaurantInterface{
+public class ApiRestaurant implements ApiRestaurantInterface, ViewRestaurantDataAccessInterface {
     private static final String API_URL = "https://api.yelp.com/v3/businesses/";
     private static final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
     private RestaurantFactory restaurantFactory;

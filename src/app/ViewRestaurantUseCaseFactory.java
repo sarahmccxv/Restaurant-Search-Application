@@ -4,6 +4,7 @@ import entity.RestaurantFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
+import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantPresenter;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
@@ -23,13 +24,15 @@ public class ViewRestaurantUseCaseFactory {
                                             ViewRestaurantViewModel viewRestaurantViewModel,
                                             ViewRestaurantDataAccessInterface viewRestaurantDataAccessObject,
                                             RegisterUserDataAccessInterface fileUserDataAccessObject,
-                                            LoginController loginController) {
+                                            LoginController loginController,
+                                            RestaurantController restaurantController) {
         ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
                 viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
-        return new ViewRestaurantView(viewRestaurantViewModel, viewRestaurantController, loginController);
+        return new ViewRestaurantView(viewRestaurantViewModel, viewRestaurantController,
+                loginController, restaurantController);
     }
 
-    private static ViewRestaurantController createViewRestaurantUseCase(ViewManagerModel viewManagerModel,
+    public static ViewRestaurantController createViewRestaurantUseCase(ViewManagerModel viewManagerModel,
                                                                         ViewRestaurantViewModel viewRestaurantViewModel,
                                                                         ViewRestaurantDataAccessInterface
                                                                         viewRestaurantDataAccessObject,
