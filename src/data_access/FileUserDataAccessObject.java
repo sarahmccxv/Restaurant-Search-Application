@@ -23,6 +23,8 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     private UserFactory userFactory;
 
+    private Integer length = 1; // By default, the csv file should contain the row of column names
+
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
         this.userFactory = userFactory;
 
@@ -41,7 +43,6 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                //Add creation_time?
                 assert header.equals("userID, username, password, location, creation_time");
 
                 String row;
@@ -56,7 +57,10 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
                     User user = userFactory.create(userID, username, password, location, ldt);
                     accounts.put(username, user);
+                    //System.out.println("user named: " + username + " is in the factory");
                     accountsID.put(userID, user);
+                    //System.out.println("user id: " + userID + " is in the factory");
+                    length ++;
                 }
             }
         }
@@ -73,6 +77,11 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return accounts.get(username);
     }
 
+    @Override
+    public User get(Integer userID) {
+        return accountsID.get(userID);
+    }
+
     private void save() {
         BufferedWriter writer;
         try {
@@ -84,8 +93,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                 String line = String.format("%s,%s,%s,%s,%s",
                         user.getUserID(), user.getUsername(),
                         user.getPassword(), user.getLocation(),
-                        user.getCreationTime());
-                        // add creation time?
+                        user.getCreationTime().toString());
                 writer.write(line);
                 writer.newLine();
             }
@@ -121,4 +129,61 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     public boolean duplicatedID(int userID) {
         return accountsID.containsKey(userID);
     }
+
+    /**
+     * Update the data access object file in order to save new users into the attributes
+     */
+    @Override
+    public void update() {
+        //System.out.println("Length of current account in memory is " + length);
+        //System.out.println("Length of csv file is " + countRows(csvFile));
+        if (length < countRows(csvFile)) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+                String header = reader.readLine();
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Process the line
+                    String[] col = line.split(",");
+                    //System.out.println("Reading csv file again to check updates");
+                    //System.out.println("The user read has ID of " + col[headers.get("userID")]);
+                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    // Identify the new user and put into accounts
+                    if (!accountsID.containsKey(userID)) {
+                        String username = String.valueOf(col[headers.get("username")]);
+                        //System.out.println("New user named " + username + "found");
+                        String password = String.valueOf(col[headers.get("password")]);
+                        String location = String.valueOf(col[headers.get("location")]);
+                        String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+                        LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+
+                        User user = userFactory.create(userID, username, password, location, ldt);
+                        accounts.put(username, user);
+                        //System.out.println("user named: " + username + " is in the factory");
+                        accountsID.put(userID, user);
+                        //System.out.println("user id: " + userID + " is in the factory");
+                        length++;
+                    }
+                }
+            }
+                catch (IOException e) {
+                throw new RuntimeException();
+                }
+            }
+            //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
+        }
+
+
+    private int countRows(File csvFile) {
+        int rowCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            while (reader.readLine() != null) {
+                rowCount++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return rowCount;
+    }
+
 }

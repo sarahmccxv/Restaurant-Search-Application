@@ -2,13 +2,13 @@ package entity;
 import java.time.LocalDateTime;
 
 public class Review implements ReviewInterface {
-    private final int reviewID;
+    private final String reviewID;
     private final User author;
     private Float rating;
     private String content;
     private LocalDateTime creationTime;
 
-    public Review(int reviewID, User author, Float rating,
+    public Review(String reviewID, User author, Float rating,
                   String content, LocalDateTime creationTime) {
         this.reviewID = reviewID;
         this.author = author;
@@ -18,7 +18,7 @@ public class Review implements ReviewInterface {
     }
 
     @Override
-    public int getReviewID() {
+    public String getReviewID() {
         return reviewID;
     }
 

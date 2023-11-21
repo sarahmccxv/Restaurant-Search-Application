@@ -1,29 +1,29 @@
-package interface_adapter.view_favourites;
+package interface_adapter.view_restaurants;
+
 import interface_adapter.ViewModel;
-import interface_adapter.logged_in.LoggedInState;
+import interface_adapter.view_favourites.ViewFavouritesState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ViewFavouritesViewModel extends ViewModel {
-
-    public static final String TITLE_LABEL = "View Favourites";
+public class ViewRestaurantViewModel extends ViewModel {
+    public static final String TITLE_LABEL = "View Restaurants";
+    public static final String MESSAGE_LABEL = "Matched Results: ";
     public static final String RETURN_LABEL = "Return";
-    private ViewFavouritesState state = new ViewFavouritesState();
+    private ViewRestaurantState state = new ViewRestaurantState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public ViewFavouritesViewModel() {
-        super("view favourites");
+    public ViewRestaurantViewModel(){
+        super("view restaurant");
     }
 
-    public void setState(ViewFavouritesState state) {
+    public void setState(ViewRestaurantState state) {
         this.state = state;
     }
 
-    public ViewFavouritesState getState() {
+    public ViewRestaurantState getState() {
         return state;
     }
-
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);
@@ -33,5 +33,4 @@ public class ViewFavouritesViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
 }

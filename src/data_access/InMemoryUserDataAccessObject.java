@@ -45,4 +45,14 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
     public User get(String username){
         return users.get(username);
     }
+
+    @Override
+    public User get(Integer userID) {
+        return users.get(userID);
+    }
+
+    @Override
+    public void update() {
+        // TODO: To be implemented later
+    }
 }
