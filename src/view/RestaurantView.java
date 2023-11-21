@@ -23,6 +23,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     final JButton returnBack;
     private JButton addToFavourite;
     final JPanel info;
+    final JPanel buttons;
     private Restaurant restaurant;
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
@@ -57,8 +58,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(info);
 
-        JPanel buttons = new JPanel();
-
+        buttons = new JPanel();
         returnBack = new JButton(RestaurantViewModel.RETURN_LABEL);
         buttons.add(returnBack);
         returnBack.addActionListener(this);
@@ -105,6 +105,10 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
+
+        if (state.getPreviousView().equals("view favourites")){
+            buttons.remove(addToFavourite);
+        }
     }
 
     @Override
