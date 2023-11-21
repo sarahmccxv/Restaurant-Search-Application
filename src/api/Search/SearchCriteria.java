@@ -8,7 +8,7 @@ public class SearchCriteria {
     private final int limit;
     private final SearchSortingMethods sortingMethod;
     private final SearchPriceLevel priceLevel;
-    private final ArrayList<String> category;
+    private final String category;
 
     public SearchCriteria(Builder builder) {
         this.name = builder.name;
@@ -39,7 +39,7 @@ public class SearchCriteria {
         return priceLevel.level;
     }
 
-    public ArrayList<String> getCategory() {
+    public String getCategory() {
         return category;
     }
 
@@ -49,7 +49,7 @@ public class SearchCriteria {
         private int limit = 5;
         private SearchSortingMethods sortingMethod = SearchSortingMethods.BEST_MATCH;
         private SearchPriceLevel priceLevel = SearchPriceLevel.CHEAP;
-        private ArrayList<String> category;
+        private String category;
 
         public Builder setName(String name) {
             this.name = name;
@@ -76,7 +76,7 @@ public class SearchCriteria {
             return this;
         }
 
-        public Builder setCategory(ArrayList<String> category) {
+        public Builder setCategory(String category) {
             this.category = category;
             return this;
         }
