@@ -29,7 +29,8 @@ public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
         String password = fileUserDataAccessObject.get(username).getPassword();
         if (favouritesDataAccessObject.hasFavourites(username)){
             FavouritesList favouritesList = favouritesDataAccessObject.getFavouritesList(username);
-            ViewFavouritesOutputData viewFavouritesOutputData = new ViewFavouritesOutputData(username, password, favouritesList);
+            int userID = fileUserDataAccessObject.get(username).getUserID();
+            ViewFavouritesOutputData viewFavouritesOutputData = new ViewFavouritesOutputData(userID, username, password, favouritesList);
             viewFavouritesPresenter.prepareSuccessView(viewFavouritesOutputData);
         } else {
             viewFavouritesPresenter.prepareFailView(username, password, "No Favourites");
