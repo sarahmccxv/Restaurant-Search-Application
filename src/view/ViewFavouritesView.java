@@ -5,15 +5,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_favourites.ViewFavouritesState;
 
@@ -35,7 +30,6 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
 
         favourites = new JPanel();
         favourites.setLayout(new BoxLayout(favourites, BoxLayout.Y_AXIS));
-
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(favourites);
 
@@ -56,7 +50,7 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
         favourites.removeAll();
         favourites.revalidate();
         favourites.repaint();
-        if (!state.getNoFavouritesMessage().isEmpty()){
+        if (!state.getSuccess()){
             favourites.add(new JLabel(state.getNoFavouritesMessage()));
         } else {
             for (String favourite : state.getFavourites()) {

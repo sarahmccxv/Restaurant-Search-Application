@@ -11,9 +11,9 @@ import use_case.register.RegisterUserDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesOutputBoundary;
 
 public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
-    final RegisterUserDataAccessInterface fileUserDataAccessObject;
-    final ViewFavouritesDataAccessInterface favouritesDataAccessObject;
-    final ViewFavouritesOutputBoundary viewFavouritesPresenter;
+    private final RegisterUserDataAccessInterface fileUserDataAccessObject;
+    private final ViewFavouritesDataAccessInterface favouritesDataAccessObject;
+    private final ViewFavouritesOutputBoundary viewFavouritesPresenter;
 
     public ViewFavouritesInteractor(ViewFavouritesDataAccessInterface favouritesDataAccessObject,
                                     ViewFavouritesOutputBoundary viewFavouritesOutputBoundary,

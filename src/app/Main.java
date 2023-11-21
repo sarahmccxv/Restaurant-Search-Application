@@ -6,6 +6,7 @@ import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
@@ -51,6 +52,7 @@ public class Main {
         ViewFavouritesViewModel viewFavouritesViewModel = new ViewFavouritesViewModel();
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
+        AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -102,8 +104,9 @@ public class Main {
         ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
                 apiRestaurantDataAccessObject, userDataAccessObject);
 
-        RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
-                apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController);
+
+        RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel, addToFavouritesViewModel,
+                apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);

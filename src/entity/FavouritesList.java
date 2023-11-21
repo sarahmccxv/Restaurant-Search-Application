@@ -26,7 +26,7 @@ public class FavouritesList {
     public String toString(){
         StringBuilder result = new StringBuilder();
         for (Restaurant favourite : favouritesList){
-            result.append(favourite.toString()).append(",");
+            result.append(favourite.getRestaurantID()).append(",");
         }
         result.delete(result.length() - 1, result.length());
         return result.toString();

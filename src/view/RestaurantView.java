@@ -1,10 +1,13 @@
 package view;
 
 import entity.Restaurant;
+import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
 import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.add_to_favourites.AddToFavouritesController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,63 +21,73 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     public final String viewName = "Restaurant";
     final JButton returnBack;
     private JButton addToFavourite;
+    final JPanel info;
     private Restaurant restaurant;
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
     private ViewRestaurantController viewRestaurantController;
     // TODO: Implement Reviews later
     //private WriteReviewController writeReviewController;
+    private AddToFavouritesController addToFavouritesController;
+    private AddToFavouritesViewModel addToFavouritesViewModel;
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
                           RestaurantController restaurantController,
                           // TODO: Add review controller later
-                          ViewRestaurantController viewRestaurantController){
+                          ViewRestaurantController viewRestaurantController,
+                          AddToFavouritesController addToFavouritesController,
+                          AddToFavouritesViewModel addToFavouritesViewModel){
         this.restaurantViewModel = restaurantViewModel;
         this.restaurantController = restaurantController;
         this.viewRestaurantController = viewRestaurantController;
+        this.addToFavouritesController = addToFavouritesController;
+        this.addToFavouritesViewModel = addToFavouritesViewModel;
 
         restaurantViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(RestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
+        info = new JPanel();
+        info.setLayout(new BoxLayout(info, BoxLayout.Y_AXIS));
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.add(info);
+
         JPanel buttons = new JPanel();
 
         returnBack = new JButton(RestaurantViewModel.RETURN_LABEL);
-        addToFavourite = new JButton(RestaurantViewModel.ADD_TO_FAVOURITE_LABEL);
-
         buttons.add(returnBack);
-        returnBack.addActionListener(
+        returnBack.addActionListener(this);
+
+
+        addToFavourite = new JButton(RestaurantViewModel.ADD_TO_FAVOURITE_LABEL);
+        buttons.add(addToFavourite);
+        addToFavourite.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(returnBack)) {
-                            //System.out.println("Return button clicked");
+                            if (evt.getSource().equals(addToFavourite)) {
                             RestaurantState state = restaurantViewModel.getState();
-                            //System.out.println("User id is " + state.getUserID() + " password is " + state.getPassword());
-                            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword());
-                        }
+                            Restaurant restaurant = state.getRestaurant();
+                            String username = state.getUsername();
+                            addToFavouritesController.execute(username, restaurant);
+                            String message = addToFavouritesViewModel.getState().getMessage();
+                            JOptionPane.showMessageDialog(null, message);
+                            }
                     }
-                }
-        );
+                });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
+        this.add(centerPanel);
         this.add(buttons);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        //System.out.println("This is property change at Restaurant View.");
-        this.removeAll();
-        JLabel title = new JLabel(RestaurantViewModel.TITLE_LABEL);
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
         RestaurantState state = (RestaurantState) evt.getNewValue();
-        //System.out.println("I've received the update state with Restaurant ID: " + state.getRestaurant().getRestaurantID());
         this.restaurant = state.getRestaurant();
-
-        JPanel info = new JPanel();
-
-        JLabel restaurantName = new JLabel(
-                "Restaurant Name: " + restaurant.getRestaurantName());
+        info.removeAll();
+        info.revalidate();
+        info.repaint();
         JLabel restaurantAddress = new JLabel(
                 "Address: " + restaurant.getAddress());
         JLabel restaurantPhoneNumber = new JLabel(
@@ -83,31 +96,10 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                 "Categories: " + restaurant.getCategories().toString());
         // TODO: Implement Reviews
         // JLabel reviews = new JLabel(restaurant.getReviews())
-
-        info.add(restaurantName);
+        info.add(new JLabel("Restaurant Name: " + restaurant.getRestaurantName()));
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
-
-        JPanel buttons = new JPanel();
-
-        buttons.add(addToFavourite);
-        addToFavourite.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(addToFavourite)) {
-                            System.out.println("Restaurant " + restaurant.getRestaurantName() + " added to Favourite");
-                            // TODO: Implement addToFavorite
-                        }
-                    }
-                }
-        );
-
-        buttons.add(returnBack);
-
-        this.add(title);
-        this.add(info);
-        this.add(buttons);
     }
 
     @Override
@@ -118,3 +110,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword());
     }
 }
+
+
+

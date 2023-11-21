@@ -11,7 +11,7 @@ public class ViewFavouritesController {
     }
 
     public void execute(String username) {
-        ViewFavouritesInputData viewFavouritesinputData = new ViewFavouritesInputData(username);
-        viewFavouritesInteractor.execute(viewFavouritesinputData);
+        ViewFavouritesInputData viewFavouritesInputData = new ViewFavouritesInputData(username);
+        viewFavouritesInteractor.execute(viewFavouritesInputData);
     }
 }
