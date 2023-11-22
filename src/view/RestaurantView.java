@@ -105,10 +105,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
-
-        if (state.getPreviousView().equals("view favourites")){
-            buttons.remove(addToFavourite);
-        }
     }
 
     @Override
