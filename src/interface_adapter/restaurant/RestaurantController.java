@@ -10,7 +10,7 @@ public class RestaurantController {
         this.restaurantsInteractor = RestaurantsInteractor;
     }
 
-    public void execute(Integer userID, String username, String password, String restaurantID) {
+    public void execute(String userID, String username, String password, String restaurantID) {
         RestaurantInputData RestaurantInputData = new RestaurantInputData(
                 userID, username, password, restaurantID);
         //System.out.println("This is Restaurant Controller. I received restaurant ID: " + restaurantID + " and gonna pass to interactor");

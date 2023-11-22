@@ -1,18 +1,18 @@
 package entity;
 
-public class YelpUser extends CommonUser {
-    private final String userID;
+public class YelpUser extends CommonUser implements YelpUserInterface {
 
     public YelpUser(String userID, String username) {
-        super(username);
-        this.userID = userID;
+        super(userID, username);
     }
 
+    @Override
     public String getUsername() {
         return super.getUsername();
     }
 
+    @Override
     public String getUserID() {
-        return userID;
+        return super.getUserID();
     }
 }

@@ -6,11 +6,11 @@ import java.util.ArrayList;
 
 public class ViewRestaurantOutputData {
     private String username;
-    private Integer userID;
+    private String userID;
     private String password;
     private ArrayList<Restaurant> restaurants;
 
-    public ViewRestaurantOutputData(Integer userID, String username, String password,
+    public ViewRestaurantOutputData(String userID, String username, String password,
                                     ArrayList<Restaurant> restaurants) {
         this.userID = userID;
         this.username = username;
@@ -18,7 +18,7 @@ public class ViewRestaurantOutputData {
         this.restaurants = restaurants;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 

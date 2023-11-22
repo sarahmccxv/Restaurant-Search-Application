@@ -20,7 +20,7 @@ public class RestaurantInteractor implements RestaurantInputBoundary {
     @Override
     public void execute(RestaurantInputData restaurantInputData) {
         //System.out.println("This is Restaurant Interactor. I've received restaurant ID: " + restaurantInputData.getRestaurantID());
-        Integer userID = restaurantInputData.getUserID();
+        String userID = restaurantInputData.getUserID();
         //System.out.println("I also receive userID: " + userID);
         String username = restaurantInputData.getUsername();
         String password = restaurantInputData.getPassword();

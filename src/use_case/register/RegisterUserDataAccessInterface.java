@@ -11,9 +11,9 @@ public interface RegisterUserDataAccessInterface {
 
     void save(User user);
 
-    User get(String username);
+    User getByUsername(String username);
 
-    User get(Integer userID);
+    User getByUserID(String userID);
 
     void update();
 }

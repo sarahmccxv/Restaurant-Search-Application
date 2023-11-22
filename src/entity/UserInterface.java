@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public interface UserInterface {
-    Integer getUserID();
+    String getUserID();
 
     String getUsername();
 
