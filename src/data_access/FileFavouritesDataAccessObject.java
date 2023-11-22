@@ -7,6 +7,7 @@ import use_case.add_to_favourites.AddToFavouritesDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;

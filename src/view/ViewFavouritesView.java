@@ -65,7 +65,7 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         String restaurantID = favourite.getRestaurantID();
-                        Integer userID = state.getUserID();
+                        String userID = state.getUserID();
                         String username = state.getUsername();
                         String password = state.getPassword();
                         restaurantController.execute(userID, username, password, restaurantID,
