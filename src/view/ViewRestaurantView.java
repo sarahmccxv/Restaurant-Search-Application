@@ -88,7 +88,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     String userID = state.getUserID();
                     String username = state.getUsername();
                     String password = state.getPassword();
-                    restaurantController.execute(userID, username, password, restaurantID);
+                    restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
                 }
             });
             restaurants.add(button);

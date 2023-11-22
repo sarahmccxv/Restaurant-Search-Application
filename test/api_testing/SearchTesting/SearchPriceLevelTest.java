@@ -22,7 +22,7 @@ public class SearchPriceLevelTest {
         ArrayList<String> expectedRanges = new ArrayList<>(Arrays.asList(
                 "Under $15", "$15-$40", "$40-$60", "Above $60"));
 
-        ArrayList<String> actualRanges = SearchPriceLevel.CHEAP.getPriceLevels();
+        ArrayList<String> actualRanges = SearchPriceLevel.getPriceLevels();
 
         assertEquals(expectedRanges.size(), actualRanges.size(), "Size mismatch");
 

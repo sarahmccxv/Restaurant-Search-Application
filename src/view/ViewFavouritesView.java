@@ -5,15 +5,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
+import entity.Restaurant;
 import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginPresenter;
+import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_favourites.ViewFavouritesState;
 
@@ -23,11 +20,14 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
     final JPanel favourites;
     private ViewFavouritesViewModel viewFavouritesViewModel;
     private LoginController loginController;
+    private RestaurantController restaurantController;
 
     public ViewFavouritesView(ViewFavouritesViewModel viewFavouritesViewModel,
-                              LoginController loginController){
+                              LoginController loginController,
+                              RestaurantController restaurantController){
         this.viewFavouritesViewModel = viewFavouritesViewModel;
         this.loginController = loginController;
+        this.restaurantController = restaurantController;
 
         viewFavouritesViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(ViewFavouritesViewModel.TITLE_LABEL);
@@ -35,7 +35,6 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
 
         favourites = new JPanel();
         favourites.setLayout(new BoxLayout(favourites, BoxLayout.Y_AXIS));
-
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(favourites);
 
@@ -56,13 +55,26 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
         favourites.removeAll();
         favourites.revalidate();
         favourites.repaint();
-        if (!state.getNoFavouritesMessage().isEmpty()){
+        if (!state.getSuccess()){
             favourites.add(new JLabel(state.getNoFavouritesMessage()));
         } else {
-            for (String favourite : state.getFavourites()) {
-                String text = "<html><b>" + favourite.split("\n")[0] + "</b><br>" +
-                        favourite.split("\n")[1] + "<br>" + favourite.split("\n")[2] + "</html>";
-                favourites.add(new JLabel(text));
+            for (Restaurant favourite : state.getFavouritesList().getFavourites()) {
+                String buttonText = "<html><b>" + favourite.getRestaurantName() + "</b><html>";
+                JButton button = new JButton(buttonText);
+                button.addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        String restaurantID = favourite.getRestaurantID();
+                        Integer userID = state.getUserID();
+                        String username = state.getUsername();
+                        String password = state.getPassword();
+                        restaurantController.execute(userID, username, password, restaurantID,
+                                "view favourites");
+                    }
+                });
+                favourites.add(button);
+                favourites.add(new JLabel(favourite.getAddress()));
+                favourites.add(new JLabel(favourite.getPhoneNumber()));
             }
         }
     }

@@ -3,30 +3,33 @@ package interface_adapter.restaurant;
 import entity.Restaurant;
 
 public class RestaurantState {
-    private String userID;
+    private Integer userID;
     private String username;
     private String password;
     private Restaurant restaurant;
+    private String previousView;
 
     public RestaurantState(){
-        userID = "";
+        userID = 0;
         username = "";
         password = "";
         restaurant = null;
+        previousView = "";
     }
 
-    public String getUserID() { return userID; }
-
+    public Integer getUserID() { return userID; }
     public String getUsername() {
         return username;
     }
-
     public String getPassword() { return password; }
+    public Restaurant getRestaurant(){
+        return restaurant;
+    }
+    public String getPreviousView() {return previousView;}
 
-    public void setUserID(String userID) {
+    public void setUserID(Integer userID) {
         this.userID = userID;
     }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -36,7 +39,5 @@ public class RestaurantState {
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
     }
-    public Restaurant getRestaurant(){
-        return restaurant;
-    }
+    public void setPreviousView(String previousView) {this.previousView = previousView;}
 }
