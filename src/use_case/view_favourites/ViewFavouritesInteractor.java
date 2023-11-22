@@ -11,9 +11,9 @@ import use_case.register.RegisterUserDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesOutputBoundary;
 
 public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
-    final RegisterUserDataAccessInterface fileUserDataAccessObject;
-    final ViewFavouritesDataAccessInterface favouritesDataAccessObject;
-    final ViewFavouritesOutputBoundary viewFavouritesPresenter;
+    private final RegisterUserDataAccessInterface fileUserDataAccessObject;
+    private final ViewFavouritesDataAccessInterface favouritesDataAccessObject;
+    private final ViewFavouritesOutputBoundary viewFavouritesPresenter;
 
     public ViewFavouritesInteractor(ViewFavouritesDataAccessInterface favouritesDataAccessObject,
                                     ViewFavouritesOutputBoundary viewFavouritesOutputBoundary,
@@ -29,7 +29,8 @@ public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
         String password = fileUserDataAccessObject.get(username).getPassword();
         if (favouritesDataAccessObject.hasFavourites(username)){
             FavouritesList favouritesList = favouritesDataAccessObject.getFavouritesList(username);
-            ViewFavouritesOutputData viewFavouritesOutputData = new ViewFavouritesOutputData(username, password, favouritesList);
+            int userID = fileUserDataAccessObject.get(username).getUserID();
+            ViewFavouritesOutputData viewFavouritesOutputData = new ViewFavouritesOutputData(userID, username, password, favouritesList);
             viewFavouritesPresenter.prepareSuccessView(viewFavouritesOutputData);
         } else {
             viewFavouritesPresenter.prepareFailView(username, password, "No Favourites");

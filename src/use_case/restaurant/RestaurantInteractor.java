@@ -19,16 +19,14 @@ public class RestaurantInteractor implements RestaurantInputBoundary {
 
     @Override
     public void execute(RestaurantInputData restaurantInputData) {
-        //System.out.println("This is Restaurant Interactor. I've received restaurant ID: " + restaurantInputData.getRestaurantID());
         Integer userID = restaurantInputData.getUserID();
-        //System.out.println("I also receive userID: " + userID);
         String username = restaurantInputData.getUsername();
         String password = restaurantInputData.getPassword();
         String restaurantID = restaurantInputData.getRestaurantID();
+        String previousView = restaurantInputData.getPreviousView();
         Restaurant restaurant = restaurantDataAccessObject.getRestaurantByID(restaurantID);
-        //System.out.println("I've called the API and I got restaurant name: " + restaurant.getRestaurantName());
-        RestaurantOutputData restaurantOutputData = new RestaurantOutputData(userID, username, password, restaurant);
-        //System.out.println("Now I am passing the data to presenter.");
+        RestaurantOutputData restaurantOutputData = new RestaurantOutputData(userID, username, password,
+                restaurant, previousView);
         restaurantPresenter.prepareSuccessView(restaurantOutputData);
     }
 }
