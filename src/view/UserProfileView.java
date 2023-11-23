@@ -25,13 +25,12 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     private final ViewManagerModel viewManagerModel;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
-    private JTextField usernameInputField = new JTextField(15);
     private JTextField passwordInputField = new JTextField(15);
     private JTextField locationInputField = new JTextField(15);
     JLabel userID, username;
     private JButton editButton, saveButton, cancelButton, returnButton;
 
-    private String tempUsername, tempPassword, tempLocation;
+    private String tempPassword, tempLocation;
 
     private final LoginController loginController;
 
@@ -53,10 +52,6 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         username = new JLabel();
         DoubleLabelPanel usernameInfo = new DoubleLabelPanel(
                 new JLabel(userProfileViewModel.USERNAME_LABEL), username);
-//        usernameInputField.setEditable(false);
-//        usernameInputField.setCaretColor(Color.WHITE);
-//        LabelTextPanel usernameInfo = new LabelTextPanel(
-//                new JLabel(userProfileViewModel.USERNAME_LABEL), usernameInputField);
         passwordInputField.setEditable(false);
         passwordInputField.setCaretColor(Color.WHITE);
         LabelTextPanel passwordInfo = new LabelTextPanel(
@@ -86,7 +81,6 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         // Enable editing and show save and cancel buttons
-//                        usernameInputField.setEditable(true);
                         passwordInputField.setEditable(true);
                         passwordInputField.setCaretColor(Color.BLACK);
                         locationInputField.setEditable(true);
@@ -98,23 +92,6 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                     }
                 }
         );
-
-//        usernameInputField.getDocument().addDocumentListener(new DocumentListener() {
-//            @Override
-//            public void insertUpdate(DocumentEvent e) {
-//                tempUsername = usernameInputField.getText();
-//            }
-//
-//            @Override
-//            public void removeUpdate(DocumentEvent e) {
-//                tempUsername = usernameInputField.getText();
-//            }
-//
-//            @Override
-//            public void changedUpdate(DocumentEvent e) {
-//
-//            }
-//        });
 
         passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -156,11 +133,9 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
             public void actionPerformed(ActionEvent e) {
                 // Save the changes and disable editing
                 UserProfileState currentState = userProfileViewModel.getState();
-//                currentState.setUsername(tempUsername);
                 currentState.setPassword(tempPassword);
                 currentState.setLocation(tempLocation);
                 userProfileViewModel.setState(currentState);
-//                usernameInputField.setEditable(false);
                 passwordInputField.setEditable(false);
                 passwordInputField.setCaretColor(Color.WHITE);
                 locationInputField.setEditable(false);
@@ -178,11 +153,8 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                 // Discard the changes and disable editing
                 userProfileViewModel.setLastState();
                 UserProfileState userProfileState = userProfileViewModel.getState();
-//                userID.setText(userProfileState.getUserID().toString());
-//                usernameInputField.setText(userProfileState.getUsername());
                 passwordInputField.setText(userProfileState.getPassword());
                 locationInputField.setText(userProfileState.getLocation());
-//                usernameInputField.setEditable(false);
                 passwordInputField.setEditable(false);
                 locationInputField.setCaretColor(Color.WHITE);
                 locationInputField.setEditable(false);
@@ -207,11 +179,11 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(returnButton)) {
             UserProfileState state = userProfileViewModel.getState();
-            System.out.println("after return button:" + state.getLocation());
+//            System.out.println("after return button:" + state.getLocation());
             loginController.execute(state.getUsername(), state.getPassword());
         } else if (evt.getSource().equals(saveButton)) {
             UserProfileState state = userProfileViewModel.getState();
-            System.out.println("after save button: " + state.getLocation());
+//            System.out.println("after save button: " + state.getLocation());
             userProfileController.execute(state.getUserID(), state.getUsername(), state.getPassword(), state.getLocation());
         }
     }

@@ -15,12 +15,11 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         LoginUserDataAccessInterface, UserProfileDataAccessInterface {
 
     private final File csvFile;
-    private static boolean updateStatus = false;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    private static final Map<String, User> accounts = new LinkedHashMap<>();
-    private static final Map<Integer, User> accountsID = new LinkedHashMap<>();
+    private final Map<String, User> accounts = new LinkedHashMap<>();
+    private final Map<Integer, User> accountsID = new LinkedHashMap<>();
 
     private UserFactory userFactory;
 
@@ -189,16 +188,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     @Override
     public void updateUserInfo(User user) {
-        changeUpdateStatus();
         accounts.replace(this.get(user.getUserID()).getUsername(), user);
         this.save();
-    }
-
-    public static void changeUpdateStatus() {
-        updateStatus = !updateStatus;
-    }
-
-    public static boolean getUpdateStatus() {
-        return updateStatus;
     }
 }
