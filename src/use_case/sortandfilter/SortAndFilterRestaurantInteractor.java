@@ -1,6 +1,5 @@
 package use_case.sortandfilter;
 
-import api.Exception.YelpRequestException;
 import api.Search.SearchCriteria;
 import api.Search.SearchPriceLevel;
 import api.Search.SearchSortingMethods;
@@ -20,23 +19,16 @@ public class SortAndFilterRestaurantInteractor implements SortAndFilterRestauran
     }
     @Override
     public void execute(SortAndFilterResaturantInputData sortAndFilterResaturantInputData) {
-        String name = sortAndFilterResaturantInputData.getName();
-        String location = sortAndFilterResaturantInputData.getLocation();
-        int limit = sortAndFilterResaturantInputData.getLimit();
         SearchSortingMethods sortingMethod = sortAndFilterResaturantInputData.getSortingMethod();
         SearchPriceLevel priceLevel = sortAndFilterResaturantInputData.getPriceLevel();
         String category = sortAndFilterResaturantInputData.getCategory();
-        YelpApiServices yelpApiServices = new YelpAPI();
         SearchCriteria criteria = new SearchCriteria.Builder()
-                .setName(name)
-                .setLocation(location)
-                .setLimit(limit)
                 .setSortingMethod(sortingMethod)
                 .setPriceLevel(priceLevel)
                 .setCategory(category)
                 .build();
         try {
-            ArrayList<Restaurant> sorted = yelpApiServices.getRestaurants(criteria);
+            ArrayList<Restaurant> sorted = sortAndFilterRestaurantDataAccessObject.getRestaurants(criteria);
             SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData = new SortAndFilterRestaurantOutputData(sorted, false);
             sortAndFilterRestaurantPresenter.prepareSuccessView(sortAndFilterRestaurantOutputData);
         } catch (RuntimeException e){

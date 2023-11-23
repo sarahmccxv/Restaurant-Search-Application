@@ -13,30 +13,26 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
 
 public class ViewRestaurantView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "view restaurant";
     final JButton returnBack;
-    final JTextField search;
+//    final JTextField search;
     final JButton sortAndFilter;
     final JPanel restaurants;
     private ViewRestaurantViewModel viewRestaurantViewModel;
     private ViewRestaurantController viewRestaurantController;
     private LoginController loginController;
     private RestaurantController restaurantController;
-    private SortAndFilterView sortAndFilterView;
 
     public ViewRestaurantView(ViewRestaurantViewModel viewRestaurantViewModel,
                               ViewRestaurantController viewRestaurantController,
                               LoginController loginController,
-                              RestaurantController restaurantController,
-                              SortAndFilterView sortAndFilterView){
+                              RestaurantController restaurantController){
         this.viewRestaurantViewModel = viewRestaurantViewModel;
         this.viewRestaurantController = viewRestaurantController;
         this.loginController = loginController;
         this.restaurantController = restaurantController;
-        this.sortAndFilterView = sortAndFilterView;
 
         viewRestaurantViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
@@ -67,14 +63,16 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
         buttons.add(sortAndFilter);
-        sortAndFilter.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Switch to the SortAndFilterView when the Sort and Filter button is clicked
-                CardLayout cardLayout = (CardLayout) getParent().getLayout();
-                cardLayout.show(getParent(), sortAndFilterView.getName());
+        sortAndFilter.addActionListener(
+                new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    // Switch to the SortAndFilterView when the Sort and Filter button is clicked
+                    CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                    cardLayout.show(getParent(), "sortAndFilterView");
             }
-        });
+        }
+        );
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

@@ -8,6 +8,7 @@ import interface_adapter.sort_and_filter.SortAndFilterState;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.view_favourites.ViewFavouritesState;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +20,7 @@ import java.beans.PropertyChangeListener;
 public class SortAndFilterView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "filter and sort restaurants";
     private final SortAndFilterViewModel sortAndFilterViewModel;
-    private final ViewRestaurantView viewRestaurantView;
+    private final ViewRestaurantViewModel viewRestaurantViewModel;
     final JButton returnBack;
     final JPanel sorted;
     final JComboBox sortingMethods;
@@ -28,10 +29,10 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     final JButton search;
     private SortAndFilterController sortAndFilterController;
 
-    public SortAndFilterView(SortAndFilterController sortAndFilterController, SortAndFilterViewModel sortAndFilterViewModel, ViewRestaurantView viewRestaurantView){
+    public SortAndFilterView(SortAndFilterController sortAndFilterController, SortAndFilterViewModel sortAndFilterViewModel, ViewRestaurantViewModel viewRestaurantViewModel){
         this.sortAndFilterViewModel = sortAndFilterViewModel;
         this.sortAndFilterController = sortAndFilterController;
-        this.viewRestaurantView = viewRestaurantView;
+        this.viewRestaurantViewModel = viewRestaurantViewModel;
         sortAndFilterViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(SortAndFilterViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -72,7 +73,7 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         if (e.getSource() == returnBack) {
             System.out.println("Return button clicked");
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
-            cardLayout.show(getParent(), viewRestaurantView.viewName);
+            cardLayout.show(getParent(), viewRestaurantViewModel.getViewName());
         } else if (e.getSource() == search) {
             System.out.println("Search button clicked");
             SearchSortingMethods selectedSortingMethod = (SearchSortingMethods) sortingMethods.getSelectedItem();
@@ -82,8 +83,8 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
             System.out.println("Selected Sorting Method: " + selectedSortingMethod);
             System.out.println("Selected Price Level: " + selectedPriceLevel);
             System.out.println("Entered Category: " + enteredCategory);
+            sortAndFilterController.execute(selectedSortingMethod, selectedPriceLevel, enteredCategory);
         }
-
         }
 
     @Override

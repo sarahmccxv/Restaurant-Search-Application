@@ -12,9 +12,14 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantViewModel;
+import interface_adapter.sort_and_filter.SortAndFilterController;
+import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+import use_case.sortandfilter.SortAndFilterRestaurantDataAccessInterface;
+import use_case.sortandfilter.SortAndFilterRestaurantInputBoundary;
+import use_case.sortandfilter.SortAndFilterRestaurantInteractor;
 import view.*;
 
 import javax.swing.*;
@@ -51,6 +56,7 @@ public class Main {
         ViewFavouritesViewModel viewFavouritesViewModel = new ViewFavouritesViewModel();
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
+        SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -105,6 +111,10 @@ public class Main {
         RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
                 apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController);
         views.add(restaurantView, restaurantView.viewName);
+
+        SortAndFilterController sortAndFilterController = SortAndFilterUseCaseFactory.createSortAndFilterUseCase(viewManagerModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
+        SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
+        views.add(sortAndFilterView, sortAndFilterView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

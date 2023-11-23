@@ -1,7 +1,6 @@
 package interface_adapter.view_restaurants;
 
 import interface_adapter.ViewModel;
-import interface_adapter.view_favourites.ViewFavouritesState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

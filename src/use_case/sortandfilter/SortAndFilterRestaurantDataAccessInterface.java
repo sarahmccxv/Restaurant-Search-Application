@@ -1,10 +1,11 @@
 package use_case.sortandfilter;
+import api.Search.SearchCriteria;
 import entity.Restaurant;
 import entity.User;
-
+import api.yelp.YelpApiServices;
 import java.util.ArrayList;
 
 public interface SortAndFilterRestaurantDataAccessInterface {
-    Restaurant get(String restaurantName);
-    void saveSort(User user);
+    public ArrayList<Restaurant> getRestaurants(SearchCriteria criteria);
+
 }

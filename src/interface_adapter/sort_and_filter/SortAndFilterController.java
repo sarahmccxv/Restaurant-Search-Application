@@ -1,17 +1,19 @@
 package interface_adapter.sort_and_filter;
 
-import use_case.view_favourites.ViewFavouritesInputBoundary;
-import use_case.view_favourites.ViewFavouritesInputData;
+import api.Search.SearchPriceLevel;
+import api.Search.SearchSortingMethods;
+import use_case.sortandfilter.SortAndFilterResaturantInputData;
+import use_case.sortandfilter.SortAndFilterRestaurantInputBoundary;
 
 public class SortAndFilterController {
-    final ViewFavouritesInputBoundary viewFavouritesInteractor;
+    final SortAndFilterRestaurantInputBoundary sortAndFilterRestaurantInteractor;
 
-    public SortAndFilterController(ViewFavouritesInputBoundary viewFavouritesInteractor) {
-        this.viewFavouritesInteractor = viewFavouritesInteractor;
+    public SortAndFilterController(SortAndFilterRestaurantInputBoundary sortAndFilterRestaurantInteractor) {
+        this.sortAndFilterRestaurantInteractor = sortAndFilterRestaurantInteractor;
     }
 
-    public void execute(String username) {
-        ViewFavouritesInputData viewFavouritesinputData = new ViewFavouritesInputData(username);
-        viewFavouritesInteractor.execute(viewFavouritesinputData);
+    public void execute(SearchSortingMethods sortingMethods, SearchPriceLevel priceLevel, String category) {
+        SortAndFilterResaturantInputData sortAndFilterRestaurantInputData = new SortAndFilterResaturantInputData(sortingMethods, priceLevel, category);
+        sortAndFilterRestaurantInteractor.execute(sortAndFilterRestaurantInputData);
     }
 }
