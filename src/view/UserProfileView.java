@@ -155,10 +155,10 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                 UserProfileState userProfileState = userProfileViewModel.getState();
                 passwordInputField.setText(userProfileState.getPassword());
                 locationInputField.setText(userProfileState.getLocation());
+                passwordInputField.setCaretColor(Color.WHITE);
                 passwordInputField.setEditable(false);
                 locationInputField.setCaretColor(Color.WHITE);
                 locationInputField.setEditable(false);
-                locationInputField.setCaretColor(Color.WHITE);
                 editButton.setVisible(true);
                 saveButton.setVisible(false);
                 cancelButton.setVisible(false);
@@ -179,11 +179,9 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     public void actionPerformed(ActionEvent evt) {
         if (evt.getSource().equals(returnButton)) {
             UserProfileState state = userProfileViewModel.getState();
-//            System.out.println("after return button:" + state.getLocation());
             loginController.execute(state.getUsername(), state.getPassword());
         } else if (evt.getSource().equals(saveButton)) {
             UserProfileState state = userProfileViewModel.getState();
-//            System.out.println("after save button: " + state.getLocation());
             userProfileController.execute(state.getUserID(), state.getUsername(), state.getPassword(), state.getLocation());
         }
     }

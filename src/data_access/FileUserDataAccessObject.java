@@ -13,16 +13,11 @@ import java.util.Map;
 
 public class FileUserDataAccessObject implements RegisterUserDataAccessInterface,
         LoginUserDataAccessInterface, UserProfileDataAccessInterface {
-
     private final File csvFile;
-
     private final Map<String, Integer> headers = new LinkedHashMap<>();
-
     private final Map<String, User> accounts = new LinkedHashMap<>();
     private final Map<Integer, User> accountsID = new LinkedHashMap<>();
-
     private UserFactory userFactory;
-
     private Integer length = 1; // By default, the csv file should contain the row of column names
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
