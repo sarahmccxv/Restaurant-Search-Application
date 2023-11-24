@@ -20,7 +20,7 @@ public class AddToFavouritesInteractor implements AddToFavouritesInputBoundary{
 
     public void execute(AddToFavouritesInputData addToFavouritesInputData){
         String username = addToFavouritesInputData.getUsername();
-        User user = fileUserDataAccessObject.get(username);
+        User user = fileUserDataAccessObject.getByUsername(username);
         Restaurant restaurant = addToFavouritesInputData.getRestaurant();
         AddToFavouritesOutputData addToFavouritesOutputData = new AddToFavouritesOutputData(user, restaurant);
         if (!favouritesDataAccessObject.hasFavourite(user, restaurant)) {

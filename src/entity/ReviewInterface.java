@@ -6,7 +6,9 @@ public interface ReviewInterface {
 
     String getReviewID();
 
-    User getAuthor();
+    CommonUser getAuthor();
+
+    Restaurant getRestaurant();
 
     Float getRating();
 

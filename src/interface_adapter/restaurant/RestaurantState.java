@@ -3,21 +3,21 @@ package interface_adapter.restaurant;
 import entity.Restaurant;
 
 public class RestaurantState {
-    private Integer userID;
+    private String userID;
     private String username;
     private String password;
     private Restaurant restaurant;
     private String previousView;
 
     public RestaurantState(){
-        userID = 0;
+        userID = "";
         username = "";
         password = "";
         restaurant = null;
         previousView = "";
     }
 
-    public Integer getUserID() { return userID; }
+    public String getUserID() { return userID; }
     public String getUsername() {
         return username;
     }
@@ -27,7 +27,7 @@ public class RestaurantState {
     }
     public String getPreviousView() {return previousView;}
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
     public void setUsername(String username) {
