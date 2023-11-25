@@ -3,12 +3,12 @@ package api.Search;
 import java.util.ArrayList;
 
 public class SearchCriteria {
-    private final String name;
-    private final String location;
-    private final int limit;
-    private final SearchSortingMethods sortingMethod;
-    private final SearchPriceLevel priceLevel;
-    private final String category;
+    private String name;
+    private String location;
+    private int limit;
+    private SearchSortingMethods sortingMethod;
+    private SearchPriceLevel priceLevel;
+    private String category;
 
     public SearchCriteria(Builder builder) {
         this.name = builder.name;
@@ -23,24 +23,48 @@ public class SearchCriteria {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getLocation() {
         return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getLimit() {
         return limit;
     }
 
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public String getSortingMethod() {
         return sortingMethod.toString();
+    }
+
+    public void setSortingMethod(SearchSortingMethods sortingMethod) {
+        this.sortingMethod = sortingMethod;
     }
 
     public String getPriceLevel() {
         return priceLevel.level;
     }
 
+    public void setPriceLevel(SearchPriceLevel priceLevel) {
+        this.priceLevel = priceLevel;
+    }
+
     public String getCategory() {
         return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public static class Builder {

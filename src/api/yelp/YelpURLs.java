@@ -30,8 +30,9 @@ public class YelpURLs {
     }
 
     public String getReviewsURL(ReviewCriteria criteria) {
-        return String.format("%s/reviews?limit=%s&sort_by=%s",
+        return String.format("%s%s/reviews?limit=%s&sort_by=%s",
                 API_URL,
+                criteria.getRestaurantID(),
                 criteria.getLimit(),
                 criteria.getSortingMethod());
     }

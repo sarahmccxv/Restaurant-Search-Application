@@ -1,6 +1,7 @@
 package api.yelp;
 
 import api.Exception.YelpRequestException;
+import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
 import api.response.ExceptionResponse;
 import okhttp3.*;
@@ -24,6 +25,11 @@ public class YelpAPIClient implements YelpAPIClientInterface {
     @Override
     public void RestaurantIDMatching(String id) {
         getFrom(yelpURLs.getURLByID(id));
+    }
+
+    @Override
+    public void ReviewIDMatching(ReviewCriteria criteria) {
+        getFrom(yelpURLs.getReviewsURL(criteria));
     }
 
     @Override

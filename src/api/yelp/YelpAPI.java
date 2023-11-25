@@ -1,9 +1,12 @@
 package api.yelp;
 
+import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
 import api.response.MultipleRestaurantResponse;
+import api.response.ReviewsResponse;
 import api.response.SingleRestaurantResponse;
 import entity.Restaurant;
+import entity.YelpReview;
 
 import java.util.ArrayList;
 
@@ -30,5 +33,9 @@ public class YelpAPI implements YelpApiServices {
         return singleRestaurantResponse.getRestaurant();
     }
 
-//    public ArrayList<Review> getReviews(String id) {}
+    public ArrayList<YelpReview> getReviews(ReviewCriteria criteria) {
+        yelpAPIClient.ReviewIDMatching(criteria);
+        ReviewsResponse reviewsResponse = new ReviewsResponse(yelpAPIClient.getResponseBody());
+        return reviewsResponse.getReviews(criteria.getRestaurantID());
+    }
 }

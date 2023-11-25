@@ -1,33 +1,39 @@
 package api.Parser;
 
-import entity.Review;
+import entity.*;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ReviewsParser {
-//    public static ArrayList<Review> parseFrom(JSONObject jsonObject) {
-//         try {
-//             CommonUserFactory restaurantFactory = new RestaurantFactory();
-//
-//             String restaurantID = jsonObject.getString("id");
-//             String restaurantName = jsonObject.getString("name");
-//             String phoneNumber = jsonObject.getString("phone");
-//
-//             JSONArray addressArray = jsonObject.getJSONObject("location").getJSONArray("display_address");
-//             String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
-//
-//             ArrayList<String> categories = new ArrayList<>();
-//             JSONArray categoriesArray = jsonObject.getJSONArray("categories");
-//             for (int i = 0; i < categoriesArray.length(); i++) {
-//                 categories.add(categoriesArray.getJSONObject(i).getString("alias"));
-//             }
-//
-//             return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
-//         } catch (JSONException e) {
-//             throw new JSONException(e);
-//         }
-//     }
+    public static ArrayList<YelpReview> parseFrom(JSONObject jsonObject, String restaurantID) {
+         try {
+            ArrayList<YelpReview> reviewArrayList = new ArrayList<>();
+            YelpReviewFactory yelpReviewFactory = new YelpReviewFactory();
+            JSONArray reviewsArray = jsonObject.getJSONArray("reviews");
+
+            for (int i = 0; i < reviewsArray.length(); i++) {
+                String authorID = reviewsArray.getJSONObject(i).getJSONObject("user").getString("id");
+                String authorName= reviewsArray.getJSONObject(i).getJSONObject("user").getString("name");
+                YelpUserFactory yelpUserFactory = new YelpUserFactory();
+                YelpUser yelpUser = yelpUserFactory.create(authorID, authorName);
+
+                String reviewID = reviewsArray.getJSONObject(i).getString("id");
+                Float rating = reviewsArray.getJSONObject(i).getFloat("rating");
+                String content = reviewsArray.getJSONObject(i).getString("text");
+
+                String dateTimeString = reviewsArray.getJSONObject(i).getString("time_created");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+                LocalDateTime creationTime = LocalDateTime.parse(dateTimeString, formatter);
+                reviewArrayList.add(yelpReviewFactory.create(reviewID, yelpUser, restaurantID, rating, content, creationTime));
+            }
+            return reviewArrayList;
+         } catch (JSONException e) {
+             throw new JSONException(e);
+         }
+     }
 }
