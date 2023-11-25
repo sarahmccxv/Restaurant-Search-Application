@@ -65,7 +65,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
 
         addToFavourite = new JButton(RestaurantViewModel.ADD_TO_FAVOURITE_LABEL);
-        buttons.add(addToFavourite);
         addToFavourite.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -105,6 +104,12 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
+
+        if (state.getPreviousView().equals("view restaurants")) {
+            buttons.add(addToFavourite);
+        } else if (state.getPreviousView().equals("view favourites")) {
+            buttons.remove(addToFavourite);
+        }
     }
 
     @Override

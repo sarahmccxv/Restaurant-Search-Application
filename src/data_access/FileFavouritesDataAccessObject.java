@@ -5,6 +5,8 @@ import api.yelp.YelpApiServices;
 import entity.*;
 import use_case.add_to_favourites.AddToFavouritesDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
+import use_case.remove_favourite.RemoveFavouriteDataAccessInterface;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessInterface,
-        AddToFavouritesDataAccessInterface {
+        AddToFavouritesDataAccessInterface, RemoveFavouriteDataAccessInterface {
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -96,4 +98,14 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
             throw new RuntimeException(e);
         }
     }
+
+    public void removeFavourite(User user, Restaurant restaurant){
+        String username = user.getUsername();
+        favouritesMap.get(username).remove(restaurant.getRestaurantID());
+        if (favouritesMap.get(username).isEmpty()){
+            favouritesMap.remove(username);
+        }
+        this.save();
+    }
+
 }

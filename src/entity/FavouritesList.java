@@ -24,11 +24,18 @@ public class FavouritesList {
 
     @Override
     public String toString(){
+        if (favouritesList.isEmpty()){
+            return "";
+        }
         StringBuilder result = new StringBuilder();
         for (Restaurant favourite : favouritesList){
             result.append(favourite.getRestaurantID()).append(",");
         }
         result.delete(result.length() - 1, result.length());
         return result.toString();
+    }
+
+    public boolean isEmpty() {
+        return favouritesList.isEmpty();
     }
 }
