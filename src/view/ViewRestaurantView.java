@@ -197,13 +197,22 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
             @Override
             public void actionPerformed(ActionEvent e) {
                 restaurants.removeAll();
+                restaurants.revalidate();
+                restaurants.repaint();
                 for (Restaurant restaurant : searchRestaurantState.getRestaurants()) {
                     String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
                     JButton button = new JButton(buttonText);
                     ViewRestaurantState currentState = viewRestaurantViewModel.getState();
+                    System.out.println("in search state");
+                    String restaurantID = restaurant.getRestaurantID();
+                    Integer userID = state.getUserID();
+                    String username = state.getUsername();
+                    String password = state.getPassword();
+                    restaurantController.execute(userID, username, password, restaurantID);
                     searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
                     restaurants.add(button);
-            }
+                    System.out.println("button added");
+            }restaurants.remove(5);
         }
         });
 
