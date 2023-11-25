@@ -4,15 +4,17 @@ import api.Search.SearchCriteria;
 import api.yelp.YelpAPI;
 import api.yelp.YelpApiServices;
 import entity.Restaurant;
+import use_case.search_restaurant.SearchRestaurantDataAccessInterface;
 import use_case.sortandfilter.SortAndFilterRestaurantDataAccessInterface;
 import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
 
 import java.util.ArrayList;
 
-public class APIRestaurantDataAccessObject implements YelpApiServices, ViewRestaurantDataAccessInterface, SortAndFilterRestaurantDataAccessInterface {
+public class APIRestaurantDataAccessObject implements YelpApiServices, ViewRestaurantDataAccessInterface, SortAndFilterRestaurantDataAccessInterface, SearchRestaurantDataAccessInterface {
 
     private final YelpApiServices apiRestaurant;
-    public APIRestaurantDataAccessObject(){
+
+    public APIRestaurantDataAccessObject() {
         this.apiRestaurant = new YelpAPI();
     }
 
@@ -29,6 +31,11 @@ public class APIRestaurantDataAccessObject implements YelpApiServices, ViewResta
     @Override
     public Restaurant getRestaurantByID(String restaurantID) {
         return apiRestaurant.getRestaurantByID(restaurantID);
+    }
+
+    @Override
+    public ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName) {
+        return apiRestaurant.getRestaurantByName(location, restaurantName);
     }
 
 }

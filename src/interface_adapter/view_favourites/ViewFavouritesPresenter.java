@@ -1,7 +1,6 @@
 package interface_adapter.view_favourites;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.LoggedInViewModel;
 import use_case.view_favourites.ViewFavouritesOutputBoundary;
 import use_case.view_favourites.ViewFavouritesOutputData;
 
@@ -21,6 +20,7 @@ public class ViewFavouritesPresenter implements ViewFavouritesOutputBoundary {
         viewFavouritesState.setUsername(viewFavouritesOutputData.getUsername());
         viewFavouritesState.setPassword(viewFavouritesOutputData.getPassword());
         viewFavouritesState.setFavourites(viewFavouritesOutputData.getFavouritesList());
+        viewFavouritesState.setSuccess(true);
         this.viewFavouritesViewModel.setState(viewFavouritesState);
         this.viewFavouritesViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(viewFavouritesViewModel.getViewName());
@@ -33,6 +33,7 @@ public class ViewFavouritesPresenter implements ViewFavouritesOutputBoundary {
         viewFavouritesState.setUsername(username);
         viewFavouritesState.setPassword(password);
         viewFavouritesState.setNoFavouritesMessage(noFavouritesMessage);
+        viewFavouritesState.setSuccess(false);
         this.viewFavouritesViewModel.setState(viewFavouritesState);
         this.viewFavouritesViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(viewFavouritesViewModel.getViewName());

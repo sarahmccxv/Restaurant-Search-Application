@@ -1,13 +1,10 @@
 package view;
 
+import api.Search.SearchCriteria;
 import api.Search.SearchPriceLevel;
 import api.Search.SearchSortingMethods;
-import interface_adapter.login.LoginState;
 import interface_adapter.sort_and_filter.SortAndFilterController;
-import interface_adapter.sort_and_filter.SortAndFilterState;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
-import interface_adapter.view_favourites.ViewFavouritesState;
-import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
@@ -83,7 +80,12 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
             System.out.println("Selected Sorting Method: " + selectedSortingMethod);
             System.out.println("Selected Price Level: " + selectedPriceLevel);
             System.out.println("Entered Category: " + enteredCategory);
-            sortAndFilterController.execute(selectedSortingMethod, selectedPriceLevel, enteredCategory);
+            SearchCriteria criteria = new SearchCriteria.Builder()
+                    .setCategory(enteredCategory)
+                            .setSortingMethod(selectedSortingMethod)
+                                    .setPriceLevel(selectedPriceLevel)
+                                            .build();
+            sortAndFilterController.execute(criteria);
         }
         }
 

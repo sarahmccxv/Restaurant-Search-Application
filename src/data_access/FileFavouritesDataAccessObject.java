@@ -3,14 +3,17 @@ package data_access;
 import api.yelp.YelpAPI;
 import api.yelp.YelpApiServices;
 import entity.*;
+import use_case.add_to_favourites.AddToFavouritesDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessInterface {
+public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessInterface,
+        AddToFavouritesDataAccessInterface {
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -31,7 +34,7 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(":");
                     String username = col[headers.get("username")];
-                    String favouritesIDList = String.valueOf(col[headers.get("favourites")]);
+                    String favouritesIDList = col[headers.get("favourites")];
                     FavouritesList favouritesList = new FavouritesList();
                     for (String restaurantID : favouritesIDList.split(",")){
                         YelpApiServices yelpAPIServices = new YelpAPI();
@@ -42,6 +45,20 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
                 }
             }
         }
+    }
+
+    public boolean hasFavourite(User user, Restaurant restaurant){
+        String username = user.getUsername();
+        if (hasFavourites(username)) {
+            String restaurantID = restaurant.getRestaurantID();
+            ArrayList<Restaurant> favourites = favouritesMap.get(username).getFavourites();
+            for (Restaurant favourite : favourites) {
+                if (favourite.getRestaurantID().equals(restaurantID)) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -69,17 +86,14 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
             writer.write(String.join(":", headers.keySet()));
             writer.newLine();
             for (String username : favouritesMap.keySet()) {
-                String line = String.format("%s,%s",
+                String line = String.format("%s:%s",
                         username, favouritesMap.get(username).toString());
                 writer.write(line);
                 writer.newLine();
             }
-
             writer.close();
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
 }

@@ -12,7 +12,7 @@ public class SortAndFilterRestaurantOutputData {
         this.sortedRestaurants = sortedRestaurants;
         this.useCaseFailed = useCaseFailed;
     }
-    public ArrayList<Restaurant> getSortedRestaurants(){
+    public ArrayList<Restaurant> getRestaurants(){
         return sortedRestaurants;
     }
 }

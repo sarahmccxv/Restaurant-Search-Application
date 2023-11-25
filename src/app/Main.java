@@ -6,20 +6,19 @@ import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantViewModel;
+import interface_adapter.search_restaurants.SearchRestaurantController;
 import interface_adapter.sort_and_filter.SortAndFilterController;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
-import use_case.sortandfilter.SortAndFilterRestaurantDataAccessInterface;
-import use_case.sortandfilter.SortAndFilterRestaurantInputBoundary;
-import use_case.sortandfilter.SortAndFilterRestaurantInteractor;
 import view.*;
 
 import javax.swing.*;
@@ -57,6 +56,7 @@ public class Main {
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
+        AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -83,7 +83,7 @@ public class Main {
 
         // Sarah's code:
         // LoggedInView loggedInView = ViewFavouritesUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                //viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
+        //viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject,
                 viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
@@ -100,19 +100,21 @@ public class Main {
         RestaurantController restaurantController = RestaurantUseCaseFactory.createRestaurantUseCase(
                 viewManagerModel, restaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject);
 
+        SortAndFilterController sortAndFilterController = SortAndFilterUseCaseFactory.createSortAndFilterUseCase(viewManagerModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
+        SearchRestaurantController searchRestaurantController = ViewRestaurantUseCaseFactory.createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel, apiRestaurantDataAccessObject);
         ViewRestaurantView viewRestaurantView = ViewRestaurantUseCaseFactory.create(viewManagerModel,
-                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
-                loginController, restaurantController);
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject, apiRestaurantDataAccessObject,
+                loginController, restaurantController, sortAndFilterController, sortAndFilterViewModel);
         views.add(viewRestaurantView, viewRestaurantView.viewName);
 
         ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
                 apiRestaurantDataAccessObject, userDataAccessObject);
 
-        RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
-                apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController);
+
+        RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel, addToFavouritesViewModel,
+                apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
 
-        SortAndFilterController sortAndFilterController = SortAndFilterUseCaseFactory.createSortAndFilterUseCase(viewManagerModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
         SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
 

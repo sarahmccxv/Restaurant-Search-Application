@@ -31,7 +31,7 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
         String location = user.getLocation();
         ArrayList<Restaurant> local_restaurants = viewRestaurantDataAccessObject.getLocalRestaurants(location);
         ViewRestaurantOutputData viewRestaurantOutputData = new ViewRestaurantOutputData(
-                userID, username, password, local_restaurants);
+                userID, username, password, local_restaurants, location);
         viewRestaurantPresenter.prepareSuccessView(viewRestaurantOutputData);
     }
 }

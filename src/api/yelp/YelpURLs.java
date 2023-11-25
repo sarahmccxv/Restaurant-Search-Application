@@ -7,7 +7,7 @@ public class YelpURLs {
     private final String API_URL = "https://api.yelp.com/v3/businesses/";
 
     public String getURLWithCriteria(SearchCriteria criteria) {
-        StringBuilder url = new StringBuilder(String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price%s",
+        StringBuilder url = new StringBuilder(String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price=%s",
                 API_URL,
                 criteria.getLocation(),
                 criteria.getLimit(),

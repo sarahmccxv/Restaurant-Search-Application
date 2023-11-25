@@ -21,19 +21,14 @@ public class SortAndFilterPresenter implements SortAndFilterRestaurantOutputBoun
     @Override
     public void prepareSuccessView(SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData) {
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
+        System.out.println("executed");
         this.sortAndFilterViewModel.setState(sortAndFilterState);
         this.sortAndFilterViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(sortAndFilterViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
-    @Override
     public void prepareFailView(String error) {
-
-    }
-
-    @Override
-    public void prepareFailView(String username, String password, String noFavouritesMessage) {
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
         this.sortAndFilterViewModel.setState(sortAndFilterState);
         this.sortAndFilterViewModel.firePropertyChanged();

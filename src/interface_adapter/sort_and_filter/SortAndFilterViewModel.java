@@ -13,7 +13,7 @@ public class SortAndFilterViewModel extends ViewModel{
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public SortAndFilterViewModel() {
-        super("view favourites");
+        super("view restaurant");
     }
 
     public void setState(SortAndFilterState state) {

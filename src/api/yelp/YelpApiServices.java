@@ -10,6 +10,6 @@ public interface YelpApiServices {
     ArrayList<Restaurant> getRestaurants(SearchCriteria criteria);
     ArrayList<Restaurant> getLocalRestaurants(String location);
     Restaurant getRestaurantByID(String id);
+    ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName);
 
-//    ArrayList<Review> getReviewsByID(String id);
 }

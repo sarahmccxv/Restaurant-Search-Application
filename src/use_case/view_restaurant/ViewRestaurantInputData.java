@@ -4,11 +4,13 @@ public class ViewRestaurantInputData {
     private final Integer userID;
     private final String username;
     private final String password;
+    private final String location;
 
-    public ViewRestaurantInputData(Integer userID, String username, String password) {
+    public ViewRestaurantInputData(Integer userID, String username, String password, String location) {
         this.userID = userID;
         this.username = username;
         this.password = password;
+        this.location = location;
     }
 
     public Integer getUserID() {
@@ -22,4 +24,5 @@ public class ViewRestaurantInputData {
     public String getPassword() {
         return password;
     }
+    public String getLocation() { return location; }
 }
