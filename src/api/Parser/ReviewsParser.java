@@ -18,7 +18,7 @@ public class ReviewsParser {
 
             for (int i = 0; i < reviewsArray.length(); i++) {
                 String authorID = reviewsArray.getJSONObject(i).getJSONObject("user").getString("id");
-                String authorName= reviewsArray.getJSONObject(i).getJSONObject("user").getString("name");
+                String authorName = reviewsArray.getJSONObject(i).getJSONObject("user").getString("name");
                 YelpUserFactory yelpUserFactory = new YelpUserFactory();
                 YelpUser yelpUser = yelpUserFactory.create(authorID, authorName);
 

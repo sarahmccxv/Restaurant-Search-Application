@@ -22,7 +22,6 @@ public class YelpURLs {
             url.append("&categories=").append(criteria.getCategory());
         }
 
-        System.out.println(url.toString());
         return url.toString();
     }
 
