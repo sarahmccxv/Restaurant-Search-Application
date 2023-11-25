@@ -3,7 +3,6 @@ package api.Parser;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 
 public class ExceptionParser {
     public static String parseFrom(JSONObject jsonObject) {

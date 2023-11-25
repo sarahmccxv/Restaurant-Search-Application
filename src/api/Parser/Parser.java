@@ -1,7 +1,6 @@
 package api.Parser;
 
 import entity.Restaurant;
-import entity.Review;
 import entity.YelpReview;
 
 import java.util.ArrayList;

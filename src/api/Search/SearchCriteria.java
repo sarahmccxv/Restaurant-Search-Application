@@ -1,6 +1,5 @@
 package api.Search;
 
-import java.util.ArrayList;
 
 public class SearchCriteria {
     private String name;

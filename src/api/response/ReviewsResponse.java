@@ -1,8 +1,6 @@
 package api.response;
 
-import entity.Restaurant;
 import entity.YelpReview;
-import entity.YelpUser;
 
 import java.util.ArrayList;
 
