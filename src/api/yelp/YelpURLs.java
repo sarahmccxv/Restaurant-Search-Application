@@ -7,7 +7,7 @@ public class YelpURLs {
     private final String API_URL = "https://api.yelp.com/v3/businesses/";
 
     public String getURLWithCriteria(SearchCriteria criteria) {
-        StringBuilder url = new StringBuilder(String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price%s",
+        StringBuilder url = new StringBuilder(String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price=%s",
                 API_URL,
                 criteria.getLocation(),
                 criteria.getLimit(),
@@ -18,10 +18,11 @@ public class YelpURLs {
             url.append("&term=").append(criteria.getName());
         }
 
-        if(criteria.getCategory() != null) {
+        if (criteria.getCategory() != null) {
             url.append("&categories=").append(criteria.getCategory());
         }
 
+        System.out.println(url.toString());
         return url.toString();
     }
 
