@@ -1,6 +1,5 @@
 package interface_adapter.view_favourites;
 import interface_adapter.ViewModel;
-import interface_adapter.logged_in.LoggedInState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

@@ -1,13 +1,12 @@
 package entity;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class FavouritesList {
-    private ArrayList<Restaurant> favouritesList = new ArrayList<>();
+    private final ArrayList<Restaurant> favouritesList;
 
     public FavouritesList(){
-        this.favouritesList = new ArrayList<Restaurant>();
+        this.favouritesList = new ArrayList<>();
     }
 
     public void add(Restaurant favourite){

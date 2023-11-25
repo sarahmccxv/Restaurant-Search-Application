@@ -3,7 +3,6 @@ package app;
 import data_access.APIRestaurantDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.FileFavouritesDataAccessObject;
-import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
@@ -17,9 +16,6 @@ import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
-import use_case.register.RegisterUserDataAccessInterface;
-import use_case.remove_favourite.RemoveFavouriteDataAccessInterface;
-import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -70,7 +66,7 @@ public class Main {
 
         FileFavouritesDataAccessObject fileFavouritesDataAccessObject;
         try {
-            fileFavouritesDataAccessObject = new FileFavouritesDataAccessObject("./favourites.csv", new RestaurantFactory());
+            fileFavouritesDataAccessObject = new FileFavouritesDataAccessObject("./favourites.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

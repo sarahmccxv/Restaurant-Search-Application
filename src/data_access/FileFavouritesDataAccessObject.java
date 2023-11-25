@@ -20,9 +20,8 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, FavouritesList> favouritesMap = new HashMap<>();
-    private RestaurantFactory restaurantFactory;
 
-    public FileFavouritesDataAccessObject(String csvPath, RestaurantFactory restaurantFactory) throws IOException {
+    public FileFavouritesDataAccessObject(String csvPath) throws IOException {
         csvFile = new File(csvPath);
         headers.put("username", 0);
         headers.put("favourites", 1);

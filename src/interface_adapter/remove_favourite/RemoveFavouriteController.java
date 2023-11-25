@@ -3,7 +3,6 @@ package interface_adapter.remove_favourite;
 import entity.Restaurant;
 import use_case.remove_favourite.RemoveFavouriteInputBoundary;
 import use_case.remove_favourite.RemoveFavouriteInputData;
-import use_case.remove_favourite.RemoveFavouriteInteractor;
 
 public class RemoveFavouriteController {
     RemoveFavouriteInputBoundary removeFavouriteInteractor;
