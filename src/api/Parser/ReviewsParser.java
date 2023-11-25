@@ -29,11 +29,12 @@ public class ReviewsParser {
                 String dateTimeString = reviewsArray.getJSONObject(i).getString("time_created");
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDateTime creationTime = LocalDateTime.parse(dateTimeString, formatter);
+
                 reviewArrayList.add(yelpReviewFactory.create(reviewID, yelpUser, restaurantID, rating, content, creationTime));
             }
             return reviewArrayList;
          } catch (JSONException e) {
-             throw new JSONException(e);
+             throw new RuntimeException(e);
          }
      }
 }

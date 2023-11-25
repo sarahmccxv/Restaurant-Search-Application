@@ -11,7 +11,7 @@ import entity.YelpReview;
 import java.util.ArrayList;
 
 public class YelpAPI implements YelpApiServices {
-    private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURLs());
+    private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURIs());
 
     @Override
     public ArrayList<Restaurant> getRestaurants(SearchCriteria criteria) {

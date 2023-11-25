@@ -10,26 +10,26 @@ import java.io.IOException;
 
 public class YelpAPIClient implements YelpAPIClientInterface {
     private final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
-    private final YelpURLs yelpURLs;
+    private final YelpURIs yelpURIs;
     public Response response;
 
-    public YelpAPIClient(YelpURLs yelpURLs) {
-        this.yelpURLs = yelpURLs;
+    public YelpAPIClient(YelpURIs yelpURIs) {
+        this.yelpURIs = yelpURIs;
     }
 
     @Override
     public void allRestaurantsMatching(SearchCriteria criteria) {
-        getFrom(yelpURLs.getURLWithCriteria(criteria));
+        getFrom(yelpURIs.getRestaurantURIWithCriteria(criteria));
     }
 
     @Override
     public void RestaurantIDMatching(String id) {
-        getFrom(yelpURLs.getURLByID(id));
+        getFrom(yelpURIs.getRestaurantURIByID(id));
     }
 
     @Override
     public void ReviewIDMatching(ReviewCriteria criteria) {
-        getFrom(yelpURLs.getReviewsURL(criteria));
+        getFrom(yelpURIs.getReviewsURI(criteria));
     }
 
     @Override
