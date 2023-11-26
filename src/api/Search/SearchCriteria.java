@@ -23,7 +23,7 @@ public class SearchCriteria {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getLocation() {
@@ -31,7 +31,7 @@ public class SearchCriteria {
     }
 
     public void setLocation(String location) {
-        this.location = location;
+        this.location = location.trim();
     }
 
     public int getLimit() {
@@ -63,7 +63,7 @@ public class SearchCriteria {
     }
 
     public void setCategory(String category) {
-        this.category = category;
+        this.category = category.trim();
     }
 
     public static class Builder {
@@ -75,12 +75,12 @@ public class SearchCriteria {
         private String category;
 
         public Builder setName(String name) {
-            this.name = name;
+            this.name = name.trim();
             return this;
         }
 
         public Builder setLocation(String location) {
-            this.location = location;
+            this.location = location.trim();
             return this;
         }
 
@@ -100,7 +100,7 @@ public class SearchCriteria {
         }
 
         public Builder setCategory(String category) {
-            this.category = category;
+            this.category = category.trim();
             return this;
         }
 

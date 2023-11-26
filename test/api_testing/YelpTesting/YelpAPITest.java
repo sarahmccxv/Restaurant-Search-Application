@@ -35,7 +35,7 @@ public class YelpAPITest {
                 .setLimit(5)
                 .setSortingMethod(SearchSortingMethods.BEST_MATCH)
                 .setPriceLevel(SearchPriceLevel.CHEAP)
-                .setCategory("chinese")
+//                .setCategory("chinese")
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getRestaurants(searchCriteria);
 

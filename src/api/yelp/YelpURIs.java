@@ -3,26 +3,25 @@ package api.yelp;
 import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
 
+
 public class YelpURIs {
     private final String API_URI = "https://api.yelp.com/v3/businesses/";
 
     public String getRestaurantURIWithCriteria(SearchCriteria criteria) {
-        String res = String.format("%ssearch?location=%s&limit=%s&sort_by=%s&price=%s",
-                API_URI,
-                criteria.getLocation(),
-                criteria.getLimit(),
-                criteria.getSortingMethod(),
-                criteria.getPriceLevel());
+        StringBuilder builder = new StringBuilder(API_URI + "search?location=")
+                .append(criteria.getLocation())
+                .append("&limit=").append(criteria.getLimit())
+                .append("&sort_by=").append(criteria.getSortingMethod())
+                .append("&price=").append(criteria.getPriceLevel());
 
-        if (criteria.getCategory() != null) {
-            res += "&categories=" + criteria.getCategory();
+        if (criteria.getName() != null) {
+            String restaurantName = criteria.getName().replace(" ", "%20");
+            builder.append("&term=").append(restaurantName);
+        } else if (criteria.getCategory() != null) {
+            builder.append("&categories=").append(criteria.getCategory());
         }
 
-        if (criteria.getName() != null)  {
-            res += "&term=" + criteria.getName();
-        }
-
-        return res;
+        return builder.toString();
     }
 
     public String getRestaurantURIByID(String id) {

@@ -45,24 +45,24 @@ public class YelpAPIClient implements YelpAPIClientInterface {
     }
 
     @Override
-    public void getFrom(String API_URL) throws YelpRequestException {
+    public void getFrom(String API_URI) throws YelpRequestException {
         try {
             OkHttpClient client = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(API_URL)
+                    .url(API_URI)
                     .addHeader("Authorization", String.format("Bearer %s", API_TOKEN))
                     .build();
             response = client.newCall(request).execute();
-            checkStatus(API_URL);
+            checkStatus(API_URI);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private void checkStatus(String API_URL) {
+    private void checkStatus(String API_URI) {
         try {
             if (response.code() != 200) {
-                ExceptionResponse exceptionResponse = new ExceptionResponse(response.body().string(), response.code(), API_URL);
+                ExceptionResponse exceptionResponse = new ExceptionResponse(response.body().string(), response.code(), API_URI);
                 throw exceptionResponse.getYelpException();
             }
         } catch (IOException e) {
