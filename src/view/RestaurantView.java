@@ -6,6 +6,7 @@ import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
 import interface_adapter.restaurant.RestaurantViewModel;
+import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
 
@@ -22,6 +23,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     final JButton returnBack;
     private JButton addToFavourite;
     final JPanel info;
+    final JPanel buttons;
     private Restaurant restaurant;
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
@@ -30,18 +32,22 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     //private WriteReviewController writeReviewController;
     private AddToFavouritesController addToFavouritesController;
     private AddToFavouritesViewModel addToFavouritesViewModel;
+    private ViewFavouritesController viewFavouritesController;
+
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
                           RestaurantController restaurantController,
                           // TODO: Add review controller later
                           ViewRestaurantController viewRestaurantController,
                           AddToFavouritesController addToFavouritesController,
-                          AddToFavouritesViewModel addToFavouritesViewModel){
+                          AddToFavouritesViewModel addToFavouritesViewModel,
+                          ViewFavouritesController viewFavouritesController){
         this.restaurantViewModel = restaurantViewModel;
         this.restaurantController = restaurantController;
         this.viewRestaurantController = viewRestaurantController;
         this.addToFavouritesController = addToFavouritesController;
         this.addToFavouritesViewModel = addToFavouritesViewModel;
+        this.viewFavouritesController = viewFavouritesController;
 
         restaurantViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(RestaurantViewModel.TITLE_LABEL);
@@ -52,8 +58,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(info);
 
-        JPanel buttons = new JPanel();
-
+        buttons = new JPanel();
         returnBack = new JButton(RestaurantViewModel.RETURN_LABEL);
         buttons.add(returnBack);
         returnBack.addActionListener(this);
@@ -104,10 +109,12 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-        //System.out.println("Return button clicked");
         RestaurantState state = restaurantViewModel.getState();
-        //System.out.println("Navigating back to ViewRestaurantView. Current userID is : " + restaurantViewModel.getState().getUserID());
-        viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
+        if (state.getPreviousView().equals("view restaurants")) {
+            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
+        } else if (state.getPreviousView().equals("view favourites")) {
+            viewFavouritesController.execute(state.getUsername());
+        }
     }
 }
 

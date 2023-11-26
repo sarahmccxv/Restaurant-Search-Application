@@ -1,19 +1,19 @@
 package use_case.view_restaurant;
 
 public class ViewRestaurantInputData {
-    private final Integer userID;
+    private final String userID;
     private final String username;
     private final String password;
     private final String location;
 
-    public ViewRestaurantInputData(Integer userID, String username, String password, String location) {
+    public ViewRestaurantInputData(String userID, String username, String password, String location) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.location = location;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 

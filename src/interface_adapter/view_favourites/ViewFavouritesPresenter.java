@@ -17,9 +17,10 @@ public class ViewFavouritesPresenter implements ViewFavouritesOutputBoundary {
     @Override
     public void prepareSuccessView(ViewFavouritesOutputData viewFavouritesOutputData){
         ViewFavouritesState viewFavouritesState = viewFavouritesViewModel.getState();
+        viewFavouritesState.setUserID(viewFavouritesOutputData.getUserID());
         viewFavouritesState.setUsername(viewFavouritesOutputData.getUsername());
         viewFavouritesState.setPassword(viewFavouritesOutputData.getPassword());
-        viewFavouritesState.setFavourites(viewFavouritesOutputData.getFavouritesList());
+        viewFavouritesState.setFavouritesList(viewFavouritesOutputData.getFavouritesList());
         viewFavouritesState.setSuccess(true);
         this.viewFavouritesViewModel.setState(viewFavouritesState);
         this.viewFavouritesViewModel.firePropertyChanged();

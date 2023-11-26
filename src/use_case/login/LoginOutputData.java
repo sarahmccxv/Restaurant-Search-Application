@@ -2,13 +2,13 @@ package use_case.login;
 
 public class LoginOutputData {
 
-    private final Integer userID;
+    private final String userID;
     private final String username;
     private boolean useCaseFailed;
     private final String password;
     private final String location;
 
-    public LoginOutputData(Integer userID, String username, String password,
+    public LoginOutputData(String userID, String username, String password,
                            boolean useCaseFailed, String location) {
         this.userID = userID;
         this.username = username;
@@ -21,7 +21,7 @@ public class LoginOutputData {
         return username;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;}
 
     public String getPassword(){

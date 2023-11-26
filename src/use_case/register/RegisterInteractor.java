@@ -29,7 +29,7 @@ public class RegisterInteractor implements RegisterInputBoundary {
 
             LocalDateTime now = LocalDateTime.now();
             // Generate a random 6 digits number using the helper function
-            int userID = createUserID();
+            String userID = createUserID().toString();
             // Below are codes to check for bugs
             //System.out.println("This is register interactor. Here we create a user with ID " + userID +
                     //", username " + registerInputData.getUsername() +
@@ -45,7 +45,7 @@ public class RegisterInteractor implements RegisterInputBoundary {
         }
     }
 
-    private int createUserID() {
+    private Integer createUserID() {
         Random random = new Random();
         int userID = 100000 + random.nextInt(900000);
         // Check if this random number is already taken

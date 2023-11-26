@@ -19,7 +19,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
     private final Map<String, User> accounts = new HashMap<>();
-    private final Map<Integer, User> accountsID = new HashMap<>();
+    private final Map<String, User> accountsID = new HashMap<>();
 
     private UserFactory userFactory;
 
@@ -48,7 +48,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    String userID = String.valueOf(col[headers.get("userID")]);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String location = String.valueOf(col[headers.get("location")]);
@@ -73,12 +73,12 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     }
 
     @Override
-    public User get(String username) {
+    public User getByUsername(String username) {
         return accounts.get(username);
     }
 
     @Override
-    public User get(Integer userID) {
+    public User getByUserID(String userID) {
         return accountsID.get(userID);
     }
 
@@ -146,7 +146,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                     String[] col = line.split(",");
                     //System.out.println("Reading csv file again to check updates");
                     //System.out.println("The user read has ID of " + col[headers.get("userID")]);
-                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    String userID = String.valueOf(col[headers.get("userID")]);
                     // Identify the new user and put into accounts
                     if (!accountsID.containsKey(userID)) {
                         String username = String.valueOf(col[headers.get("username")]);

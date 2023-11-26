@@ -6,27 +6,29 @@ import entity.Restaurant;
 import java.util.ArrayList;
 
 public class ViewFavouritesOutputData {
+    private String userID;
     private String username;
     private String password;
-    private ArrayList<String> favouritesListString = new ArrayList<>();
+    private FavouritesList favouritesList;
 
-    public ViewFavouritesOutputData(String username, String password, FavouritesList favouritesList) {
+    public ViewFavouritesOutputData(String userID, String username, String password, FavouritesList favouritesList) {
+        this.userID = userID;
         this.username = username;
         this.password = password;
-        for (Restaurant restaurant : favouritesList.getFavourites()){
-            favouritesListString.add(restaurant.toString());
-        }
+        this.favouritesList = favouritesList;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public ArrayList<String> getFavouritesList() {
-        return favouritesListString;
+    public FavouritesList getFavouritesList() {
+        return favouritesList;
     }
 
     public String getPassword() {
         return password;
     }
+
+    public String getUserID() {return userID;}
 }

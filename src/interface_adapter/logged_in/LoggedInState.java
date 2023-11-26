@@ -2,7 +2,7 @@ package interface_adapter.logged_in;
 
 public class LoggedInState {
     private String username = "";
-    private Integer userID = 0;
+    private String userID = "";
     private String password = "";
     private String location = "";
 
@@ -19,7 +19,7 @@ public class LoggedInState {
     public String getUsername() {
         return username;
     }
-    public Integer getUserID() {return userID;}
+    public String getUserID() {return userID;}
     public String getPassword() {
         return password;
     }
@@ -27,7 +27,7 @@ public class LoggedInState {
     public void setUsername(String newUsername) {
         this.username = newUsername;
     }
-    public void setUserID(Integer newUserID) {
+    public void setUserID(String newUserID) {
         this.userID = newUserID;
     }
     public void setPassword(String newPassword) {

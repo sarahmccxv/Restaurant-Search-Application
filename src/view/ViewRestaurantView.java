@@ -166,10 +166,10 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                 public void actionPerformed(ActionEvent evt) {
                     //System.out.println("Go to restaurant " + restaurant.getRestaurantName());
                     String restaurantID = restaurant.getRestaurantID();
-                    Integer userID = state.getUserID();
+                    String userID = state.getUserID();
                     String username = state.getUsername();
                     String password = state.getPassword();
-                    restaurantController.execute(userID, username, password, restaurantID);
+                    restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
                 }
             });
                 restaurants.add(button);
@@ -205,10 +205,11 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     ViewRestaurantState currentState = viewRestaurantViewModel.getState();
                     System.out.println("in search state");
                     String restaurantID = restaurant.getRestaurantID();
-                    Integer userID = state.getUserID();
+                    String userID = state.getUserID();
                     String username = state.getUsername();
                     String password = state.getPassword();
-                    restaurantController.execute(userID, username, password, restaurantID);
+                    String previousView = state.getPreviousView();
+                    restaurantController.execute(userID, username, password, restaurantID, previousView);
                     searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
                     restaurants.add(button);
                     System.out.println("button added");
