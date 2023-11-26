@@ -85,7 +85,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                 public void actionPerformed(ActionEvent evt) {
                     //System.out.println("Go to restaurant " + restaurant.getRestaurantName());
                     String restaurantID = restaurant.getRestaurantID();
-                    Integer userID = state.getUserID();
+                    String userID = state.getUserID();
                     String username = state.getUsername();
                     String password = state.getPassword();
                     restaurantController.execute(userID, username, password, restaurantID, "view restaurants");

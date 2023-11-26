@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class ViewFavouritesState {
     private boolean success;
-    private int userID;
+    private String userID;
     private String username;
     private String password;
     private FavouritesList favouritesList;
@@ -47,6 +47,6 @@ public class ViewFavouritesState {
     }
     public void setSuccess(boolean success) {this.success = success;}
     public boolean getSuccess() {return success;}
-    public int getUserID() {return userID;}
-    public void setUserID(int userID) {this.userID = userID;};
+    public String getUserID() {return userID;}
+    public void setUserID(String userID) {this.userID = userID;};
 }

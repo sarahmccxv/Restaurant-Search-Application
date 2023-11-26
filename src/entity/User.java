@@ -4,45 +4,38 @@ import java.sql.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class User implements UserInterface {
-    private final int userID;
-    private final String username;
+public class User extends CommonUser implements UserInterface {
     private final String password;
     private final LocalDateTime creationTime;
     private String location;
     private FavouritesList favouritesList = new FavouritesList();
-    private final ArrayList<Review> reviewsList = new ArrayList<>();
+    private ArrayList<Review> reviewsList = new ArrayList<>();
 
-    public User(int userID, String username, String password, String location,
+    public User(String userID, String username, String password, String location,
                 LocalDateTime creationTime){
-        this.userID = userID;
-        this.username = username;
+        super(userID, username);
         this.password = password;
         this.location = location;
         this.creationTime = creationTime;
         this.favouritesList = new FavouritesList();
     }
 
-    public int getUserID() {
-        return userID;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
+    @Override
     public String getPassword() {
         return password;
     }
 
+    @Override
     public String getLocation() {
         return location;
     }
 
+    @Override
     public FavouritesList getFavouritesList() {
         return favouritesList;
     }
 
+    @Override
     public ArrayList<Review> getReviewsList() {
         return reviewsList;
     }
@@ -52,22 +45,27 @@ public class User implements UserInterface {
         return creationTime;
     }
 
+    @Override
     public void setLocation(String location) {
         this.location = location;
     }
 
+    @Override
     public void addToFavourites(Restaurant restaurant){
         favouritesList.add(restaurant);
     }
 
+    @Override
     public void removeFavourite(String restaurantID){
         favouritesList.remove(restaurantID);
     }
 
+    @Override
     public void addReview(Review review){
         reviewsList.add(review);
     }
 
+    @Override
     public void removeReview(Review review){
         reviewsList.remove(review);
     }

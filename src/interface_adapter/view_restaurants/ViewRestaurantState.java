@@ -6,12 +6,12 @@ import interface_adapter.view_favourites.ViewFavouritesState;
 import java.util.ArrayList;
 
 public class ViewRestaurantState {
-    private Integer userID;
+    private String userID;
     private String username;
     private String password;
     private ArrayList<Restaurant> restaurants;
     public ViewRestaurantState(){
-        userID = 0;
+        userID = "";
         username = "";
         password = "";
         restaurants = new ArrayList<>();
@@ -21,11 +21,11 @@ public class ViewRestaurantState {
         return username;
     }
 
-    public Integer getUserID() { return userID; }
+    public String getUserID() { return userID; }
 
     public String getPassword() { return password; }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
     public void setUsername(String username) {
