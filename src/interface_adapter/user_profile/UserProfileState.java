@@ -1,7 +1,7 @@
 package interface_adapter.user_profile;
 
 public class UserProfileState {
-    private Integer userID = 0;
+    private String userID = "";
     private String username = "";
     private String password = "";
     private String location = "";
@@ -16,7 +16,7 @@ public class UserProfileState {
     // Because of the previous copy constructor, the default constructor must be explicit.
     public UserProfileState() {}
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 
@@ -32,7 +32,7 @@ public class UserProfileState {
         return location;
     }
 
-    public void setUserID(Integer userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 

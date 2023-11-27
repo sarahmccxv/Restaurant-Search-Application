@@ -17,7 +17,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
     private final Map<String, User> accounts = new LinkedHashMap<>();
-    private final Map<Integer, User> accountsID = new LinkedHashMap<>();
+    private final Map<String, User> accountsID = new LinkedHashMap<>();
 
     private UserFactory userFactory;
     private Integer length = 1; // By default, the csv file should contain the row of column names
@@ -185,7 +185,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     @Override
     public void updateUserInfo(User user) {
-        accounts.replace(this.get(user.getUserID()).getUsername(), user);
+        accounts.replace(this.getByUserID(user.getUserID()).getUsername(), user);
         this.save();
     }
 }

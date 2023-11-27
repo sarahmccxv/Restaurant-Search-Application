@@ -19,12 +19,12 @@ public class UserProfileInteractor implements UserProfileInputBoundary{
 
     @Override
     public void execute(UserProfileInputData userProfileInputData) {
-        Integer userID = userProfileInputData.getUserID();
+        String userID = userProfileInputData.getUserID();
         String username = userProfileInputData.getUsername();
         String password = userProfileInputData.getPassword();
         String location = userProfileInputData.getLocation();
         fileUserDataAccessObject.update();
-        User oldUser = fileUserDataAccessObject.get(userID);
+        User oldUser = fileUserDataAccessObject.getByUserID(userID);
         User newUser = userFactory.create(userID, username, password, location, oldUser.getCreationTime());
         fileUserDataAccessObject.updateUserInfo(newUser);
 //        System.out.println("UserProfileInteractor" + newUser.getLocation());

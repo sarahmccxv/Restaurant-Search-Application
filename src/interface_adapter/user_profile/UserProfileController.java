@@ -10,7 +10,7 @@ public class UserProfileController {
         this.userProfileInteractor = userProfileInteractor;
     }
 
-    public void execute(Integer userID, String username, String password, String location) {
+    public void execute(String userID, String username, String password, String location) {
         UserProfileInputData userProfileInputData = new UserProfileInputData(userID,
                 username, password, location);
         userProfileInteractor.execute(userProfileInputData);

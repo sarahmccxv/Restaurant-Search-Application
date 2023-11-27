@@ -9,7 +9,7 @@ public class LoginOutputData {
     private final String location;
 
 
-    public LoginOutputData(Integer userID, String username, String password,
+    public LoginOutputData(String userID, String username, String password,
                            String location, boolean useCaseFailed) {
         this.userID = userID;
         this.username = username;

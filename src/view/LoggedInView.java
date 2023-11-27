@@ -101,7 +101,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(userProfile)) {
-                            Integer userID = loggedInViewModel.getState().getUserID();
+                            String userID = loggedInViewModel.getState().getUserID();
                             String username = loggedInViewModel.getState().getUsername();
                             String password = loggedInViewModel.getState().getPassword();
                             String location = loggedInViewModel.getState().getLocation();

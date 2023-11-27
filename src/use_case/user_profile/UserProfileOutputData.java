@@ -4,9 +4,9 @@ public class UserProfileOutputData {
     private final String username;
     private final String password;
     private final String location;
-    private final Integer userID;
+    private final String userID;
 
-    public UserProfileOutputData(Integer userID, String username, String password, String location) {
+    public UserProfileOutputData(String userID, String username, String password, String location) {
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -25,7 +25,7 @@ public class UserProfileOutputData {
         return location;
     }
 
-    public Integer getUserID() {
+    public String getUserID() {
         return userID;
     }
 }
