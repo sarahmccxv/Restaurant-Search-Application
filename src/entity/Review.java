@@ -6,9 +6,9 @@ public class Review extends CommonReview implements ReviewInterface {
     private Float rating;
     private String content;
 
-    public Review(String reviewID, User author, Restaurant restaurant, Float rating,
+    public Review(String reviewID, User author, String restaurantID, Float rating,
                   String content, LocalDateTime creationTime) {
-        super(reviewID, author, restaurant, rating, content, creationTime);
+        super(reviewID, author, restaurantID, rating, content, creationTime);
         this.author = author;
     }
 
