@@ -2,13 +2,13 @@ package view;
 
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
-import interface_adapter.user_profile.UserProfileController;
-import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesState;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+import interface_adapter.user_profile.UserProfileController;
+import interface_adapter.user_profile.UserProfileViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -90,8 +90,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                             String userID = loggedInViewModel.getState().getUserID();
                             String username = loggedInViewModel.getState().getUsername();
                             String password = loggedInViewModel.getState().getPassword();
+                            String location = loggedInViewModel.getState().getLocation();
                             //System.out.println("This is LoggedInView. My state has username " + username + " and password " + password);
-                            viewRestaurantController.execute(userID, username, password);
+                            viewRestaurantController.execute(userID, username, password, location);
                         }
                     }
                 }
@@ -110,7 +111,6 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
-
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);

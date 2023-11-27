@@ -8,7 +8,6 @@ public class LoginOutputData {
     private final String password;
     private final String location;
 
-
     public LoginOutputData(String userID, String username, String password,
                            String location, boolean useCaseFailed) {
         this.userID = userID;
@@ -29,8 +28,5 @@ public class LoginOutputData {
         return password;
     }
 
-    public String getLocation() {
-        return location;
-    }
-
+    public String getLocation(){ return location;}
 }

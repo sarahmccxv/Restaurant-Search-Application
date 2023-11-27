@@ -18,8 +18,8 @@ import view.UserProfileView;
 import javax.swing.*;
 import java.io.IOException;
 
-public class UserProfileUserCaseFactory {
-    private UserProfileUserCaseFactory() {}
+public class UserProfileUseCaseFactory {
+    private UserProfileUseCaseFactory() {}
 
     public static UserProfileView create(ViewManagerModel viewManagerModel,
                                          UserProfileViewModel userProfileViewModel,

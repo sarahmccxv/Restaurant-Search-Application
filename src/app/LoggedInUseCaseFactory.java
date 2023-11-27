@@ -45,7 +45,7 @@ public class LoggedInUseCaseFactory {
                     viewFavouritesViewModel, userDataAccessObject, fileUserDataAccessObject);
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
                     viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
-            UserProfileController userProfileController = UserProfileUserCaseFactory.createUserProfileUseCase(
+            UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
                     viewManagerModel, userProfileViewModel, userProfileDataAccessObject);
             return new LoggedInView(loggedInViewModel, viewFavouritesViewModel,
                     viewFavouritesController, viewRestaurantViewModel, viewRestaurantController, userProfileViewModel, userProfileController);

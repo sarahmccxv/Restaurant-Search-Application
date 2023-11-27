@@ -3,8 +3,8 @@ package entity;
 import java.time.LocalDateTime;
 
 public class YelpReviewFactory {
-    public YelpReview create(String reviewID, YelpUser author, Restaurant restaurant, Float rating,
+    public YelpReview create(String reviewID, YelpUser author, String restaurantID, Float rating,
                          String content, LocalDateTime creationTime) {
-        return new YelpReview(reviewID, author, restaurant, rating, content, creationTime);
+        return new YelpReview(reviewID, author, restaurantID, rating, content, creationTime);
     }
 }

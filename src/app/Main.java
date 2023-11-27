@@ -13,11 +13,13 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantViewModel;
+import interface_adapter.search_restaurants.SearchRestaurantController;
+import interface_adapter.sort_and_filter.SortAndFilterController;
+import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
-import use_case.user_profile.UserProfileDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -54,6 +56,7 @@ public class Main {
         ViewFavouritesViewModel viewFavouritesViewModel = new ViewFavouritesViewModel();
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
+        SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
         UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
 
@@ -80,7 +83,7 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject,
                 viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
@@ -91,9 +94,11 @@ public class Main {
         RestaurantController restaurantController = RestaurantUseCaseFactory.createRestaurantUseCase(
                 viewManagerModel, restaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject);
 
+        SortAndFilterController sortAndFilterController = SortAndFilterUseCaseFactory.createSortAndFilterUseCase(viewManagerModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
+        SearchRestaurantController searchRestaurantController = ViewRestaurantUseCaseFactory.createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel, apiRestaurantDataAccessObject);
         ViewRestaurantView viewRestaurantView = ViewRestaurantUseCaseFactory.create(viewManagerModel,
-                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
-                loginController, restaurantController);
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject, apiRestaurantDataAccessObject,
+                loginController, restaurantController, sortAndFilterController, sortAndFilterViewModel);
         views.add(viewRestaurantView, viewRestaurantView.viewName);
 
         ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
@@ -109,7 +114,10 @@ public class Main {
                 fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
 
-        UserProfileView userProfileView = UserProfileUserCaseFactory.create(viewManagerModel, userProfileViewModel,
+        SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
+        views.add(sortAndFilterView, sortAndFilterView.viewName);
+
+        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
                 userDataAccessObject, loginController);
         views.add(userProfileView, userProfileView.viewName);
 

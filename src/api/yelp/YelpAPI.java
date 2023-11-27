@@ -1,14 +1,17 @@
 package api.yelp;
 
+import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
 import api.response.MultipleRestaurantResponse;
+import api.response.ReviewsResponse;
 import api.response.SingleRestaurantResponse;
 import entity.Restaurant;
+import entity.YelpReview;
 
 import java.util.ArrayList;
 
 public class YelpAPI implements YelpApiServices {
-    private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURLs());
+    private static final YelpAPIClient yelpAPIClient = new YelpAPIClient(new YelpURIs());
 
     @Override
     public ArrayList<Restaurant> getRestaurants(SearchCriteria criteria) {
@@ -29,6 +32,24 @@ public class YelpAPI implements YelpApiServices {
         SingleRestaurantResponse singleRestaurantResponse = new SingleRestaurantResponse(yelpAPIClient.getResponseBody());
         return singleRestaurantResponse.getRestaurant();
     }
+    public ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName) {
+        SearchCriteria criteria = new SearchCriteria.Builder()
+                .setLocation(location)
+                .setName(restaurantName)
+                .build();
+        return getRestaurants(criteria);
+    }
 
-//    public ArrayList<Review> getReviews(String id) {}
+    @Override
+    public ArrayList<YelpReview> getReviews(ReviewCriteria criteria) {
+        yelpAPIClient.ReviewIDMatching(criteria);
+        ReviewsResponse reviewsResponse = new ReviewsResponse(yelpAPIClient.getResponseBody());
+        return reviewsResponse.getReviews(criteria.getRestaurantID());
+    }
+
+    @Override
+    public ArrayList<YelpReview> getReviewsByID(String id) {
+        ReviewCriteria criteria = new ReviewCriteria.Builder().setRestaurantID(id).build();
+        return getReviews(criteria);
+    }
 }

@@ -28,7 +28,7 @@ public class SingleRestaurantParser {
 
              return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
          } catch (JSONException e) {
-             throw new JSONException(e);
+             throw new RuntimeException(e);
          }
      }
 }
