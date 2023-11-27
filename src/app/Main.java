@@ -13,9 +13,11 @@ import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantViewModel;
+import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+import use_case.user_profile.UserProfileDataAccessInterface;
 import view.*;
 
 import javax.swing.*;
@@ -53,6 +55,7 @@ public class Main {
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
+        UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -79,7 +82,7 @@ public class Main {
 
         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
+                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
@@ -105,6 +108,10 @@ public class Main {
                 addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController,
                 fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
+
+        UserProfileView userProfileView = UserProfileUserCaseFactory.create(viewManagerModel, userProfileViewModel,
+                userDataAccessObject, loginController);
+        views.add(userProfileView, userProfileView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

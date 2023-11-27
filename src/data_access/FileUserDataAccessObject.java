@@ -4,25 +4,22 @@ import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.register.RegisterUserDataAccessInterface;
+import use_case.user_profile.UserProfileDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FileUserDataAccessObject implements RegisterUserDataAccessInterface,
-        LoginUserDataAccessInterface {
-
+        LoginUserDataAccessInterface, UserProfileDataAccessInterface {
     private final File csvFile;
-
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    private final Map<String, User> accounts = new HashMap<>();
-    private final Map<String, User> accountsID = new HashMap<>();
+    private final Map<String, User> accounts = new LinkedHashMap<>();
+    private final Map<Integer, User> accountsID = new LinkedHashMap<>();
 
     private UserFactory userFactory;
-
     private Integer length = 1; // By default, the csv file should contain the row of column names
 
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
@@ -186,4 +183,9 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return rowCount;
     }
 
+    @Override
+    public void updateUserInfo(User user) {
+        accounts.replace(this.get(user.getUserID()).getUsername(), user);
+        this.save();
+    }
 }

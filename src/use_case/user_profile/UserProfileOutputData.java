@@ -1,19 +1,14 @@
-package use_case.login;
+package use_case.user_profile;
 
-public class LoginOutputData {
-
-    private final String userID;
+public class UserProfileOutputData {
     private final String username;
-    private boolean useCaseFailed;
     private final String password;
     private final String location;
+    private final Integer userID;
 
-
-    public LoginOutputData(Integer userID, String username, String password,
-                           String location, boolean useCaseFailed) {
+    public UserProfileOutputData(Integer userID, String username, String password, String location) {
         this.userID = userID;
         this.username = username;
-        this.useCaseFailed = useCaseFailed;
         this.password = password;
         this.location = location;
     }
@@ -22,10 +17,7 @@ public class LoginOutputData {
         return username;
     }
 
-    public String getUserID() {
-        return userID;}
-
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
@@ -33,4 +25,7 @@ public class LoginOutputData {
         return location;
     }
 
+    public Integer getUserID() {
+        return userID;
+    }
 }

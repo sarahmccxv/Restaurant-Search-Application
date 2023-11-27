@@ -1,5 +1,6 @@
 package use_case.login;
 
+import data_access.FileUserDataAccessObject;
 import entity.User;
 
 public class LoginInteractor implements LoginInputBoundary {
@@ -16,6 +17,7 @@ public class LoginInteractor implements LoginInputBoundary {
     public void execute(LoginInputData loginInputData) {
         String username = loginInputData.getUsername();
         String password = loginInputData.getPassword();
+
         if (!userDataAccessObject.existsByName(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
         } else {
@@ -23,11 +25,11 @@ public class LoginInteractor implements LoginInputBoundary {
             if (!password.equals(pwd)) {
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
             } else {
-
                 User user = userDataAccessObject.getByUsername(loginInputData.getUsername());
 
+
                 LoginOutputData loginOutputData = new LoginOutputData(
-                        user.getUserID(), user.getUsername(), user.getPassword(), false);
+                        user.getUserID(), user.getUsername(), user.getPassword(), user.getLocation(), false);
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
