@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 public class YelpReview extends CommonReview implements ReviewInterface {
     private final YelpUser author;
 
-    public YelpReview(String reviewID, YelpUser author, Restaurant restaurant, Float rating,
+    public YelpReview(String reviewID, YelpUser author, String restaurantID, Float rating,
                   String content, LocalDateTime creationTime) {
-        super(reviewID, author, restaurant, rating, content, creationTime);
+        super(reviewID, author, restaurantID, rating, content, creationTime);
         this.author = author;
     }
 

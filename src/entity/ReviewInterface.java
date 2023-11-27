@@ -8,7 +8,7 @@ public interface ReviewInterface {
 
     CommonUser getAuthor();
 
-    Restaurant getRestaurant();
+    String getRestaurantID();
 
     Float getRating();
 

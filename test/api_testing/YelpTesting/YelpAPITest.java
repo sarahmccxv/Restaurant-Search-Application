@@ -1,5 +1,6 @@
 package api_testing.YelpTesting;
 
+import api.Review.ReviewCriteria;
 import api.Search.SearchPriceLevel;
 import api.Search.SearchSortingMethods;
 import api.yelp.YelpApiServices;
@@ -9,6 +10,8 @@ import api.yelp.YelpAPI;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import entity.Review;
+import entity.YelpReview;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -29,10 +32,10 @@ public class YelpAPITest {
         SearchCriteria searchCriteria = new SearchCriteria.Builder()
                 .setName(expectedRestaurantName)
                 .setLocation(location)
-                .setLimit(1)
+                .setLimit(5)
                 .setSortingMethod(SearchSortingMethods.BEST_MATCH)
                 .setPriceLevel(SearchPriceLevel.CHEAP)
-                .setCategory("italian")
+//                .setCategory("chinese")
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getRestaurants(searchCriteria);
 
@@ -62,5 +65,19 @@ public class YelpAPITest {
         assertEquals(expectedRestaurantAddress, restaurant.getAddress());
         assertEquals(expectedPhoneNumber, restaurant.getPhoneNumber());
         assertEquals(expectedRestaurantCategories, restaurant.getCategories());
+    }
+
+    @Test
+    void getReviewsTest() {
+        ReviewCriteria reviewCriteria = new ReviewCriteria.Builder()
+                .setRestaurantID(expectedRestaurantID)
+                .setLimit(1)
+                .build();
+
+        ArrayList<YelpReview> reviews = yelpApiServices.getReviews(reviewCriteria);
+
+        assertEquals(expectedRestaurantID, reviews.get(0).getRestaurantID());
+        assertEquals("Jess F.", reviews.get(0).getAuthor().getUsername());
+        assertEquals("2023-11-07T07:15:08", reviews.get(0).getCreationTime().toString());
     }
 }
