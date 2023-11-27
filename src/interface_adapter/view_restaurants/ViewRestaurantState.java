@@ -9,12 +9,18 @@ public class ViewRestaurantState {
     private String userID;
     private String username;
     private String password;
+    private String location;
     private ArrayList<Restaurant> restaurants;
+    private String restaurantName;
+    private String previousView;
     public ViewRestaurantState(){
         userID = "";
         username = "";
         password = "";
+        location = "";
         restaurants = new ArrayList<>();
+        restaurantName = "";
+        previousView = "";
     };
 
     public String getUsername() {
@@ -24,6 +30,9 @@ public class ViewRestaurantState {
     public String getUserID() { return userID; }
 
     public String getPassword() { return password; }
+    public String getLocation() { return location; }
+    public String getRestaurantName(){ return restaurantName;}
+    public String getPreviousView(){return previousView;}
 
     public void setUserID(String userID) {
         this.userID = userID;
@@ -37,6 +46,9 @@ public class ViewRestaurantState {
     public void setRestaurants(ArrayList<Restaurant> restaurants) {
         this.restaurants = restaurants;
     }
+    public void setLocation(String location) { this.location = location; }
+    public void setRestaurantName(String restaurantName){ this.restaurantName = restaurantName;}
+    public void setPreviousView(String previousView){this.previousView = previousView;}
 
     public ArrayList<Restaurant> getRestaurants(){
         return restaurants;

@@ -49,7 +49,7 @@ public class RestaurantUseCaseFactory {
         ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
                 viewFavouritesViewModel, favouritesDataAccessObject2, fileUserDataAccessObject);
         return new RestaurantView(restaurantViewModel, restaurantController, viewRestaurantController,
-                addToFavouritesController, addToFavouritesViewModel, viewFavouritesController);
+                addToFavouritesController, addToFavouritesViewModel, viewFavouritesController, viewManagerModel);
     }
 
     public static RestaurantController createRestaurantUseCase(ViewManagerModel viewManagerModel,

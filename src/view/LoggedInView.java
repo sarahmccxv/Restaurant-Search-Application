@@ -79,8 +79,9 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
                             String userID = loggedInViewModel.getState().getUserID();
                             String username = loggedInViewModel.getState().getUsername();
                             String password = loggedInViewModel.getState().getPassword();
+                            String location = loggedInViewModel.getState().getLocation();
                             //System.out.println("This is LoggedInView. My state has username " + username + " and password " + password);
-                            viewRestaurantController.execute(userID, username, password);
+                            viewRestaurantController.execute(userID, username, password, location);
                         }
                     }
                 }
