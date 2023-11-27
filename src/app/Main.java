@@ -71,7 +71,7 @@ public class Main {
         }
 
         RegisterView registerView = RegisterUseCaseFactory.create(viewManagerModel, loginViewModel, registerViewModel,
-                userDataAccessObject);
+                userDataAccessObject, apiRestaurantDataAccessObject);
         views.add(registerView, registerView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
