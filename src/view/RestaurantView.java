@@ -97,8 +97,9 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                         if (evt.getSource().equals(addReview)) {
                             RestaurantState state = restaurantViewModel.getState();
                             Restaurant restaurant = state.getRestaurant();
+                            String previousView = state.getPreviousView();
                             String userID = state.getUserID();
-                            addReviewController.execute(userID, restaurant);
+                            addReviewController.execute(userID, restaurant, previousView);
                         }
                     }
                 });

@@ -17,6 +17,7 @@ public class AddReviewPresenter implements AddReviewOutputBoundary {
         AddReviewState state = addReviewViewModel.getState();
         state.setUser(addReviewOutputData.getUser());
         state.setRestaurant(addReviewOutputData.getRestaurant());
+        state.setPrevious_view(addReviewOutputData.getPreviousView());
         this.addReviewViewModel.setState(state);
         this.addReviewViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(addReviewViewModel.getViewName());

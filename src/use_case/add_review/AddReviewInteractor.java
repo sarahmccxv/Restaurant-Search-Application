@@ -19,7 +19,8 @@ public class AddReviewInteractor implements AddReviewInputBoundary {
         String userID = addReviewInputData.getUserID();
         User user = fileUserDataAccessObject.getByUserID(userID);
         Restaurant restaurant = addReviewInputData.getRestaurant();
-        AddReviewOutputData addReviewOutputData = new AddReviewOutputData(user, restaurant);
+        String previousView = addReviewInputData.getPreviousView();
+        AddReviewOutputData addReviewOutputData = new AddReviewOutputData(user, restaurant, previousView);
         addReviewPresenter.prepareSuccessView(addReviewOutputData);
     }
 }

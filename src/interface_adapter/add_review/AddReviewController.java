@@ -13,8 +13,8 @@ public class AddReviewController {
         this.addReviewInteractor = addReviwInputBoundary;
     }
 
-    public void execute(String userID, Restaurant restaurant) {
-        AddReviewInputData addReviewInputData = new AddReviewInputData(userID, restaurant);
+    public void execute(String userID, Restaurant restaurant, String previousView) {
+        AddReviewInputData addReviewInputData = new AddReviewInputData(userID, restaurant, previousView);
         addReviewInteractor.execute(addReviewInputData);
     }
 

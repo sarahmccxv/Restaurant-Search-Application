@@ -134,6 +134,7 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
         String password = state.getUser().getPassword();
         String restaurantID = state.getRestaurant().getRestaurantID();
         String previous_view = state.getPrevious_view();
+        System.out.println("previous view was " + previous_view);
         restaurantController.execute(userID, username, password, restaurantID, previous_view);
     }
 
