@@ -42,12 +42,13 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
         users.clear();
     }
 
-    public User get(String username){
+    @Override
+    public User getByUsername(String username){
         return users.get(username);
     }
 
     @Override
-    public User get(Integer userID) {
+    public User getByUserID(String userID) {
         return users.get(userID);
     }
 

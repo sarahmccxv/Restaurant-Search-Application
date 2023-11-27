@@ -15,8 +15,10 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         LoginUserDataAccessInterface, UserProfileDataAccessInterface {
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
+
     private final Map<String, User> accounts = new LinkedHashMap<>();
     private final Map<Integer, User> accountsID = new LinkedHashMap<>();
+
     private UserFactory userFactory;
     private Integer length = 1; // By default, the csv file should contain the row of column names
 
@@ -43,7 +45,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                 String row;
                 while ((row = reader.readLine()) != null) {
                     String[] col = row.split(",");
-                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    String userID = String.valueOf(col[headers.get("userID")]);
                     String username = String.valueOf(col[headers.get("username")]);
                     String password = String.valueOf(col[headers.get("password")]);
                     String location = String.valueOf(col[headers.get("location")]);
@@ -68,12 +70,12 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
     }
 
     @Override
-    public User get(String username) {
+    public User getByUsername(String username) {
         return accounts.get(username);
     }
 
     @Override
-    public User get(Integer userID) {
+    public User getByUserID(String userID) {
         return accountsID.get(userID);
     }
 
@@ -141,7 +143,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
                     String[] col = line.split(",");
                     //System.out.println("Reading csv file again to check updates");
                     //System.out.println("The user read has ID of " + col[headers.get("userID")]);
-                    int userID = Integer.parseInt(col[headers.get("userID")]);
+                    String userID = String.valueOf(col[headers.get("userID")]);
                     // Identify the new user and put into accounts
                     if (!accountsID.containsKey(userID)) {
                         String username = String.valueOf(col[headers.get("username")]);

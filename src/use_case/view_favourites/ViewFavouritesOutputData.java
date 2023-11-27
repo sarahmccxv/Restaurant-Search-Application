@@ -6,12 +6,12 @@ import entity.Restaurant;
 import java.util.ArrayList;
 
 public class ViewFavouritesOutputData {
-    private int userID;
+    private String userID;
     private String username;
     private String password;
     private FavouritesList favouritesList;
 
-    public ViewFavouritesOutputData(int userID, String username, String password, FavouritesList favouritesList) {
+    public ViewFavouritesOutputData(String userID, String username, String password, FavouritesList favouritesList) {
         this.userID = userID;
         this.username = username;
         this.password = password;
@@ -30,5 +30,5 @@ public class ViewFavouritesOutputData {
         return password;
     }
 
-    public int getUserID() {return userID;}
+    public String getUserID() {return userID;}
 }
