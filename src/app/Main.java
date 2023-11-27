@@ -6,6 +6,8 @@ import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -16,6 +18,8 @@ import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+import interface_adapter.write_review.WriteReviewController;
+import interface_adapter.write_review.WriteReviewViewModel;
 import view.*;
 
 import javax.swing.*;
@@ -53,6 +57,9 @@ public class Main {
         ViewRestaurantViewModel viewRestaurantViewModel = new ViewRestaurantViewModel();
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
+        AddReviewViewModel addReviewViewModel = new AddReviewViewModel();
+        WriteReviewViewModel writeReviewViewModel = new WriteReviewViewModel();
+
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -102,9 +109,17 @@ public class Main {
         views.add(viewFavouritesView, viewFavouritesView.viewName);
 
         RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
-                addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController,
+                addReviewViewModel, addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
+                viewRestaurantController,
                 fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
+
+        AddReviewController addReviewController = RestaurantUseCaseFactory.createAddReviewUseCase(viewManagerModel,
+                addReviewViewModel, userDataAccessObject);
+
+        WriteReviewView writeReviewView = new WriteReviewView(addReviewViewModel, writeReviewViewModel, addReviewController,
+                restaurantController);
+        views.add(writeReviewView, writeReviewView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

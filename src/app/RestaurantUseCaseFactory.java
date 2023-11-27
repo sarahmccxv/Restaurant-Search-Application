@@ -3,6 +3,9 @@ package app;
 import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_review.AddReviewPresenter;
+import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
 import interface_adapter.add_to_favourites.AddToFavouritesPresenter;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
@@ -13,6 +16,9 @@ import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import use_case.add_review.AddReviewInputBoundary;
+import use_case.add_review.AddReviewInteractor;
+import use_case.add_review.AddReviewOutputBoundary;
 import use_case.add_to_favourites.AddToFavouritesDataAccessInterface;
 import use_case.add_to_favourites.AddToFavouritesInputBoundary;
 import use_case.add_to_favourites.AddToFavouritesInteractor;
@@ -35,6 +41,7 @@ public class RestaurantUseCaseFactory {
 
     public static RestaurantView create(ViewManagerModel viewManagerModel,
                                         RestaurantViewModel restaurantViewModel,
+                                        AddReviewViewModel addReviewViewModel,
                                         AddToFavouritesViewModel addToFavouritesViewModel,
                                         ViewRestaurantDataAccessInterface RestaurantDataAccessObject,
                                         RegisterUserDataAccessInterface fileUserDataAccessObject,
@@ -44,12 +51,14 @@ public class RestaurantUseCaseFactory {
                                         FileFavouritesDataAccessObject favouritesDataAccessObject2) throws IOException {
         RestaurantController restaurantController = createRestaurantUseCase(viewManagerModel,
                 restaurantViewModel, RestaurantDataAccessObject, fileUserDataAccessObject);
+        AddReviewController addReviewController = createAddReviewUseCase(viewManagerModel, addReviewViewModel,
+                fileUserDataAccessObject);
         AddToFavouritesController addToFavouritesController = createAddToFavouritesUseCase(viewManagerModel, addToFavouritesViewModel,
                 favouritesDataAccessObject, fileUserDataAccessObject);
         ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
                 viewFavouritesViewModel, favouritesDataAccessObject2, fileUserDataAccessObject);
-        return new RestaurantView(restaurantViewModel, restaurantController, viewRestaurantController,
-                addToFavouritesController, addToFavouritesViewModel, viewFavouritesController);
+        return new RestaurantView(restaurantViewModel, restaurantController, addReviewViewModel, addReviewController,
+                viewRestaurantController, addToFavouritesController, addToFavouritesViewModel, viewFavouritesController);
     }
 
     public static RestaurantController createRestaurantUseCase(ViewManagerModel viewManagerModel,
@@ -64,6 +73,14 @@ public class RestaurantUseCaseFactory {
         RestaurantInputBoundary RestaurantInteractor = new RestaurantInteractor(
                 fileUserDataAccessObject, restaurantDataAccessObject, restaurantOutputBoundary);
         return new RestaurantController(RestaurantInteractor);
+    }
+
+    public static AddReviewController createAddReviewUseCase(ViewManagerModel viewManagerModel,
+                                                             AddReviewViewModel addReviewViewModel,
+                                                             RegisterUserDataAccessInterface fileUserDataAccessObject) {
+        AddReviewOutputBoundary addReviewPresenter = new AddReviewPresenter(viewManagerModel, addReviewViewModel);
+        AddReviewInputBoundary addReviewInteractor = new AddReviewInteractor(addReviewPresenter, fileUserDataAccessObject);
+        return new AddReviewController(addReviewInteractor);
     }
 
     public static AddToFavouritesController createAddToFavouritesUseCase(ViewManagerModel viewManagerModel,

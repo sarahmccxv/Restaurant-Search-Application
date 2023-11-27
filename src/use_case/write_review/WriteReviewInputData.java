@@ -4,15 +4,15 @@ import entity.Restaurant;
 import entity.User;
 
 public class WriteReviewInputData {
-    private final String userID;
+    private final User user;
     private final Restaurant restaurant;
 
-    public WriteReviewInputData(String userID, Restaurant restaurant) {
-        this.userID = userID;
+    public WriteReviewInputData(User user, Restaurant restaurant) {
+        this.user = user;
         this.restaurant = restaurant;
     }
 
-    public String getUserID() { return userID; }
+    public User getUserID() { return user; }
 
     public Restaurant getRestaurant() { return restaurant;}
 }

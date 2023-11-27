@@ -1,6 +1,7 @@
 package use_case.restaurant;
 
 import entity.Restaurant;
+import entity.User;
 
 public class RestaurantOutputData {
     private String userID;

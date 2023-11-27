@@ -1,7 +1,10 @@
 package view;
 
 import entity.Restaurant;
+import entity.User;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
@@ -23,7 +26,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     public final String viewName = "Restaurant";
     final JButton returnBack;
-    private JButton writeReview;
+    private JButton addReview;
     private JButton addToFavourite;
     final JPanel info;
     final JPanel buttons;
@@ -31,9 +34,8 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
     private ViewRestaurantController viewRestaurantController;
-    // TODO: Implement Reviews later
-    private WriteReviewViewModel writeReviewViewModel;
-    private WriteReviewController writeReviewController;
+    private AddReviewViewModel addReviewViewModel;
+    private AddReviewController addReviewController;
     private AddToFavouritesController addToFavouritesController;
     private AddToFavouritesViewModel addToFavouritesViewModel;
     private ViewFavouritesController viewFavouritesController;
@@ -41,16 +43,16 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
                           RestaurantController restaurantController,
-                          WriteReviewViewModel writeReviewViewModel,
-                          WriteReviewController writeReviewController,
+                          AddReviewViewModel addReviewViewModel,
+                          AddReviewController addReviewController,
                           ViewRestaurantController viewRestaurantController,
                           AddToFavouritesController addToFavouritesController,
                           AddToFavouritesViewModel addToFavouritesViewModel,
                           ViewFavouritesController viewFavouritesController){
         this.restaurantViewModel = restaurantViewModel;
         this.restaurantController = restaurantController;
-        this.writeReviewViewModel = writeReviewViewModel;
-        this.writeReviewController = writeReviewController;
+        this.addReviewViewModel = addReviewViewModel;
+        this.addReviewController = addReviewController;
         this.viewRestaurantController = viewRestaurantController;
         this.addToFavouritesController = addToFavouritesController;
         this.addToFavouritesViewModel = addToFavouritesViewModel;
@@ -87,16 +89,16 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                     }
                 });
 
-        writeReview = new JButton(RestaurantViewModel.WRITE_REVIEW_LABEL);
-        buttons.add(writeReview);
-        writeReview.addActionListener(
+        addReview = new JButton(RestaurantViewModel.WRITE_REVIEW_LABEL);
+        buttons.add(addReview);
+        addReview.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(writeReview)) {
+                        if (evt.getSource().equals(addReview)) {
                             RestaurantState state = restaurantViewModel.getState();
                             Restaurant restaurant = state.getRestaurant();
                             String userID = state.getUserID();
-                            writeReviewController.execute(userID, restaurant);
+                            addReviewController.execute(userID, restaurant);
                         }
                     }
                 });
