@@ -213,7 +213,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
                     restaurants.add(button);
                     System.out.println("button added");
-            }restaurants.remove(5);
+                }
+            restaurants.remove(5);
         }
         });
 

@@ -9,6 +9,7 @@ import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +34,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     private AddToFavouritesController addToFavouritesController;
     private AddToFavouritesViewModel addToFavouritesViewModel;
     private ViewFavouritesController viewFavouritesController;
+    private ViewManagerModel viewManagerModel;
 
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
@@ -41,13 +43,15 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                           ViewRestaurantController viewRestaurantController,
                           AddToFavouritesController addToFavouritesController,
                           AddToFavouritesViewModel addToFavouritesViewModel,
-                          ViewFavouritesController viewFavouritesController){
+                          ViewFavouritesController viewFavouritesController,
+                          ViewManagerModel viewManagerModel){
         this.restaurantViewModel = restaurantViewModel;
         this.restaurantController = restaurantController;
         this.viewRestaurantController = viewRestaurantController;
         this.addToFavouritesController = addToFavouritesController;
         this.addToFavouritesViewModel = addToFavouritesViewModel;
         this.viewFavouritesController = viewFavouritesController;
+        this.viewManagerModel = viewManagerModel;
 
         restaurantViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(RestaurantViewModel.TITLE_LABEL);
@@ -111,9 +115,13 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     public void actionPerformed(ActionEvent evt) {
         RestaurantState state = restaurantViewModel.getState();
         if (state.getPreviousView().equals("view restaurants")) {
-            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
+            viewManagerModel.setActiveView("view restaurant");
+            viewManagerModel.firePropertyChanged();
+//            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
         } else if (state.getPreviousView().equals("view favourites")) {
             viewFavouritesController.execute(state.getUsername());
+        }else {
+            System.out.println("ohno");
         }
     }
 }
