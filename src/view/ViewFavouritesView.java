@@ -67,7 +67,7 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
         if (!state.getSuccess()){
             favourites.add(new JLabel(state.getNoFavouritesMessage()));
         } else {
-            for (Restaurant favourite : state.getFavouritesList().getFavourites()) {
+            for (Restaurant favourite : state.getFavouritesList()) {
                 JPanel restaurant = new JPanel();
 
                 String restaruant_name = "<html><b>" + favourite.getRestaurantName() + "</b><html>";

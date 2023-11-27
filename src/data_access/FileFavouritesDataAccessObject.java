@@ -9,10 +9,7 @@ import use_case.remove_favourite.RemoveFavouriteDataAccessInterface;
 
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessInterface,
         AddToFavouritesDataAccessInterface, RemoveFavouriteDataAccessInterface {
@@ -52,8 +49,8 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
         String username = user.getUsername();
         if (hasFavourites(username)) {
             String restaurantID = restaurant.getRestaurantID();
-            ArrayList<Restaurant> favourites = favouritesMap.get(username).getFavourites();
-            for (Restaurant favourite : favourites) {
+            FavouritesList favouritesList = favouritesMap.get(username);
+            for (Restaurant favourite : favouritesList) {
                 if (favourite.getRestaurantID().equals(restaurantID)) {
                     return true;
                 }
@@ -66,7 +63,7 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
     public boolean hasFavourites(String username){
         if (favouritesMap.get(username) == null) {
             return false;
-        } else return !favouritesMap.get(username).getFavourites().isEmpty();
+        } else return !favouritesMap.get(username).isEmpty();
     }
 
     @Override

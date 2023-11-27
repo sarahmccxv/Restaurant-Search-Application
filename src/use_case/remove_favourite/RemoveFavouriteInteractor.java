@@ -1,7 +1,5 @@
 package use_case.remove_favourite;
 
-
-import entity.FavouritesList;
 import entity.Restaurant;
 import entity.User;
 import use_case.register.RegisterUserDataAccessInterface;

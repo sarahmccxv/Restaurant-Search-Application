@@ -78,6 +78,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                             }
                     }
                 });
+        buttons.add(addToFavourite);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -106,9 +107,9 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.add(restaurantCategories);
 
         if (state.getPreviousView().equals("view restaurants")) {
-            buttons.add(addToFavourite);
+            addToFavourite.setVisible(true);
         } else if (state.getPreviousView().equals("view favourites")) {
-            buttons.remove(addToFavourite);
+            addToFavourite.setVisible(false);
         }
     }
 
