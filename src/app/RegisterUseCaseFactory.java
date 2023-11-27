@@ -1,7 +1,6 @@
 package app;
 
 import api.yelp.YelpApiServices;
-import data_access.FileUserDataAccessObject;
 import entity.UserFactory;
 import entity.UserInterface;
 import interface_adapter.ViewManagerModel;
