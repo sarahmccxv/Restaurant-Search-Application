@@ -86,48 +86,16 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JPanel search_button = new JPanel();
         search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
         search_button.add(search);
-        search.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(search)) {
-                            ViewRestaurantState currentState = viewRestaurantViewModel.getState();
-                            searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
-                        }
-                    }
-                }
-        );
 
         JPanel sort_button = new JPanel();
         sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
         sort_button.add(sortAndFilter);
-        sortAndFilter.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(sortAndFilter)) {
-                            SortAndFilterState state = sortAndFilterViewModel.getState();
-                            SearchCriteria criteria = state.getCriteria();
-                            sortAndFilterController.execute(criteria);
-                        }
-                    }
-                }
-        );
 
         JPanel buttons = new JPanel();
         returnBack = new JButton(ViewRestaurantViewModel.RETURN_LABEL);
         buttons.add(returnBack);
-        returnBack.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(returnBack)) {
-                            //System.out.println("Return button clicked");
-                            ViewRestaurantState state = viewRestaurantViewModel.getState();
-                            //System.out.println("User name is " + state.getUsername() + " password is " + state.getPassword());
-                            loginController.execute(state.getUsername(), state.getPassword());
-                        }
-                    }
-                }
-                );
+        returnBack.addActionListener(this);
+
 
 
 
