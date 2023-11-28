@@ -45,12 +45,16 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel(RegisterViewModel.LOCATION_LABEL), locationInputField);
 
-        JPanel buttons = new JPanel();
+        JFrame frame = new JFrame("Register buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
-        register.setOpaque(true);
-        register.setBorderPainted(false);
         register.setBackground(Color.BLUE); // for the background
         register.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(buttons);
+        frame.pack();
+        frame.setVisible(true);
         buttons.add(register);
         cancel = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
         buttons.add(cancel);
