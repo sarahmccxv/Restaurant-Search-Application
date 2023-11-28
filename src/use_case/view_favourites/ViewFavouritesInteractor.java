@@ -1,14 +1,7 @@
 package use_case.view_favourites;
 
-import data_access.FileUserDataAccessObject;
 import entity.FavouritesList;
-import entity.User;
-
-import java.util.ArrayList;
-
-import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import use_case.register.RegisterUserDataAccessInterface;
-import use_case.view_favourites.ViewFavouritesOutputBoundary;
 
 public class ViewFavouritesInteractor implements ViewFavouritesInputBoundary{
     private final RegisterUserDataAccessInterface fileUserDataAccessObject;

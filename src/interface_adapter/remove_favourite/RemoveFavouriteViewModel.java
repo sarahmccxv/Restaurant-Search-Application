@@ -1,25 +1,24 @@
-package interface_adapter.view_favourites;
+package interface_adapter.remove_favourite;
+
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-public class ViewFavouritesViewModel extends ViewModel {
-
-    public static final String TITLE_LABEL = "View Favourites";
-    public static final String RETURN_LABEL = "Return";
-    private ViewFavouritesState state = new ViewFavouritesState();
+public class RemoveFavouriteViewModel extends ViewModel{
+    public static final String TITLE_LABEL = "Notice";
+    private RemoveFavouriteState state = new RemoveFavouriteState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
-    public ViewFavouritesViewModel() {
-        super("view favourites");
+    public RemoveFavouriteViewModel() {
+        super("Removed Favourite View");
     }
 
-    public void setState(ViewFavouritesState state) {
+    public void setState(RemoveFavouriteState state) {
         this.state = state;
     }
 
-    public ViewFavouritesState getState() {
+    public RemoveFavouriteState getState() {
         return state;
     }
 
@@ -32,5 +31,5 @@ public class ViewFavouritesViewModel extends ViewModel {
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         support.addPropertyChangeListener(listener);
     }
-
 }
+

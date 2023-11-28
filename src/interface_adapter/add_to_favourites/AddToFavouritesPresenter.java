@@ -19,10 +19,10 @@ public class AddToFavouritesPresenter implements AddToFavouritesOutputBoundary {
         state.setUsername(addToFavouritesOutputData.getUsername());
         state.setRestaurantName(addToFavouritesOutputData.getRestaurantName());
         state.setMessage(addToFavouritesOutputData.getSuccessMessage());
-        this.addToFavouritesViewModel.setState(state);
-        this.addToFavouritesViewModel.firePropertyChanged();
-        this.viewManagerModel.setActiveView(addToFavouritesViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        addToFavouritesViewModel.setState(state);
+        addToFavouritesViewModel.firePropertyChanged();
+        viewManagerModel.setActiveView(addToFavouritesViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 
     public void prepareFailView(AddToFavouritesOutputData addToFavouritesOutputData){
