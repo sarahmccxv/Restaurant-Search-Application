@@ -63,7 +63,7 @@ public class SearchCriteria {
     }
 
     public void setCategory(String category) {
-        this.category = category.trim();
+        this.category = category.trim().toLowerCase();
     }
 
     public static class Builder {
@@ -100,7 +100,7 @@ public class SearchCriteria {
         }
 
         public Builder setCategory(String category) {
-            this.category = category.trim();
+            this.category = category.trim().toLowerCase();
             return this;
         }
 

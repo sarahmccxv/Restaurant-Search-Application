@@ -30,12 +30,12 @@ public class YelpAPITest {
     @Test
     void getRestaurantsTest() {
         SearchCriteria searchCriteria = new SearchCriteria.Builder()
-                .setName(expectedRestaurantName)
+//                .setName(expectedRestaurantName)
                 .setLocation(location)
                 .setLimit(5)
                 .setSortingMethod(SearchSortingMethods.BEST_MATCH)
                 .setPriceLevel(SearchPriceLevel.CHEAP)
-//                .setCategory("chinese")
+                .setCategory("Japanese")
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getRestaurants(searchCriteria);
 
