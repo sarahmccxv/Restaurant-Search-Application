@@ -34,7 +34,7 @@ public class YelpAPI implements YelpApiServices {
     }
 
     @Override
-    public ArrayList<Restaurant> getRestaurantsByName(String location, String restaurantName) {
+    public ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName) {
         SearchCriteria criteria = new SearchCriteria.Builder()
                 .setLocation(location)
                 .setName(restaurantName)
