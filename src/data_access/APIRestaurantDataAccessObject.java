@@ -2,6 +2,7 @@ package data_access;
 
 import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
+import api.Review.ReviewCriteria;
 import api.yelp.YelpAPI;
 import api.yelp.YelpApiServices;
 import entity.Restaurant;
@@ -42,12 +43,11 @@ public class APIRestaurantDataAccessObject implements YelpApiServices, ViewResta
 
     @Override
     public ArrayList<YelpReview> getReviews(ReviewCriteria criteria) {
-        return null;
+        return apiRestaurant.getReviews(criteria);
     }
 
     @Override
     public ArrayList<YelpReview> getReviewsByID(String id) {
-        return null;
+        return apiRestaurant.getReviewsByID(id);
     }
-
 }
