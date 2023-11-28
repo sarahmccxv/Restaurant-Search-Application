@@ -25,17 +25,17 @@ public class YelpAPITest {
     private final String expectedRestaurantName = "Pai Northern Thai Kitchen";
     private final String expectedRestaurantAddress = "18 Duncan Street, Toronto, ON M5H 3G8";
     private final String expectedPhoneNumber = "+14169014724";
-    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("thai"));
+    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("Thai"));
 
     @Test
     void getRestaurantsTest() {
         SearchCriteria searchCriteria = new SearchCriteria.Builder()
-                .setName(expectedRestaurantName)
+//                .setName(expectedRestaurantName)
                 .setLocation(location)
                 .setLimit(5)
                 .setSortingMethod(SearchSortingMethods.BEST_MATCH)
                 .setPriceLevel(SearchPriceLevel.CHEAP)
-//                .setCategory("chinese")
+                .setCategory("Japanese")
                 .build();
         ArrayList<Restaurant> restaurantArrayList = yelpApiServices.getRestaurants(searchCriteria);
 

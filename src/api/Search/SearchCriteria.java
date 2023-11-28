@@ -1,7 +1,5 @@
 package api.Search;
 
-import java.util.ArrayList;
-
 public class SearchCriteria {
     private  String name;
     private  String location;
@@ -23,6 +21,10 @@ public class SearchCriteria {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name.trim();
+    }
+
     public String getLocation() {
         return location;
     }
@@ -33,17 +35,34 @@ public class SearchCriteria {
         return limit;
     }
 
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
+
     public String getSortingMethod() {
         return sortingMethod.toString();
+    }
+
+    public void setSortingMethod(SearchSortingMethods sortingMethod) {
+        this.sortingMethod = sortingMethod;
     }
 
     public String getPriceLevel() {
         return priceLevel.level;
     }
 
+    public void setPriceLevel(SearchPriceLevel priceLevel) {
+        this.priceLevel = priceLevel;
+    }
+
     public String getCategory() {
         return category;
     }
+
+    public void setCategory(String category) {
+        this.category = category.trim().toLowerCase();
+    }
+
 
     public static class Builder {
         private String name;
@@ -79,7 +98,7 @@ public class SearchCriteria {
         }
 
         public Builder setCategory(String category) {
-            this.category = category;
+            this.category = category.trim().toLowerCase();
             return this;
         }
 
