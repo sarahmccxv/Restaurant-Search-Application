@@ -58,6 +58,8 @@ public class Main {
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
+        UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
+        RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
