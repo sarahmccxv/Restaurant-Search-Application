@@ -3,7 +3,6 @@ package app;
 import data_access.APIRestaurantDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.FileFavouritesDataAccessObject;
-import entity.RestaurantFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
@@ -11,6 +10,7 @@ import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.register.RegisterViewModel;
+import interface_adapter.remove_favourite.RemoveFavouriteViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.search_restaurants.SearchRestaurantController;
@@ -57,6 +57,7 @@ public class Main {
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
+        RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
         try {
@@ -69,7 +70,7 @@ public class Main {
 
         FileFavouritesDataAccessObject fileFavouritesDataAccessObject;
         try {
-            fileFavouritesDataAccessObject = new FileFavouritesDataAccessObject("./favourites.csv", new RestaurantFactory());
+            fileFavouritesDataAccessObject = new FileFavouritesDataAccessObject("./favourites.csv");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -102,10 +103,10 @@ public class Main {
         ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
                 apiRestaurantDataAccessObject, userDataAccessObject);
 
-        ViewFavouritesView viewFavouritesView = new ViewFavouritesView(viewFavouritesViewModel,
-                LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
-                        userDataAccessObject), restaurantController);
-        views.add(viewFavouritesView, viewFavouritesView.viewName);
+        ViewFavouritesView viewFavouritesView = ViewFavouritesUseCaseFactory.create(viewManagerModel, restaurantViewModel,
+                loginViewModel, loggedInViewModel, viewFavouritesViewModel, removeFavouriteViewModel, apiRestaurantDataAccessObject,
+                userDataAccessObject, fileFavouritesDataAccessObject);
+        views.add(viewFavouritesView, ViewFavouritesView.viewName);
 
         RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
                 addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController,

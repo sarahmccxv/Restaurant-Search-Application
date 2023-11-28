@@ -14,7 +14,6 @@ public class AddToFavouritesController {
     public void execute(String username, Restaurant restaurant){
         AddToFavouritesInputData addToFavouritesInputData = new AddToFavouritesInputData(username, restaurant);
         addToFavouritesInteractor.execute(addToFavouritesInputData);
-        System.out.println("Add To Favourites Controller called");
     }
 
 }

@@ -1,15 +1,12 @@
 package use_case.view_favourites;
 
 import entity.FavouritesList;
-import entity.Restaurant;
-
-import java.util.ArrayList;
 
 public class ViewFavouritesOutputData {
-    private String userID;
-    private String username;
-    private String password;
-    private FavouritesList favouritesList;
+    private final String userID;
+    private final String username;
+    private final String password;
+    private final FavouritesList favouritesList;
 
     public ViewFavouritesOutputData(String userID, String username, String password, FavouritesList favouritesList) {
         this.userID = userID;
