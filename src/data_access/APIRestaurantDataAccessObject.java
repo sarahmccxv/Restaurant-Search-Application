@@ -37,7 +37,7 @@ public class APIRestaurantDataAccessObject implements YelpApiServices, ViewResta
 
     @Override
     public ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName) {
-        return apiRestaurant.getRestaurantByName(location, restaurantName);
+        return apiRestaurant.getRestaurantsByName(location, restaurantName);
     }
 
     @Override

@@ -32,7 +32,9 @@ public class YelpAPI implements YelpApiServices {
         SingleRestaurantResponse singleRestaurantResponse = new SingleRestaurantResponse(yelpAPIClient.getResponseBody());
         return singleRestaurantResponse.getRestaurant();
     }
-    public ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName) {
+
+    @Override
+    public ArrayList<Restaurant> getRestaurantsByName(String location, String restaurantName) {
         SearchCriteria criteria = new SearchCriteria.Builder()
                 .setLocation(location)
                 .setName(restaurantName)
