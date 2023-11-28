@@ -4,6 +4,7 @@ import entity.User;
 import entity.UserFactory;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.register.RegisterUserDataAccessInterface;
+import use_case.user_profile.UserProfileDataAccessInterface;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -12,14 +13,14 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FileUserDataAccessObject implements RegisterUserDataAccessInterface,
-        LoginUserDataAccessInterface {
+        LoginUserDataAccessInterface, UserProfileDataAccessInterface {
 
     private final File csvFile;
 
     private final Map<String, Integer> headers = new LinkedHashMap<>();
 
-    private final Map<String, User> accounts = new HashMap<>();
-    private final Map<String, User> accountsID = new HashMap<>();
+    private final Map<String, User> accounts = new LinkedHashMap<>();
+    private final Map<String, User> accountsID = new LinkedHashMap<>();
 
     private UserFactory userFactory;
 
@@ -186,4 +187,9 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
         return rowCount;
     }
 
+    @Override
+    public void updateUserInfo(User user) {
+        accounts.replace(this.getByUserID(user.getUserID()).getUsername(), user);
+        this.save();
+    }
 }
