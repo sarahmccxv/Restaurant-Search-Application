@@ -15,7 +15,7 @@ public class SingleRestaurantParser {
 
              String restaurantID = jsonObject.getString("id");
              String restaurantName = jsonObject.getString("name");
-             String phoneNumber = jsonObject.getString("phone");
+             String phoneNumber = jsonObject.getString("display_phone");
              String imageURL = jsonObject.getString("image_url");
 
              JSONArray addressArray = jsonObject.getJSONObject("location").getJSONArray("display_address");
