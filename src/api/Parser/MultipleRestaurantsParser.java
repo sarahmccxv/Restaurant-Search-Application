@@ -20,6 +20,7 @@ public class MultipleRestaurantsParser {
                 String restaurantID = businessesArray.getJSONObject(i).getString("id");
                 String restaurantName = businessesArray.getJSONObject(i).getString("name");
                 String phoneNumber = businessesArray.getJSONObject(i).getString("phone");
+                String imageURL = businessesArray.getJSONObject(i).getString("image_url");
 
                 JSONArray addressArray = businessesArray.getJSONObject(i).getJSONObject("location").getJSONArray("display_address");
                 String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
@@ -30,7 +31,7 @@ public class MultipleRestaurantsParser {
                     categories.add(categoriesArray.getJSONObject(j).getString("alias"));
                 }
 
-                restaurantsList.add(restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories));
+                restaurantsList.add(restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories, imageURL));
             }
 
             return restaurantsList;

@@ -16,6 +16,7 @@ public class SingleRestaurantParser {
              String restaurantID = jsonObject.getString("id");
              String restaurantName = jsonObject.getString("name");
              String phoneNumber = jsonObject.getString("phone");
+             String imageURL = jsonObject.getString("image_url");
 
              JSONArray addressArray = jsonObject.getJSONObject("location").getJSONArray("display_address");
              String address = String.format("%s, %s", addressArray.getString(0), addressArray.getString(1));
@@ -26,7 +27,7 @@ public class SingleRestaurantParser {
                  categories.add(categoriesArray.getJSONObject(i).getString("alias"));
              }
 
-             return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories);
+             return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories, imageURL);
          } catch (JSONException e) {
              throw new RuntimeException(e);
          }

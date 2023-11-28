@@ -11,12 +11,19 @@ import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
 
 public class RestaurantView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -97,18 +104,50 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.removeAll();
         info.revalidate();
         info.repaint();
-        JLabel restaurantAddress = new JLabel(
-                "Address: " + restaurant.getAddress());
-        JLabel restaurantPhoneNumber = new JLabel(
-                "Phone number: " + restaurant.getPhoneNumber());
-        JLabel restaurantCategories = new JLabel(
-                "Categories: " + restaurant.getCategories().toString());
+
+        JLabel restaurantImage = new JLabel();
+        try {
+            URL url = new URL(restaurant.getImageURL());
+            BufferedImage image = ImageIO.read(url);
+            // Set the image to the label
+            int desiredWidth = 300;
+            int desiredHeight = 200;
+            Image scaledImage = image.getScaledInstance(desiredWidth, desiredHeight, Image.SCALE_SMOOTH);
+            restaurantImage.setIcon(new ImageIcon(scaledImage));
+
+            // Create a border around the image
+            Border border = new LineBorder(Color.BLACK, 2); // Change color and thickness as desired
+            restaurantImage.setBorder(border);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Create JLabels with HTML for bold text
+        JLabel restaurantName = new JLabel("<html><b>Restaurant Name:</b> " + restaurant.getRestaurantName() + "</html>");
+        JLabel restaurantAddress = new JLabel("<html><b>Address:</b> " + restaurant.getAddress() + "</html>");
+        JLabel restaurantPhoneNumber = new JLabel("<html><b>Phone number:</b> " + restaurant.getPhoneNumber() + "</html>");
+        String categories = String.join(", ", restaurant.getCategories());
+        JLabel restaurantCategories = new JLabel("<html><b>Categories:</b> " + categories + "</html>");;
+
         // TODO: Implement Reviews
         // JLabel reviews = new JLabel(restaurant.getReviews())
-        info.add(new JLabel("Restaurant Name: " + restaurant.getRestaurantName()));
+
+        // Set empty spaces between labels
+        int spaceAfterImage = 10; // Adjust space as needed
+        Border emptySpaceAfterImage = new EmptyBorder(spaceAfterImage, 0, 0, 0);
+
+        restaurantName.setBorder(emptySpaceAfterImage);
+        restaurantAddress.setBorder(emptySpaceAfterImage);
+        restaurantPhoneNumber.setBorder(emptySpaceAfterImage);
+        restaurantCategories.setBorder(emptySpaceAfterImage);
+//        reviews.setBorder(emptySpaceAfterImage);
+
+        info.add(restaurantImage);
+        info.add(restaurantName);
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
+//        info.add(reviews);
     }
 
     @Override
