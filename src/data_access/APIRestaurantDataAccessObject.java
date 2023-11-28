@@ -1,9 +1,11 @@
 package data_access;
 
 import api.Search.SearchCriteria;
+import api.Review.ReviewCriteria;
 import api.yelp.YelpAPI;
 import api.yelp.YelpApiServices;
 import entity.Restaurant;
+import entity.YelpReview;
 import use_case.search_restaurant.SearchRestaurantDataAccessInterface;
 import use_case.sortandfilter.SortAndFilterRestaurantDataAccessInterface;
 import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
@@ -38,4 +40,13 @@ public class APIRestaurantDataAccessObject implements YelpApiServices, ViewResta
         return apiRestaurant.getRestaurantByName(location, restaurantName);
     }
 
+    @Override
+    public ArrayList<YelpReview> getReviews(ReviewCriteria criteria) {
+        return apiRestaurant.getReviews(criteria);
+    }
+
+    @Override
+    public ArrayList<YelpReview> getReviewsByID(String id) {
+        return apiRestaurant.getReviewsByID(id);
+    }
 }
