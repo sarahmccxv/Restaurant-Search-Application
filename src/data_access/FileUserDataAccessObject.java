@@ -189,7 +189,9 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
 
     @Override
     public void updateUserInfo(User user) {
-        accounts.replace(this.getByUserID(user.getUserID()).getUsername(), user);
+        String id = user.getUserID();
+        accounts.replace(this.getByUserID(id).getUsername(), user);
+        accountsID.replace(id, user);
         this.save();
     }
 }
