@@ -16,6 +16,7 @@ import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.search_restaurants.SearchRestaurantController;
 import interface_adapter.sort_and_filter.SortAndFilterController;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
+import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
@@ -57,6 +58,7 @@ public class Main {
         RestaurantViewModel restaurantViewModel = new RestaurantViewModel();
         SortAndFilterViewModel sortAndFilterViewModel = new SortAndFilterViewModel();
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
+        UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
         RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
 
         FileUserDataAccessObject userDataAccessObject;
@@ -82,9 +84,9 @@ public class Main {
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
         views.add(loginView, loginView.viewName);
 
-        LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
+         LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject, userDataAccessObject);
+                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
@@ -115,6 +117,10 @@ public class Main {
 
         SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
+
+        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
+                userDataAccessObject, loginController);
+        views.add(userProfileView, userProfileView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);
         viewManagerModel.firePropertyChanged();

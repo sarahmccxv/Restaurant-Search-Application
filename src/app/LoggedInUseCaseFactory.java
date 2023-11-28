@@ -2,6 +2,8 @@ package app;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.user_profile.UserProfileController;
+import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
@@ -9,6 +11,7 @@ import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.view_restaurants.ViewRestaurantPresenter;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import use_case.register.RegisterUserDataAccessInterface;
+import use_case.user_profile.UserProfileDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesDataAccessInterface;
 import use_case.view_favourites.ViewFavouritesInputBoundary;
 import use_case.view_favourites.ViewFavouritesInteractor;
@@ -18,6 +21,7 @@ import use_case.view_restaurant.ViewRestaurantInputBoundary;
 import use_case.view_restaurant.ViewRestaurantInteractor;
 import use_case.view_restaurant.ViewRestaurantOutputBoundary;
 import view.LoggedInView;
+import view.UserProfileView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -32,6 +36,8 @@ public class LoggedInUseCaseFactory {
                                       ViewRestaurantDataAccessInterface viewRestaurantDataAccessObject,
                                       ViewFavouritesViewModel viewFavouritesViewModel,
                                       ViewFavouritesDataAccessInterface userDataAccessObject,
+                                      UserProfileViewModel userProfileViewModel,
+                                      UserProfileDataAccessInterface userProfileDataAccessObject,
                                       RegisterUserDataAccessInterface fileUserDataAccessObject) {
 
         try {
@@ -39,8 +45,10 @@ public class LoggedInUseCaseFactory {
                     viewFavouritesViewModel, userDataAccessObject, fileUserDataAccessObject);
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
                     viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
+            UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
+                    viewManagerModel, userProfileViewModel, userProfileDataAccessObject);
             return new LoggedInView(loggedInViewModel, viewFavouritesViewModel,
-                    viewFavouritesController, viewRestaurantViewModel, viewRestaurantController);
+                    viewFavouritesController, viewRestaurantViewModel, viewRestaurantController, userProfileViewModel, userProfileController);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
