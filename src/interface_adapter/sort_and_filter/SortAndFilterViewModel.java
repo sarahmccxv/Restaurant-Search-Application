@@ -7,7 +7,8 @@ import java.beans.PropertyChangeSupport;
 public class SortAndFilterViewModel extends ViewModel{
     public static final String TITLE_LABEL = "Sort and filter";
     public static final String RETURN_BUTTON_LABEL = "Return";
-    public static final String SEARCH_BUTTON_LABEL = "Search";
+    public static final String APPLY_BUTTON_LABEL = "Apply";
+    public static final String CANCEL_BUTTON_LABEL = "Cancel";
     private SortAndFilterState state = new SortAndFilterState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 

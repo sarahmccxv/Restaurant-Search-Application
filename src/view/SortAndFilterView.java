@@ -14,16 +14,19 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
+import static api.Search.SearchPriceLevel.*;
+import static api.Search.SearchSortingMethods.*;
+
 public class SortAndFilterView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "filter and sort restaurants";
     private final SortAndFilterViewModel sortAndFilterViewModel;
     private final ViewRestaurantViewModel viewRestaurantViewModel;
     final JButton returnBack;
     final JPanel sorted;
-    final JComboBox sortingMethods;
-    final JComboBox priceLevel;
+    final JComboBox<String> sortingMethodComboBox;
+    final JComboBox<String> priceLevelComboBox;
     final JTextField categoryInputField = new JTextField(15);
-    final JButton search;
+    final JButton apply;
     private SortAndFilterController sortAndFilterController;
 
     public SortAndFilterView(SortAndFilterController sortAndFilterController, SortAndFilterViewModel sortAndFilterViewModel, ViewRestaurantViewModel viewRestaurantViewModel){
@@ -40,29 +43,26 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(sorted);
 
-//        LabelTextPanel categoryInfo = new LabelTextPanel(
-//                new JLabel(SortAndFilterViewModel.CATEGORY_LABEL), categoryInputField);
+        JPanel applyButton = new JPanel();
+        apply = new JButton(SortAndFilterViewModel.APPLY_BUTTON_LABEL);
+        applyButton.add(apply);
+        apply.addActionListener(this);
+
+        String[] sortingMethod = {BEST_MATCH.toString(), RATING.toString(), REVIEW_COUNT.toString()};
+        sortingMethodComboBox = new JComboBox(sortingMethod);
+        sortingMethodComboBox.setSelectedItem(BEST_MATCH);
+
+        String[] priceLevel = {CHEAP.toString(), MODERATE.toString(), PRICEY.toString(), LUXURY.toString()};
+        priceLevelComboBox = new JComboBox<>(priceLevel);
+        priceLevelComboBox.setSelectedItem(CHEAP);
 
         JPanel returnButton = new JPanel();
         returnBack = new JButton(SortAndFilterViewModel.RETURN_BUTTON_LABEL);
         returnButton.add(returnBack);
         returnBack.addActionListener(this);
 
-        JPanel searchButton = new JPanel();
-        search = new JButton(SortAndFilterViewModel.SEARCH_BUTTON_LABEL);
-        searchButton.add(search);
-        search.addActionListener(this);
-
-        JPanel comboBoxPanel = new JPanel();
-        comboBoxPanel.setLayout(new BoxLayout(comboBoxPanel, BoxLayout.Y_AXIS));
-        sortingMethods = new JComboBox<>(SearchSortingMethods.values());
-        sortingMethods.setSelectedItem(SearchSortingMethods.BEST_MATCH);
-        priceLevel = new JComboBox<>(SearchPriceLevel.values());
-        sortingMethods.setSelectedItem(SearchPriceLevel.CHEAP);
-        comboBoxPanel.add(sortingMethods);
-        comboBoxPanel.add(priceLevel);
-
-        sorted.add(comboBoxPanel);
+        this.add(sortingMethodComboBox);
+        this.add(priceLevelComboBox);
     }
 
     @Override
@@ -71,10 +71,10 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
             System.out.println("Return button clicked");
             CardLayout cardLayout = (CardLayout) getParent().getLayout();
             cardLayout.show(getParent(), viewRestaurantViewModel.getViewName());
-        } else if (e.getSource() == search) {
-            System.out.println("Search button clicked");
-            SearchSortingMethods selectedSortingMethod = (SearchSortingMethods) sortingMethods.getSelectedItem();
-            SearchPriceLevel selectedPriceLevel = (SearchPriceLevel) priceLevel.getSelectedItem();
+        } else if (e.getSource() == apply) {
+            System.out.println("Apply button clicked");
+            SearchSortingMethods selectedSortingMethod = (SearchSortingMethods) sortingMethodComboBox.getSelectedItem();
+            SearchPriceLevel selectedPriceLevel = (SearchPriceLevel) priceLevelComboBox.getSelectedItem();
             String enteredCategory = categoryInputField.getText();
 
             System.out.println("Selected Sorting Method: " + selectedSortingMethod);

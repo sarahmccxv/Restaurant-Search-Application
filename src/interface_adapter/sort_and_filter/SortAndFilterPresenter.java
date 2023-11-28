@@ -28,6 +28,7 @@ public class SortAndFilterPresenter implements SortAndFilterRestaurantOutputBoun
         this.sortAndFilterViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(sortAndFilterViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+        System.out.println("sort and filter view should change");
     }
 
     public void prepareFailView(String error) {

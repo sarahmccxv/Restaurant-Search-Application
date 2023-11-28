@@ -9,7 +9,7 @@ public class SearchResaturantInputData {
         this.restaurantName = restaurantName;
     }
 
-    String getRestaurantName() {
+    public String getRestaurantName() {
         return restaurantName;
     }
     String getLocation(){
