@@ -24,6 +24,7 @@ import java.beans.PropertyChangeListener;
 public class WriteReviewView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "Add Review";
     private final AddReviewViewModel addReviewViewModel;
+    private final WriteReviewController writeReviewController;
     private final WriteReviewViewModel writeReviewViewModel;
     private RestaurantController restaurantController;
 
@@ -40,12 +41,12 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
     public WriteReviewView(AddReviewViewModel addReviewViewModel,
                            WriteReviewViewModel writeReviewViewModel,
                            AddReviewController addReviewController,
-                           //WriteReviewController writeReviewcontroller,
+                           WriteReviewController writeReviewcontroller,
                            RestaurantController restaurantController) {
 
-        //this.writeReviewController = writeReviewcontroller;
         this.addReviewViewModel = addReviewViewModel;
         this.addReviewController = addReviewController;
+        this.writeReviewController = writeReviewcontroller;
         this.restaurantController = restaurantController;
         this.writeReviewViewModel = writeReviewViewModel;
         this.writeReviewViewModel.addPropertyChangeListener(this);
@@ -70,9 +71,11 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
                         if (evt.getSource().equals(save)) {
                             System.out.println("Save clicked");
                             WriteReviewState currentState = writeReviewViewModel.getState();
-                            //writeReviewController.execute(
-                                    //currentState.getUser(),
-                                    //currentState.getRestaurant());
+                            writeReviewController.execute(
+                                    currentState.getUser(),
+                                    currentState.getRestaurant(),
+                                    currentState.getRating(),
+                                    currentState.getContent());
                         }
                     }
                 }

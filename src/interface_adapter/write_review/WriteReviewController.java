@@ -13,8 +13,9 @@ public class WriteReviewController {
         this.writeReviewInteractor = writeReviewInteractor;
     }
 
-    public void execute(User user, Restaurant restaurant) {
-        WriteReviewInputData writeReviewInputData = new WriteReviewInputData(user, restaurant);
+    public void execute(User user, Restaurant restaurant, String rating, String content) {
+        WriteReviewInputData writeReviewInputData =
+                new WriteReviewInputData(user, restaurant, rating, content);
         writeReviewInteractor.execute(writeReviewInputData);
     }
 }
