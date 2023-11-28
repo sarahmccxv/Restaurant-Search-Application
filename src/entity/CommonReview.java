@@ -42,13 +42,6 @@ public class CommonReview {
         return creationTime;
     }
 
-    private void changeContent(String newContent) {
-        this.content = newContent;
-    }
-
-    private void changeRating(Float newRating) {
-        this.rating = newRating;
-    }
 
     @Override
     public String toString() {
