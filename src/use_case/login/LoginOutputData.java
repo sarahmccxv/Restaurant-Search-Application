@@ -6,13 +6,15 @@ public class LoginOutputData {
     private final String username;
     private boolean useCaseFailed;
     private final String password;
+    private final String location;
 
     public LoginOutputData(String userID, String username, String password,
-                           boolean useCaseFailed) {
+                           String location, boolean useCaseFailed) {
         this.userID = userID;
         this.username = username;
         this.useCaseFailed = useCaseFailed;
         this.password = password;
+        this.location = location;
     }
 
     public String getUsername() {
@@ -26,4 +28,5 @@ public class LoginOutputData {
         return password;
     }
 
+    public String getLocation(){ return location;}
 }

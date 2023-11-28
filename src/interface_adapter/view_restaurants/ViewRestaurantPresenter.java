@@ -23,6 +23,7 @@ public class ViewRestaurantPresenter implements ViewRestaurantOutputBoundary {
         viewRestaurantState.setUsername(viewRestaurantOutputData.getUsername());
         viewRestaurantState.setPassword(viewRestaurantOutputData.getPassword());
         viewRestaurantState.setRestaurants(viewRestaurantOutputData.getLocalRestaurants());
+        viewRestaurantState.setLocation(viewRestaurantOutputData.getLocation());
         //System.out.println("Restaurants received at presentor are " + viewRestaurantOutputData.getLocalRestaurants().toString());
         this.viewRestaurantViewModel.setState(viewRestaurantState);
         this.viewRestaurantViewModel.firePropertyChanged();

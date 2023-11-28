@@ -43,6 +43,7 @@ public class Restaurant implements RestaurantInterface{
     public ArrayList<Review> getReviews() {
         return reviews;
     }
+    public int getReviewSize(){return reviews.size();}
 
     public ArrayList<String> getCategories() {
         return categories;

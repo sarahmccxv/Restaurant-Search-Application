@@ -1,10 +1,7 @@
 package view;
 
 import entity.Restaurant;
-import entity.User;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.add_review.AddReviewController;
-import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
@@ -12,8 +9,7 @@ import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_restaurants.ViewRestaurantController;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
-import interface_adapter.write_review.WriteReviewController;
-import interface_adapter.write_review.WriteReviewViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +22,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     public final String viewName = "Restaurant";
     final JButton returnBack;
-    private JButton addReview;
     private JButton addToFavourite;
     final JPanel info;
     final JPanel buttons;
@@ -34,29 +29,29 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
     private ViewRestaurantController viewRestaurantController;
-    private AddReviewViewModel addReviewViewModel;
-    private AddReviewController addReviewController;
+    // TODO: Implement Reviews later
+    //private WriteReviewController writeReviewController;
     private AddToFavouritesController addToFavouritesController;
     private AddToFavouritesViewModel addToFavouritesViewModel;
     private ViewFavouritesController viewFavouritesController;
+    private ViewManagerModel viewManagerModel;
 
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
                           RestaurantController restaurantController,
-                          AddReviewViewModel addReviewViewModel,
-                          AddReviewController addReviewController,
+                          // TODO: Add review controller later
                           ViewRestaurantController viewRestaurantController,
                           AddToFavouritesController addToFavouritesController,
                           AddToFavouritesViewModel addToFavouritesViewModel,
-                          ViewFavouritesController viewFavouritesController){
+                          ViewFavouritesController viewFavouritesController,
+                          ViewManagerModel viewManagerModel){
         this.restaurantViewModel = restaurantViewModel;
         this.restaurantController = restaurantController;
-        this.addReviewViewModel = addReviewViewModel;
-        this.addReviewController = addReviewController;
         this.viewRestaurantController = viewRestaurantController;
         this.addToFavouritesController = addToFavouritesController;
         this.addToFavouritesViewModel = addToFavouritesViewModel;
         this.viewFavouritesController = viewFavouritesController;
+        this.viewManagerModel = viewManagerModel;
 
         restaurantViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(RestaurantViewModel.TITLE_LABEL);
@@ -74,7 +69,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
 
         addToFavourite = new JButton(RestaurantViewModel.ADD_TO_FAVOURITE_LABEL);
-        buttons.add(addToFavourite);
         addToFavourite.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
@@ -88,21 +82,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                             }
                     }
                 });
-
-        addReview = new JButton(RestaurantViewModel.WRITE_REVIEW_LABEL);
-        buttons.add(addReview);
-        addReview.addActionListener(
-                new ActionListener() {
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(addReview)) {
-                            RestaurantState state = restaurantViewModel.getState();
-                            Restaurant restaurant = state.getRestaurant();
-                            String previousView = state.getPreviousView();
-                            String userID = state.getUserID();
-                            addReviewController.execute(userID, restaurant, previousView);
-                        }
-                    }
-                });
+        buttons.add(addToFavourite);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -129,15 +109,25 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
         info.add(restaurantAddress);
         info.add(restaurantPhoneNumber);
         info.add(restaurantCategories);
+
+        if (state.getPreviousView().equals("view restaurants")) {
+            addToFavourite.setVisible(true);
+        } else if (state.getPreviousView().equals("view favourites")) {
+            addToFavourite.setVisible(false);
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
         RestaurantState state = restaurantViewModel.getState();
         if (state.getPreviousView().equals("view restaurants")) {
-            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword());
+            viewManagerModel.setActiveView("view restaurant");
+            viewManagerModel.firePropertyChanged();
+//            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
         } else if (state.getPreviousView().equals("view favourites")) {
             viewFavouritesController.execute(state.getUsername());
+        }else {
+            System.out.println("ohno");
         }
     }
 }

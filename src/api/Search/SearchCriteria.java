@@ -1,13 +1,12 @@
 package api.Search;
 
-
 public class SearchCriteria {
-    private String name;
-    private String location;
-    private int limit;
-    private SearchSortingMethods sortingMethod;
-    private SearchPriceLevel priceLevel;
-    private String category;
+    private  String name;
+    private  String location;
+    private  int limit;
+    private  SearchSortingMethods sortingMethod;
+    private  SearchPriceLevel priceLevel;
+    private  String category;
 
     public SearchCriteria(Builder builder) {
         this.name = builder.name;
@@ -30,9 +29,7 @@ public class SearchCriteria {
         return location;
     }
 
-    public void setLocation(String location) {
-        this.location = location.trim();
-    }
+    public void setLocation(String location) { this.location = location; }
 
     public int getLimit() {
         return limit;
@@ -63,8 +60,9 @@ public class SearchCriteria {
     }
 
     public void setCategory(String category) {
-        this.category = category.trim();
+        this.category = category.trim().toLowerCase();
     }
+
 
     public static class Builder {
         private String name;
@@ -75,12 +73,12 @@ public class SearchCriteria {
         private String category;
 
         public Builder setName(String name) {
-            this.name = name.trim();
+            this.name = name;
             return this;
         }
 
         public Builder setLocation(String location) {
-            this.location = location.trim();
+            this.location = location;
             return this;
         }
 
@@ -100,7 +98,7 @@ public class SearchCriteria {
         }
 
         public Builder setCategory(String category) {
-            this.category = category.trim();
+            this.category = category.trim().toLowerCase();
             return this;
         }
 

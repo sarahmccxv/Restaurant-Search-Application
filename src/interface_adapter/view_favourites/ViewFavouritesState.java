@@ -3,8 +3,6 @@ package interface_adapter.view_favourites;
 
 import entity.FavouritesList;
 
-import java.util.ArrayList;
-
 public class ViewFavouritesState {
     private boolean success;
     private String userID;
@@ -14,12 +12,12 @@ public class ViewFavouritesState {
     private String noFavouritesMessage;
 
     public ViewFavouritesState(){
-        boolean success = false;
+        success = false;
         username = "";
         password = "";
         favouritesList = new FavouritesList();
         noFavouritesMessage = "";
-    };
+    }
 
     public String getUsername() {
         return username;
@@ -48,5 +46,5 @@ public class ViewFavouritesState {
     public void setSuccess(boolean success) {this.success = success;}
     public boolean getSuccess() {return success;}
     public String getUserID() {return userID;}
-    public void setUserID(String userID) {this.userID = userID;};
+    public void setUserID(String userID) {this.userID = userID;}
 }

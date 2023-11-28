@@ -2,7 +2,9 @@ package use_case.search_restaurant;
 
 import entity.Restaurant;
 
+import java.util.ArrayList;
+
 public interface SearchRestaurantDataAccessInterface {
-    boolean existsByName(String identifier);
-    Restaurant get(String restaurantName);
+
+    ArrayList<Restaurant> getRestaurantByName(String location, String restaurantName);
 }
