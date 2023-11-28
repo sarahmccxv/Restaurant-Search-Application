@@ -20,10 +20,10 @@ public class SortAndFilterRestaurantInteractor implements SortAndFilterRestauran
     @Override
     public void execute(SortAndFilterResaturantInputData sortAndFilterResaturantInputData) {
         SearchCriteria criteria = sortAndFilterResaturantInputData.getCriteria();
-        System.out.println("Interactor: executed");
+        System.out.println("Interactor executed");
         try {
             ArrayList<Restaurant> sorted = sortAndFilterRestaurantDataAccessObject.getRestaurants(criteria);
-            SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData = new SortAndFilterRestaurantOutputData(sorted, false);
+            SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData = new SortAndFilterRestaurantOutputData(sorted,criteria, false);
             sortAndFilterRestaurantPresenter.prepareSuccessView(sortAndFilterRestaurantOutputData);
         } catch (RuntimeException e){
 //            sortAndFilterRestaurantPresenter.prepareFailView("No restaurant satisfies such filter and sort.");

@@ -19,10 +19,8 @@ public class SortAndFilterUseCaseFactory {
     public static SortAndFilterView create(ViewManagerModel viewManagerModel,
                                             ViewRestaurantViewModel viewRestaurantViewModel,
                                             SortAndFilterViewModel sortAndFilterViewModel,
-                                            SortAndFilterRestaurantDataAccessInterface sortAndFilterRestaurantDataAccessObject,
-                                            SortAndFilterController sortAndFilterController,
-                                            RestaurantController restaurantController) {
-        SortAndFilterController sortAndFilterController1 = createSortAndFilterUseCase(viewManagerModel,
+                                            SortAndFilterRestaurantDataAccessInterface sortAndFilterRestaurantDataAccessObject) {
+        SortAndFilterController sortAndFilterController = createSortAndFilterUseCase(viewManagerModel,
                 sortAndFilterViewModel, sortAndFilterRestaurantDataAccessObject);
         return new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
     }
@@ -34,7 +32,6 @@ public class SortAndFilterUseCaseFactory {
     {
         SortAndFilterRestaurantOutputBoundary sortAndFilterRestaurantOutputBoundary = new SortAndFilterPresenter(
                 viewManagerModel, sortAndFilterViewModel);
-        RestaurantFactory restaurantFactory = new RestaurantFactory();
         SortAndFilterRestaurantInputBoundary sortAndFilterInteractor = new SortAndFilterRestaurantInteractor(
                 sortAndFilterRestaurantDataAccessObject, sortAndFilterRestaurantOutputBoundary);
         return new SortAndFilterController(sortAndFilterInteractor);

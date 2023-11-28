@@ -21,7 +21,9 @@ public class SortAndFilterPresenter implements SortAndFilterRestaurantOutputBoun
     @Override
     public void prepareSuccessView(SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData) {
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
-        System.out.println("executed");
+        System.out.println("sort and filter presenter executed");
+        sortAndFilterState.setCriteria(sortAndFilterRestaurantOutputData.getCriteria());
+        sortAndFilterState.setRestaurants(sortAndFilterRestaurantOutputData.getRestaurants());
         this.sortAndFilterViewModel.setState(sortAndFilterState);
         this.sortAndFilterViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(sortAndFilterViewModel.getViewName());

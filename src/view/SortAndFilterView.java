@@ -40,8 +40,8 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         JPanel centerPanel = new JPanel(new GridBagLayout());
         centerPanel.add(sorted);
 
-        LabelTextPanel categoryInfo = new LabelTextPanel(
-                new JLabel(SortAndFilterViewModel.CATEGORY_LABEL), categoryInputField);
+//        LabelTextPanel categoryInfo = new LabelTextPanel(
+//                new JLabel(SortAndFilterViewModel.CATEGORY_LABEL), categoryInputField);
 
         JPanel returnButton = new JPanel();
         returnBack = new JButton(SortAndFilterViewModel.RETURN_BUTTON_LABEL);
