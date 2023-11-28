@@ -24,7 +24,7 @@ public class SingleRestaurantParser {
              ArrayList<String> categories = new ArrayList<>();
              JSONArray categoriesArray = jsonObject.getJSONArray("categories");
              for (int i = 0; i < categoriesArray.length(); i++) {
-                 categories.add(categoriesArray.getJSONObject(i).getString("alias"));
+                 categories.add(categoriesArray.getJSONObject(i).getString("title"));
              }
 
              return restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories, imageURL);

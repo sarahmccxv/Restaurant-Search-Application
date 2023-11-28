@@ -28,7 +28,7 @@ public class MultipleRestaurantsParser {
                 ArrayList<String> categories = new ArrayList<>();
                 JSONArray categoriesArray = businessesArray.getJSONObject(i).getJSONArray("categories");
                 for (int j = 0; j < categoriesArray.length(); j++) {
-                    categories.add(categoriesArray.getJSONObject(j).getString("alias"));
+                    categories.add(categoriesArray.getJSONObject(j).getString("title"));
                 }
 
                 restaurantsList.add(restaurantFactory.create(restaurantID, restaurantName, address, phoneNumber, categories, imageURL));
