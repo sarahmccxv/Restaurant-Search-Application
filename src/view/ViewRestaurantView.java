@@ -57,6 +57,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JFrame frame = new JFrame("View restaurant buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         restaurants = new JPanel();
         restaurants.setLayout(new BoxLayout(restaurants, BoxLayout.Y_AXIS));
@@ -84,6 +86,11 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         JPanel search_button = new JPanel();
         search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
+        search.setBackground(Color.BLUE); // for the background
+        search.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(search_button);
+        frame.pack();
+        frame.setVisible(false);
         search_button.add(search);
         search.addActionListener(
                 new ActionListener() {
@@ -144,12 +151,17 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        JFrame frame = new JFrame("View restaurant buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.removeAll();
         restaurants.removeAll();
         restaurants.revalidate();
         restaurants.repaint();
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //Set font
+        Font titleFont = new Font("Arial", Font.BOLD, 18); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
         ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
@@ -158,6 +170,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         sortAndFilterState.getCriteria().setLocation(location);
         System.out.println(sortAndFilterState.getCriteria().getLocation());
         sortAndFilterViewModel.setState(sortAndFilterState);
+
         for (Restaurant restaurant : state.getRestaurants()) {
             String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
             JButton button = new JButton(buttonText);
@@ -189,10 +202,16 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         gbc.gridx = 1;  // Set the X coordinate for the second component
         gbc.insets = new Insets(0, 0, 0, 0);  // Reset insets if needed
         JButton search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
+        search.setBackground(Color.BLUE); // for the background
+        search.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(searchPanel);
+        frame.pack();
+        frame.setVisible(false);
         searchPanel.add(search, gbc);
         System.out.println("gbc");
             ViewRestaurantState searchRestaurantState = (ViewRestaurantState) evt.getNewValue();
         System.out.println(searchRestaurantState.getRestaurants());
+
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
