@@ -9,13 +9,15 @@ public class ViewRestaurantOutputData {
     private String userID;
     private String password;
     private ArrayList<Restaurant> restaurants;
+    private String location;
 
     public ViewRestaurantOutputData(String userID, String username, String password,
-                                    ArrayList<Restaurant> restaurants) {
+                                    ArrayList<Restaurant> restaurants, String location) {
         this.userID = userID;
         this.username = username;
         this.password = password;
         this.restaurants = restaurants;
+        this.location = location;
     }
 
     public String getUserID() {
@@ -33,4 +35,5 @@ public class ViewRestaurantOutputData {
     public ArrayList<Restaurant> getLocalRestaurants() {
         return restaurants;
     }
+    public String getLocation(){return location;}
 }

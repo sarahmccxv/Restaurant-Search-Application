@@ -1,14 +1,18 @@
 package use_case.search_restaurant;
 
+import entity.Restaurant;
+
+import java.util.ArrayList;
+
 public class SearchRestaurantOutputData {
-    private final String restaurantName;
+    private final ArrayList<Restaurant> restaurants;
     private boolean useCaseFailed;
 
-    public SearchRestaurantOutputData(String restaurantName, boolean useCaseFailed){
-        this.restaurantName = restaurantName;
+    public SearchRestaurantOutputData(ArrayList<Restaurant> restaurants, boolean useCaseFailed){
+        this.restaurants = restaurants;
         this.useCaseFailed = useCaseFailed;
     }
-    public String getRestaurantName(){
-        return restaurantName;
+    public ArrayList<Restaurant> getRestaurants(){
+        return restaurants;
     }
 }
