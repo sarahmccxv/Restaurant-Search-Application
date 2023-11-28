@@ -8,7 +8,7 @@ public class User extends CommonUser implements UserInterface {
     private final String password;
     private final LocalDateTime creationTime;
     private String location;
-    private FavouritesList favouritesList = new FavouritesList();
+    private FavouritesList favouritesList;
     private ArrayList<Review> reviewsList = new ArrayList<>();
 
     public User(String userID, String username, String password, String location,
