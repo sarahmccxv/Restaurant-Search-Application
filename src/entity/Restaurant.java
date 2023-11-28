@@ -9,15 +9,17 @@ public class Restaurant implements RestaurantInterface{
     private String phoneNumber;
     private ArrayList<Review> reviews;
     private ArrayList<String> categories;
+    private String imageURL;
 
     public Restaurant(String restaurantID, String restaurantName, String address, String phoneNumber,
-                      ArrayList<String> categories){
+                      ArrayList<String> categories, String imageURL){
         this.restaurantID = restaurantID;
         this.restaurantName = restaurantName;
         this.address = address;
         this.phoneNumber = phoneNumber;
         this.reviews = new ArrayList<Review>();
         this.categories = categories;
+        this.imageURL = imageURL;
     }
 
     public void addReviewandRating(Review review){
@@ -47,6 +49,10 @@ public class Restaurant implements RestaurantInterface{
 
     public ArrayList<String> getCategories() {
         return categories;
+    }
+
+    public String getImageURL() {
+        return imageURL;
     }
 
     @Override
