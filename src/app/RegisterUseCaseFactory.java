@@ -1,6 +1,6 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
+import api.yelp.YelpApiServices;
 import entity.UserFactory;
 import entity.UserInterface;
 import interface_adapter.ViewManagerModel;
@@ -24,10 +24,10 @@ public class RegisterUseCaseFactory {
 
     public static RegisterView create(
             ViewManagerModel viewManagerModel, LoginViewModel loginViewModel, RegisterViewModel registerViewModel,
-            RegisterUserDataAccessInterface userDataAccessObject) {
+            RegisterUserDataAccessInterface userDataAccessObject, YelpApiServices apiRestaurantDataAccessObject) {
         try {
             RegisterController registerController = createUserRegisterUseCase(viewManagerModel, registerViewModel,
-                    loginViewModel, userDataAccessObject);
+                    loginViewModel, userDataAccessObject, apiRestaurantDataAccessObject);
 
             return new RegisterView(registerController, registerViewModel);
         } catch (IOException e) {
@@ -38,9 +38,10 @@ public class RegisterUseCaseFactory {
     }
 
     private static RegisterController createUserRegisterUseCase(ViewManagerModel viewManagerModel,
-                                                            RegisterViewModel registerViewModel,
-                                                            LoginViewModel loginViewModel,
-                                                            RegisterUserDataAccessInterface userDataAccessObject)
+                                                                RegisterViewModel registerViewModel,
+                                                                LoginViewModel loginViewModel,
+                                                                RegisterUserDataAccessInterface userDataAccessObject,
+                                                                YelpApiServices apiRestaurantDataAccessObject)
             throws IOException {
 
         // Notice how we pass this method's parameters to the Presenter.
@@ -49,7 +50,7 @@ public class RegisterUseCaseFactory {
         UserFactory userFactory = new UserFactory();
 
         RegisterInputBoundary userRegisterInteractor = new RegisterInteractor(
-                userDataAccessObject, registerOutputBoundary, userFactory);
+                userDataAccessObject, apiRestaurantDataAccessObject, registerOutputBoundary, userFactory);
 
         return new RegisterController(userRegisterInteractor);
     }
