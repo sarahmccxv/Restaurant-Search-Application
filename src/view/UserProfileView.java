@@ -194,6 +194,7 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                 }
             }
         });
+        avatarLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 
         this.setLayout(new BorderLayout()); // Use BorderLayout for overall structure
 
