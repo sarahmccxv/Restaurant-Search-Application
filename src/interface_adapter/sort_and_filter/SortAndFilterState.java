@@ -23,10 +23,12 @@ public class SortAndFilterState {
                 .build();
         restaurants = new ArrayList<>();
         previousView = "";
+        searchPriceLevel = SearchPriceLevel.CHEAP;
+        searchSortingMethods = SearchSortingMethods.BEST_MATCH;
     }
 
     public SearchCriteria getCriteria(){
-        return criteria;
+        return this.criteria;
     }
     public String getLocation() { return location; }
     public ArrayList<Restaurant> getRestaurants(){return restaurants;}
@@ -50,7 +52,6 @@ public class SortAndFilterState {
         this.searchPriceLevel = searchPriceLevel;
         this.criteria.setPriceLevel(searchPriceLevel);
     }
-
     public void setCriteria(SearchCriteria criteria){this.criteria = criteria;}
     public void setLocation(String location) {this.location = location;
     this.criteria.setLocation(location);}

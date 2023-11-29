@@ -20,6 +20,7 @@ package view;
         import java.awt.event.KeyListener;
         import java.beans.PropertyChangeEvent;
         import java.beans.PropertyChangeListener;
+        import java.util.ArrayList;
 
 public class ViewRestaurantView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "view restaurant";
@@ -210,7 +211,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     String username = state.getUsername();
                     String password = state.getPassword();
                     String previousView = state.getPreviousView();
-                    restaurantController.execute(userID, username, password, restaurantID, previousView);
+                    restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
                     searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
                     restaurants.add(button);
                     System.out.println("button added");
@@ -227,21 +228,6 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     @Override
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(sortAndFilter)) {
-                            SortAndFilterState state = sortAndFilterViewModel.getState();
-                            SearchCriteria criteria = state.getCriteria();
-                            String previousView = state.getPreviousView();
-                            sortAndFilterController.execute(criteria, previousView);
-                            CardLayout cardLayout = (CardLayout) getParent().getLayout();
-                            cardLayout.show(getParent(), "sortAndFilterView");
-                        }
-                    }
-                }
-        );
-        sortAndFilter.addActionListener(
-                new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent evt) {
-                        if (evt.getSource().equals(sortAndFilter)) {
                             SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
                             sortAndFilterState.setLocation(location);
                             sortAndFilterState.setCategory(state.getRestaurantName());
@@ -249,6 +235,23 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                             SearchCriteria criteria = sortAndFilterState.getCriteria();
                             String previousView = sortAndFilterState.getPreviousView();
                             sortAndFilterController.execute(criteria, previousView);
+                        }
+                        if (state.getPreviousView().equals("sort and filter")){
+                            ArrayList<Restaurant> sorted = state.getRestaurants();
+                            for (Restaurant restaurant : sorted) {
+                                String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
+                                JButton button = new JButton(buttonText);
+                                System.out.println("in sort state adding buttons");
+                                String restaurantID = restaurant.getRestaurantID();
+                                String userID = state.getUserID();
+                                String username = state.getUsername();
+                                String password = state.getPassword();
+                                String previousView = state.getPreviousView();
+                                restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
+                                restaurants.add(button);
+                            }
+                            restaurants.remove(5);
+
                         }
                     }
                 }
