@@ -1,6 +1,7 @@
 package interface_adapter.write_review;
 
 import interface_adapter.ViewModel;
+import interface_adapter.add_review.AddReviewState;
 import interface_adapter.login.LoginState;
 
 import java.beans.PropertyChangeListener;

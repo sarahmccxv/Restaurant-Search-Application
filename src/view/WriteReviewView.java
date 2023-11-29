@@ -3,11 +3,7 @@ package view;
 import interface_adapter.add_review.AddReviewController;
 import interface_adapter.add_review.AddReviewState;
 import interface_adapter.add_review.AddReviewViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
 import interface_adapter.restaurant.RestaurantController;
-import interface_adapter.view_restaurants.ViewRestaurantState;
 import interface_adapter.write_review.WriteReviewController;
 import interface_adapter.write_review.WriteReviewState;
 import interface_adapter.write_review.WriteReviewViewModel;
@@ -35,17 +31,12 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
     final JButton save;
     final JButton returnBack;
 
-    private final AddReviewController addReviewController;
-    //private final WriteReviewController writeReviewController;
-
     public WriteReviewView(AddReviewViewModel addReviewViewModel,
                            WriteReviewViewModel writeReviewViewModel,
-                           AddReviewController addReviewController,
                            WriteReviewController writeReviewcontroller,
                            RestaurantController restaurantController) {
 
         this.addReviewViewModel = addReviewViewModel;
-        this.addReviewController = addReviewController;
         this.writeReviewController = writeReviewcontroller;
         this.restaurantController = restaurantController;
         this.writeReviewViewModel = writeReviewViewModel;
@@ -69,13 +60,19 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(save)) {
-                            System.out.println("Save clicked");
-                            WriteReviewState currentState = writeReviewViewModel.getState();
+                            //System.out.println("Save clicked");
+                            AddReviewState currentState = addReviewViewModel.getState();
+                            WriteReviewState newState = writeReviewViewModel.getState();
+                            newState.setUser(currentState.getUser());
+                            newState.setRestaurant(currentState.getRestaurant());
+                            writeReviewViewModel.setState(newState);
                             writeReviewController.execute(
-                                    currentState.getUser(),
-                                    currentState.getRestaurant(),
-                                    currentState.getRating(),
-                                    currentState.getContent());
+                                    newState.getUser(),
+                                    newState.getRestaurant(),
+                                    newState.getRating(),
+                                    newState.getContent());
+                            String message = writeReviewViewModel.getState().getMessage();
+                            JOptionPane.showMessageDialog(null, message);
                         }
                     }
                 }
@@ -130,14 +127,14 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
      * React to a button click that results in evt.
      */
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        //System.out.println("Click " + evt.getActionCommand());
         AddReviewState state = addReviewViewModel.getState();
         String userID = state.getUser().getUserID();
         String username = state.getUser().getUsername();
         String password = state.getUser().getPassword();
         String restaurantID = state.getRestaurant().getRestaurantID();
         String previous_view = state.getPrevious_view();
-        System.out.println("previous view was " + previous_view);
+        //System.out.println("previous view was " + previous_view);
         restaurantController.execute(userID, username, password, restaurantID, previous_view);
     }
 

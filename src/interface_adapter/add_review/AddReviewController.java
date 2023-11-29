@@ -9,8 +9,8 @@ import use_case.add_review.AddReviewInteractor;
 public class AddReviewController {
     final AddReviewInputBoundary addReviewInteractor;
 
-    public AddReviewController(AddReviewInputBoundary addReviwInputBoundary) {
-        this.addReviewInteractor = addReviwInputBoundary;
+    public AddReviewController(AddReviewInputBoundary addReviewInputBoundary) {
+        this.addReviewInteractor = addReviewInputBoundary;
     }
 
     public void execute(String userID, Restaurant restaurant, String previousView) {

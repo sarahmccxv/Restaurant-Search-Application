@@ -16,6 +16,7 @@ import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.write_review.WriteReviewController;
 import use_case.add_review.AddReviewInputBoundary;
 import use_case.add_review.AddReviewInteractor;
 import use_case.add_review.AddReviewOutputBoundary;
@@ -32,7 +33,10 @@ import use_case.view_favourites.ViewFavouritesInputBoundary;
 import use_case.view_favourites.ViewFavouritesInteractor;
 import use_case.view_favourites.ViewFavouritesOutputBoundary;
 import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
+import use_case.write_review.WriteReviewInteractor;
+import use_case.write_review.WriteReviewOutputBoundary;
 import view.RestaurantView;
+import view.WriteReviewView;
 
 import java.io.IOException;
 

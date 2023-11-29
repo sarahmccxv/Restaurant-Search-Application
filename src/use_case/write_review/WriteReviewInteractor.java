@@ -29,12 +29,15 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
     public void execute(WriteReviewInputData writeReviewInputData) {
         User user = writeReviewInputData.getUser();
         Restaurant restauarnt = writeReviewInputData.getRestaurant();
+        System.out.println("This is write review interactor. I got input data with user " + user.getUsername() +
+                "and restaurant " + restauarnt.getRestaurantName());
         String content = writeReviewInputData.getContent();
         String rating_txt = writeReviewInputData.getRating();
         WriteReviewOutputData writeReviewOutputData = new WriteReviewOutputData(user, restauarnt);
         // check if rating is legit
         if (isValidRating(rating_txt)) {
             Float rating = Float.parseFloat(rating_txt);
+            System.out.println("The rating here has string: " + rating_txt);
             String reviewID = String.valueOf(createUserID());
             LocalDateTime now = LocalDateTime.now();
             Review review = reviewFactory.create(reviewID, user, restauarnt.getRestaurantID(), rating, content, now);
@@ -58,7 +61,7 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
     }
 
     private boolean isValidRating(String rating_txt) {
-        if (rating_txt.matches("^([0-4]\\.[05])|5\\.0$")) {
+        if (rating_txt.matches("^([1-4](\\\\.0|\\\\.5)?)|5(\\\\.0)?$")) {
             try {
                 Float rating = Float.parseFloat(rating_txt);
                 return rating > 0 && rating <= 5;
