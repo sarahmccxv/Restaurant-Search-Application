@@ -1,27 +1,25 @@
 package view;
 
-import api.Search.SearchCriteria;
-import entity.Restaurant;
-import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.restaurant.RestaurantController;
-import interface_adapter.search_restaurants.SearchRestaurantController;
-import interface_adapter.sort_and_filter.SortAndFilterController;
-import interface_adapter.sort_and_filter.SortAndFilterState;
-import interface_adapter.sort_and_filter.SortAndFilterViewModel;
-import interface_adapter.view_restaurants.ViewRestaurantController;
-import interface_adapter.view_restaurants.ViewRestaurantState;
-import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+        import api.Search.SearchCriteria;
+        import entity.Restaurant;
+        import interface_adapter.login.LoginController;
+        import interface_adapter.restaurant.RestaurantController;
+        import interface_adapter.search_restaurants.SearchRestaurantController;
+        import interface_adapter.sort_and_filter.SortAndFilterController;
+        import interface_adapter.sort_and_filter.SortAndFilterState;
+        import interface_adapter.sort_and_filter.SortAndFilterViewModel;
+        import interface_adapter.view_restaurants.ViewRestaurantController;
+        import interface_adapter.view_restaurants.ViewRestaurantState;
+        import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
+        import javax.swing.*;
+        import java.awt.*;
+        import java.awt.event.ActionEvent;
+        import java.awt.event.ActionListener;
+        import java.awt.event.KeyEvent;
+        import java.awt.event.KeyListener;
+        import java.beans.PropertyChangeEvent;
+        import java.beans.PropertyChangeListener;
 
 public class ViewRestaurantView extends JPanel implements ActionListener, PropertyChangeListener{
     public final String viewName = "view restaurant";
@@ -30,12 +28,13 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
     final JButton sortAndFilter;
     final JButton search;
     final JPanel restaurants;
-    private final SearchRestaurantController searchRestaurantController;
-    private final SortAndFilterViewModel sortAndFilterViewModel;
-    private final SortAndFilterController sortAndFilterController;
-    private final ViewRestaurantViewModel viewRestaurantViewModel;
-    private final LoginController loginController;
-    private final RestaurantController restaurantController;
+    private SearchRestaurantController searchRestaurantController;
+    private SortAndFilterViewModel sortAndFilterViewModel;
+    private SortAndFilterController sortAndFilterController;
+    private ViewRestaurantViewModel viewRestaurantViewModel;
+    private ViewRestaurantController viewRestaurantController;
+    private LoginController loginController;
+    private RestaurantController restaurantController;
 
     public ViewRestaurantView(ViewRestaurantViewModel viewRestaurantViewModel,
                               ViewRestaurantController viewRestaurantController,
@@ -45,6 +44,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                               SortAndFilterViewModel sortAndFilterViewModel,
                               SearchRestaurantController searchRestaurantController){
         this.viewRestaurantViewModel = viewRestaurantViewModel;
+        this.viewRestaurantController = viewRestaurantController;
         this.loginController = loginController;
         this.restaurantController = restaurantController;
         this.sortAndFilterController = sortAndFilterController;
@@ -60,23 +60,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         restaurants = new JPanel();
         restaurants.setLayout(new BoxLayout(restaurants, BoxLayout.Y_AXIS));
-        JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.add(restaurants);
 
-        JPanel searchPanel = new JPanel(new GridBagLayout());
-        LabelTextPanel search_restaurant = new LabelTextPanel(new JLabel(" "), searchInputField);
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;  // Set the X coordinate for the first component
-        gbc.gridy = 0;  // Set the Y coordinate for the first component
-        gbc.insets = new Insets(0, 0, 0, 10);  // Optional: Add some spacing between components
-
-        searchPanel.add(search_restaurant, gbc);
-
-        gbc.gridx = 1;  // Set the X coordinate for the second component
-        gbc.insets = new Insets(0, 0, 0, 0);  // Reset insets if needed
-        search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
-        searchPanel.add(search, gbc);
-
+        LabelTextPanel search_restaurant = new LabelTextPanel(new JLabel("Search by name"), searchInputField);
 
         searchInputField.addKeyListener(
                 new KeyListener() {
@@ -97,37 +82,84 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     }
                 });
 
+        JPanel search_button = new JPanel();
+        search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
+        search_button.add(search);
+        search.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(search)) {
+                            ViewRestaurantState currentState = viewRestaurantViewModel.getState();
+                            searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
+                        }
+                    }
+                }
+        );
 
         JPanel sort_button = new JPanel();
         sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
         sort_button.add(sortAndFilter);
+        sortAndFilter.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(sortAndFilter)) {
+                            SortAndFilterState state = sortAndFilterViewModel.getState();
+                            SearchCriteria criteria = state.getCriteria();
+                            String previousView = state.getPreviousView();
+                            sortAndFilterController.execute(criteria, previousView);
+//                            System.out.println("Is executed");
+                            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                            cardLayout.show(getParent(), "sortAndFilterView");
+                        }
+                    }
+                }
+        );
 
         JPanel buttons = new JPanel();
         returnBack = new JButton(ViewRestaurantViewModel.RETURN_LABEL);
         buttons.add(returnBack);
-        returnBack.addActionListener(this);
+        returnBack.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(returnBack)) {
+                            //System.out.println("Return button clicked");
+                            ViewRestaurantState state = viewRestaurantViewModel.getState();
+                            //System.out.println("User name is " + state.getUsername() + " password is " + state.getPassword());
+                            loginController.execute(state.getUsername(), state.getPassword());
+                        }
+                    }
+                }
+        );
+
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
         this.add(search_restaurant);
-        this.add(searchPanel);
+        this.add(search_button);
         this.add(sort_button);
         this.add(message);
-        this.add(centerPanel);
         this.add(buttons);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
-        String location = state.getLocation();
+        this.removeAll();
         restaurants.removeAll();
         restaurants.revalidate();
         restaurants.repaint();
-
+        JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
+        message.setAlignmentX(Component.CENTER_ALIGNMENT);
+        ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
+        String location = state.getLocation();
+        SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
+        sortAndFilterState.getCriteria().setLocation(location);
+        System.out.println(sortAndFilterState.getCriteria().getLocation());
+        sortAndFilterViewModel.setState(sortAndFilterState);
         for (Restaurant restaurant : state.getRestaurants()) {
-            JPanel res = new JPanel();
             String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
             JButton button = new JButton(buttonText);
             button.addActionListener(new ActionListener() {
@@ -141,28 +173,70 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
                 }
             });
-            res.add(button);
-            restaurants.add(res);
+            restaurants.add(button);
         }
+        JPanel centerPanel = new JPanel(new GridBagLayout());
+        centerPanel.add(restaurants);
 
+        JPanel searchPanel = new JPanel(new GridBagLayout());
+        LabelTextPanel search_restaurant = new LabelTextPanel(new JLabel(" "), searchInputField);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;  // Set the X coordinate for the first component
+        gbc.gridy = 0;  // Set the Y coordinate for the first component
+        gbc.insets = new Insets(0, 0, 0, 10);  // Optional: Add some spacing between components
+
+        searchPanel.add(search_restaurant, gbc);
+
+        gbc.gridx = 1;  // Set the X coordinate for the second component
+        gbc.insets = new Insets(0, 0, 0, 0);  // Reset insets if needed
+        JButton search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
+        searchPanel.add(search, gbc);
+        System.out.println("gbc");
+        ViewRestaurantState searchRestaurantState = (ViewRestaurantState) evt.getNewValue();
+        System.out.println(searchRestaurantState.getRestaurants());
         search.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ArrayList<Restaurant> searchResult = state.getRestaurants();
-                for (Restaurant restaurant : searchResult) {
+                restaurants.removeAll();
+                restaurants.revalidate();
+                restaurants.repaint();
+                for (Restaurant restaurant : searchRestaurantState.getRestaurants()) {
+                    String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
+                    JButton button = new JButton(buttonText);
+                    ViewRestaurantState currentState = viewRestaurantViewModel.getState();
                     System.out.println("in search state");
                     String restaurantID = restaurant.getRestaurantID();
                     String userID = state.getUserID();
                     String username = state.getUsername();
                     String password = state.getPassword();
                     String previousView = state.getPreviousView();
-                    String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
                     restaurantController.execute(userID, username, password, restaurantID, previousView);
-                    searchRestaurantController.execute(state.getLocation(), state.getRestaurantName());
+                    searchRestaurantController.execute(currentState.getLocation(), currentState.getRestaurantName());
+                    restaurants.add(button);
+                    System.out.println("button added");
                 }
-        }
+                restaurants.remove(5);
+            }
         });
 
+        JPanel sort_button = new JPanel();
+        JButton sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
+        sort_button.add(sortAndFilter);
+        sortAndFilter.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(sortAndFilter)) {
+                            SortAndFilterState state = sortAndFilterViewModel.getState();
+                            SearchCriteria criteria = state.getCriteria();
+                            String previousView = state.getPreviousView();
+                            sortAndFilterController.execute(criteria, previousView);
+                            CardLayout cardLayout = (CardLayout) getParent().getLayout();
+                            cardLayout.show(getParent(), "sortAndFilterView");
+                        }
+                    }
+                }
+        );
         sortAndFilter.addActionListener(
                 new ActionListener() {
                     @Override
@@ -180,12 +254,22 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                 }
         );
 
-        }
+
+        JPanel buttons = new JPanel();
+        buttons.add(returnBack);
+
+        this.add(title);
+        this.add(searchPanel);
+        this.add(sort_button);
+        this.add(message);
+        this.add(centerPanel);
+        this.add(buttons);
+    }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
-            System.out.println("Return button clicked");
-            ViewRestaurantState state = viewRestaurantViewModel.getState();
-            loginController.execute(state.getUsername(), state.getPassword());
+        System.out.println("Return button clicked");
+        ViewRestaurantState state = viewRestaurantViewModel.getState();
+        loginController.execute(state.getUsername(), state.getPassword());
     }
 }
