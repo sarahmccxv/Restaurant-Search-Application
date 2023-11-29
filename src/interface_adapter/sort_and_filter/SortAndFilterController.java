@@ -11,8 +11,8 @@ public class SortAndFilterController {
         this.sortAndFilterRestaurantInteractor = sortAndFilterRestaurantInteractor;
     }
 
-    public void execute(SearchCriteria criteria) {
-        SortAndFilterResaturantInputData sortAndFilterRestaurantInputData = new SortAndFilterResaturantInputData(criteria);
+    public void execute(SearchCriteria criteria, String previousView) {
+        SortAndFilterResaturantInputData sortAndFilterRestaurantInputData = new SortAndFilterResaturantInputData(criteria, previousView);
         sortAndFilterRestaurantInteractor.execute(sortAndFilterRestaurantInputData);
     }
 }

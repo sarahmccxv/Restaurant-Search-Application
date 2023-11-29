@@ -22,7 +22,7 @@ public class SortAndFilterUseCaseFactory {
                                             SortAndFilterRestaurantDataAccessInterface sortAndFilterRestaurantDataAccessObject) {
         SortAndFilterController sortAndFilterController = createSortAndFilterUseCase(viewManagerModel,
                 sortAndFilterViewModel, sortAndFilterRestaurantDataAccessObject);
-        return new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
+        return new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewManagerModel);
     }
 
     public static SortAndFilterController createSortAndFilterUseCase(ViewManagerModel viewManagerModel,

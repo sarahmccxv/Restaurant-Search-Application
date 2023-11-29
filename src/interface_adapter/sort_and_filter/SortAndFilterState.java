@@ -10,15 +10,19 @@ import entity.User;
 import java.util.ArrayList;
 
 public class SortAndFilterState {
+    private SearchSortingMethods searchSortingMethods;
+    private SearchPriceLevel searchPriceLevel;
     private SearchCriteria criteria;
     private ArrayList<Restaurant> restaurants;
-    private String location = "";
+    private String location;
     private String category;
+    private String previousView;
 
     public SortAndFilterState() {
-        criteria = new SearchCriteria.Builder().setLocation(location)
+        criteria = new SearchCriteria.Builder()
                 .build();
         restaurants = new ArrayList<>();
+        previousView = "";
     }
 
     public SearchCriteria getCriteria(){
@@ -27,8 +31,31 @@ public class SortAndFilterState {
     public String getLocation() { return location; }
     public ArrayList<Restaurant> getRestaurants(){return restaurants;}
     public String getCategory(){return category;}
+
+    public SearchSortingMethods getSearchSortingMethods() {
+        return searchSortingMethods;
+    }
+
+    public SearchPriceLevel getSearchPriceLevel() {
+        return searchPriceLevel;
+    }
+    public String getPreviousView() {return previousView;}
+
+    public void setSearchSortingMethods(SearchSortingMethods searchSortingMethods) {
+        this.searchSortingMethods = searchSortingMethods;
+        this.criteria.setSortingMethod(searchSortingMethods);
+    }
+
+    public void setSearchPriceLevel(SearchPriceLevel searchPriceLevel) {
+        this.searchPriceLevel = searchPriceLevel;
+        this.criteria.setPriceLevel(searchPriceLevel);
+    }
+
     public void setCriteria(SearchCriteria criteria){this.criteria = criteria;}
-    public void setLocation(String location) {this.location = location;}
+    public void setLocation(String location) {this.location = location;
+    this.criteria.setLocation(location);}
     public void setRestaurants(ArrayList<Restaurant> restaurants){this.restaurants = restaurants;}
-    public void setCategory(String category){this.category = category;}
+    public void setCategory(String category){this.category = category;
+    this.criteria.setCategory(category);}
+    public void setPreviousView(String previousView) {this.previousView = previousView;}
 }

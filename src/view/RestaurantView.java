@@ -126,8 +126,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 //            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
         } else if (state.getPreviousView().equals("view favourites")) {
             viewFavouritesController.execute(state.getUsername());
-        }else {
-            System.out.println("ohno");
         }
     }
 }

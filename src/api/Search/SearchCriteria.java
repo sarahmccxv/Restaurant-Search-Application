@@ -98,7 +98,8 @@ public class SearchCriteria {
         }
 
         public Builder setCategory(String category) {
-            this.category = category.trim().toLowerCase();
+//            this.category = category.trim().toLowerCase();
+            this.category = category;
             return this;
         }
 

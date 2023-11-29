@@ -169,10 +169,12 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(sortAndFilter)) {
                             SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
-                            sortAndFilterState.getCriteria().setLocation(location);
+                            sortAndFilterState.setLocation(location);
+                            sortAndFilterState.setCategory(state.getRestaurantName());
                             System.out.println("in sort state");
                             SearchCriteria criteria = sortAndFilterState.getCriteria();
-                            sortAndFilterController.execute(criteria);
+                            String previousView = sortAndFilterState.getPreviousView();
+                            sortAndFilterController.execute(criteria, previousView);
                         }
                     }
                 }
