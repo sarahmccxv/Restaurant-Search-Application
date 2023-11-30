@@ -62,6 +62,7 @@ public class Main {
         UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
         RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
 
+
         FileUserDataAccessObject userDataAccessObject;
         try {
             userDataAccessObject = new FileUserDataAccessObject("./users.csv", new UserFactory());
