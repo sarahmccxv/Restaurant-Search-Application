@@ -64,7 +64,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         restaurants = new JPanel();
         restaurants.setLayout(new BoxLayout(restaurants, BoxLayout.Y_AXIS));
 
-        LabelTextPanel search_restaurant = new LabelTextPanel(new JLabel("Search by name"), searchInputField);
+        LabelTextPanel search_restaurant = new LabelTextPanel(new JLabel(" "), searchInputField);
 
         searchInputField.addKeyListener(
                 new KeyListener() {
@@ -155,8 +155,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        JFrame frame = new JFrame("View restaurant buttons");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        JFrame frame = new JFrame("View restaurant buttons");
+//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.removeAll();
         restaurants.removeAll();
         restaurants.revalidate();
@@ -220,9 +220,9 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JButton search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
         search.setBackground(Color.BLUE); // for the background
         search.setForeground(Color.WHITE); // for the text
-        frame.setContentPane(searchPanel);
-        frame.pack();
-        frame.setVisible(false);
+//        frame.setContentPane(searchPanel);
+//        frame.pack();
+//        frame.setVisible(false);
         searchPanel.add(search, gbc);
         System.out.println("gbc");
         ViewRestaurantState searchRestaurantState = (ViewRestaurantState) evt.getNewValue();

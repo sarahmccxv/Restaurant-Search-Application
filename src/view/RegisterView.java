@@ -57,7 +57,6 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         frame.setVisible(false);
         buttons.add(register);
         cancel = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
-        cancel.setBackground(Color.BLUE);
         buttons.add(cancel);
 
         register.addActionListener(
