@@ -38,6 +38,22 @@ public class Main {
         // various cards, and the layout, and stitch them together.
 
         // The main application window.
+        try {
+            // Set Nimbus look and feel
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            // If Nimbus is not available, fall back to default look and feel
+            try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
         JFrame application = new JFrame("Restaurant Search Application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 

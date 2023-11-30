@@ -5,11 +5,10 @@ import interface_adapter.register.RegisterState;
 import interface_adapter.register.RegisterViewModel;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -45,9 +44,17 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel(RegisterViewModel.LOCATION_LABEL), locationInputField);
 
-        JPanel buttons = new JPanel();
+        JFrame frame = new JFrame("Register buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
         register.setBackground(Color.BLUE);
+        register.setBackground(Color.BLUE); // for the background
+        register.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(buttons);
+        frame.pack();
+        frame.setVisible(false);
         buttons.add(register);
         cancel = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
         cancel.setBackground(Color.BLUE);
@@ -96,7 +103,19 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+        usernameInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                usernameInfo.getLabel().setForeground(Color.BLACK);
+            }
 
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                usernameInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
         passwordInputField.addKeyListener(
                 new KeyListener() {
                     @Override
@@ -117,6 +136,32 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+        passwordInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                passwordInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                passwordInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
+        passwordInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                passwordInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                passwordInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
 
         repeatPasswordInputField.addKeyListener(
                 new KeyListener() {
@@ -138,6 +183,32 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     }
                 }
         );
+        repeatPasswordInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                repeatPasswordInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                repeatPasswordInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
+        repeatPasswordInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                repeatPasswordInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                repeatPasswordInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
 
         locationInputField.addKeyListener(
                 new KeyListener() {
@@ -157,10 +228,35 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+        locationInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                locationInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                locationInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
+        locationInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                locationInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                locationInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
 
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
         this.add(title);
         this.add(usernameInfo);
         this.add(passwordInfo);
@@ -168,6 +264,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         this.add(locationInfo);
         this.add(buttons);
     }
+
 
     /**
      * React to a button click that results in evt.
