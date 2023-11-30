@@ -17,16 +17,6 @@ public class Review extends CommonReview implements ReviewInterface {
         return author;
     }
 
-    @Override
-    public Float getRating() {
-        return rating;
-    }
-
-    @Override
-    public String getContent() {
-        return content;
-    }
-
     private void setContent(String newContent) {
         this.content = newContent;
     }

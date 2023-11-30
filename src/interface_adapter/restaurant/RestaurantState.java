@@ -1,6 +1,7 @@
 package interface_adapter.restaurant;
 
 import entity.Restaurant;
+import entity.User;
 
 public class RestaurantState {
     private String userID;
@@ -26,6 +27,7 @@ public class RestaurantState {
         return restaurant;
     }
     public String getPreviousView() {return previousView;}
+
 
     public void setUserID(String userID) {
         this.userID = userID;

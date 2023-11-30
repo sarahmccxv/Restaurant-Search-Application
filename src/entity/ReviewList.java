@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ReviewList {
 
-    private ArrayList<Review> reviewlist = new ArrayList<>();
+    private ArrayList<Review> reviewlist;
 
     public ReviewList(){
         this.reviewlist = new ArrayList<Review>();
