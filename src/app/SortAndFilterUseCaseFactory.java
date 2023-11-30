@@ -7,6 +7,7 @@ import interface_adapter.sort_and_filter.SortAndFilterController;
 import interface_adapter.sort_and_filter.SortAndFilterPresenter;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantState;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import use_case.register.RegisterUserDataAccessInterface;
 import use_case.sortandfilter.SortAndFilterRestaurantDataAccessInterface;
@@ -26,7 +27,7 @@ public class SortAndFilterUseCaseFactory {
         SortAndFilterController sortAndFilterController = createSortAndFilterUseCase(viewManagerModel,
                 sortAndFilterViewModel, sortAndFilterRestaurantDataAccessObject);
         return new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewManagerModel, viewRestaurantController,
-                restaurantController);
+                restaurantController, viewRestaurantViewModel.getState(), viewRestaurantViewModel);
     }
 
     public static SortAndFilterController createSortAndFilterUseCase(ViewManagerModel viewManagerModel,

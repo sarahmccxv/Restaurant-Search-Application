@@ -19,6 +19,7 @@ import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantState;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import view.*;
 

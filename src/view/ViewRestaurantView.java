@@ -113,9 +113,11 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                             CardLayout cardLayout = (CardLayout) getParent().getLayout();
                             cardLayout.show(getParent(), "sortAndFilterView");
                         }
+
                     }
                 }
         );
+
 
         JPanel buttons = new JPanel();
         returnBack = new JButton(ViewRestaurantViewModel.RETURN_LABEL);
@@ -155,6 +157,12 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
         ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
+        System.out.println("property name is " + evt.getPropertyName());
+        if ("restaurants".equals(evt.getPropertyName())) {
+            System.out.println("im here");
+        }
+
+
         String location = state.getLocation();
         String userID = state.getUserID();
         String username = state.getUsername();

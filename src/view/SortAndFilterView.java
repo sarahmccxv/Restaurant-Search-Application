@@ -10,6 +10,8 @@ import interface_adapter.sort_and_filter.SortAndFilterController;
 import interface_adapter.sort_and_filter.SortAndFilterState;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantState;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,17 +34,23 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     private ViewManagerModel viewManagerModel;
     private ViewRestaurantController viewRestaurantController;
     private RestaurantController restaurantController;
+    private ViewRestaurantState viewRestaurantState;
+    private ViewRestaurantViewModel viewRestaurantViewModel;
 
     public SortAndFilterView(SortAndFilterController sortAndFilterController,
                              SortAndFilterViewModel sortAndFilterViewModel,
                              ViewManagerModel viewManagerModel,
                              ViewRestaurantController viewRestaurantController,
-                             RestaurantController restaurantController){
+                             RestaurantController restaurantController,
+                             ViewRestaurantState viewRestaurantState,
+                             ViewRestaurantViewModel viewRestaurantViewModel){
         this.sortAndFilterViewModel = sortAndFilterViewModel;
         this.sortAndFilterController = sortAndFilterController;
         this.viewManagerModel = viewManagerModel;
         this.viewRestaurantController = viewRestaurantController;
         this.restaurantController = restaurantController;
+        this.viewRestaurantState = viewRestaurantState;
+        this.viewRestaurantViewModel =viewRestaurantViewModel;
 
         sortAndFilterViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(SortAndFilterViewModel.TITLE_LABEL);
@@ -163,7 +171,9 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
                 System.out.println(sortAndFilterState.getSearchSortingMethods());
                 System.out.println(sortAndFilterState.getSearchPriceLevel());
                 sortAndFilterController.execute(criteria, "view restaurants");
-                viewRestaurantController.execute(sortAndFilterState.getUserID(), sortAndFilterState.getUsername(), sortAndFilterState.getPassword(), sortAndFilterState.getLocation());
+                viewRestaurantState.setRestaurants(sortAndFilterState.getRestaurants());
+                viewRestaurantViewModel.setRestaurants(sortAndFilterState.getRestaurants());
+//                viewRestaurantController.execute(sortAndFilterState.getUserID(), sortAndFilterState.getUsername(), sortAndFilterState.getPassword(), sortAndFilterState.getLocation());
                 viewManagerModel.setActiveView("view restaurant");
                 viewManagerModel.firePropertyChanged();
             }
