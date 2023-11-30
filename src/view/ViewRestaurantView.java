@@ -168,6 +168,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         String username = state.getUsername();
         String password = state.getPassword();
 
+        searchInputField.setText("");
+
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
         sortAndFilterState.getCriteria().setLocation(location);
         System.out.println(sortAndFilterState.getCriteria().getLocation());
@@ -231,6 +233,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                 restaurants.remove(5);
             }
         });
+
 
         JPanel sort_button = new JPanel();
         JButton sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
