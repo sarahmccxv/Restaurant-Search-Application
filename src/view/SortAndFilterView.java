@@ -3,10 +3,13 @@ package view;
 import api.Search.SearchCriteria;
 import api.Search.SearchPriceLevel;
 import api.Search.SearchSortingMethods;
+import entity.Restaurant;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.sort_and_filter.SortAndFilterController;
 import interface_adapter.sort_and_filter.SortAndFilterState;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,13 +30,19 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     final JButton apply;
     private final SortAndFilterController sortAndFilterController;
     private ViewManagerModel viewManagerModel;
+    private ViewRestaurantController viewRestaurantController;
+    private RestaurantController restaurantController;
 
     public SortAndFilterView(SortAndFilterController sortAndFilterController,
                              SortAndFilterViewModel sortAndFilterViewModel,
-                             ViewManagerModel viewManagerModel){
+                             ViewManagerModel viewManagerModel,
+                             ViewRestaurantController viewRestaurantController,
+                             RestaurantController restaurantController){
         this.sortAndFilterViewModel = sortAndFilterViewModel;
         this.sortAndFilterController = sortAndFilterController;
         this.viewManagerModel = viewManagerModel;
+        this.viewRestaurantController = viewRestaurantController;
+        this.restaurantController = restaurantController;
 
         sortAndFilterViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(SortAndFilterViewModel.TITLE_LABEL);
@@ -81,16 +90,18 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
             }
         });
 
-        apply.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                SearchCriteria criteria = state.getCriteria();
-                String previousView = state.getPreviousView();
-                sortAndFilterController.execute(criteria, previousView);
-                viewManagerModel.setActiveView("view restaurant");
-                viewManagerModel.firePropertyChanged();
-            }
-        });
+        apply.addActionListener(this);
+
+//        apply.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                SearchCriteria criteria = state.getCriteria();
+//                sortAndFilterController.execute(criteria, "view restaurants");
+//                viewManagerModel.setActiveView("view restaurant");
+//                System.out.println("in apply action");
+//                viewManagerModel.firePropertyChanged();
+//            }
+//        });
 
         JPanel returnButton = new JPanel();
         returnBack = new JButton(SortAndFilterViewModel.RETURN_BUTTON_LABEL);
@@ -139,26 +150,32 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         System.out.println("Property change: " + evt.getPropertyName());
-//        SortAndFilterState sortAndFilterState = (SortAndFilterState) evt.getNewValue();
-//        apply.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                sortAndFilterState.setSearchSortingMethods((SearchSortingMethods) sortingMethodComboBox.getSelectedItem());
-//                sortAndFilterState.setSearchPriceLevel((SearchPriceLevel) priceLevelComboBox.getSelectedItem());
-//                SearchCriteria criteria = sortAndFilterState.getCriteria();
-//                String previousView = sortAndFilterState.getPreviousView();
-//                sortAndFilterController.execute(criteria, previousView);
-//                viewManagerModel.setActiveView("view restaurant");
-//                viewManagerModel.firePropertyChanged();
-//            }
-//        });
+        SortAndFilterState sortAndFilterState = (SortAndFilterState) evt.getNewValue();
+        // Remove existing action listeners
+        for (ActionListener al : apply.getActionListeners()) {
+            apply.removeActionListener(al);
+        }
+        apply.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                SearchCriteria criteria = sortAndFilterState.getCriteria();
+                System.out.println("apply action");
+                System.out.println(sortAndFilterState.getSearchSortingMethods());
+                System.out.println(sortAndFilterState.getSearchPriceLevel());
+                sortAndFilterController.execute(criteria, "view restaurants");
+                viewRestaurantController.execute(sortAndFilterState.getUserID(), sortAndFilterState.getUsername(), sortAndFilterState.getPassword(), sortAndFilterState.getLocation());
+                viewManagerModel.setActiveView("view restaurant");
+                viewManagerModel.firePropertyChanged();
+            }
+        });
     }
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed: " + e.getActionCommand());
-        System.out.println("return button clicked");
         SortAndFilterState state = sortAndFilterViewModel.getState();
-//        if (state.getPreviousView().equals("view restaurants")) {
+        if (state.getPreviousView().equals("view restaurants")) {
             viewManagerModel.setActiveView("view restaurant");
+            System.out.println("return button clicked");
             viewManagerModel.firePropertyChanged();
     }
+}
 }

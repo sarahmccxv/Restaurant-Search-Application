@@ -156,6 +156,10 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
         ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
         String location = state.getLocation();
+        String userID = state.getUserID();
+        String username = state.getUsername();
+        String password = state.getPassword();
+
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
         sortAndFilterState.getCriteria().setLocation(location);
         System.out.println(sortAndFilterState.getCriteria().getLocation());
@@ -231,29 +235,17 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                             SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
                             sortAndFilterState.setLocation(location);
                             sortAndFilterState.setCategory(state.getRestaurantName());
+                            sortAndFilterState.setUserID(userID);
+                            sortAndFilterState.setPassword(password);
+                            sortAndFilterState.setUsername(username);
                             System.out.println("in sort state");
                             SearchCriteria criteria = sortAndFilterState.getCriteria();
                             String previousView = sortAndFilterState.getPreviousView();
+                            System.out.println(previousView + "is the previous view after sort in view restaurant");
                             sortAndFilterController.execute(criteria, previousView);
                         }
-                        if (state.getPreviousView().equals("sort and filter")){
-                            ArrayList<Restaurant> sorted = state.getRestaurants();
-                            for (Restaurant restaurant : sorted) {
-                                String buttonText = restaurant.getRestaurantName() + " - " + restaurant.getAddress();
-                                JButton button = new JButton(buttonText);
-                                System.out.println("in sort state adding buttons");
-                                String restaurantID = restaurant.getRestaurantID();
-                                String userID = state.getUserID();
-                                String username = state.getUsername();
-                                String password = state.getPassword();
-                                String previousView = state.getPreviousView();
-                                restaurantController.execute(userID, username, password, restaurantID, "view restaurants");
-                                restaurants.add(button);
-                            }
-                            restaurants.remove(5);
 
                         }
-                    }
                 }
         );
 

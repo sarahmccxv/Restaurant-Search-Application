@@ -17,6 +17,9 @@ public class SortAndFilterState {
     private String location;
     private String category;
     private String previousView;
+    private String userID;
+    private String username;
+    private String password;
 
     public SortAndFilterState() {
         criteria = new SearchCriteria.Builder()
@@ -43,6 +46,11 @@ public class SortAndFilterState {
     }
     public String getPreviousView() {return previousView;}
 
+    public String getUserID(){return userID;}
+    public String getUsername(){return username;}
+    public String getPassword(){return password;}
+
+
     public void setSearchSortingMethods(SearchSortingMethods searchSortingMethods) {
         this.searchSortingMethods = searchSortingMethods;
         this.criteria.setSortingMethod(searchSortingMethods);
@@ -59,4 +67,16 @@ public class SortAndFilterState {
     public void setCategory(String category){this.category = category;
     this.criteria.setCategory(category);}
     public void setPreviousView(String previousView) {this.previousView = previousView;}
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
 }

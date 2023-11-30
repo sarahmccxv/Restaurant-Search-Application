@@ -115,7 +115,7 @@ public class Main {
                 fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
 
-        SortAndFilterView sortAndFilterView = SortAndFilterUseCaseFactory.create(viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
+        SortAndFilterView sortAndFilterView = SortAndFilterUseCaseFactory.create(viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel, apiRestaurantDataAccessObject, viewRestaurantController, restaurantController);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
 
         UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
