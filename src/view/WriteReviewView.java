@@ -44,6 +44,8 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
 
         JLabel title = new JLabel("Write Your Review");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JLabel message = new JLabel("Please enter your rating between 0 and 5, with optional 0.5 as the last digit.");
+        message.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel ratingInfo = new LabelTextPanel(
                 new JLabel("Enter rating: "), ratingInputField);
@@ -117,6 +119,7 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
                 });
 
         this.add(title);
+        this.add(message);
         this.add(ratingInfo);
         this.add(ratingErrorField);
         this.add(contentInfo);
