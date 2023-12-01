@@ -17,8 +17,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Objects;
 
 import static api.Search.SearchPriceLevel.*;
 import static api.Search.SearchSortingMethods.*;
@@ -26,6 +29,7 @@ import static api.Search.SearchSortingMethods.*;
 public class SortAndFilterView extends JPanel implements ActionListener, PropertyChangeListener {
     public final String viewName = "sort and filter restaurant";
     private final SortAndFilterViewModel sortAndFilterViewModel;
+    final JTextField sortInputField = new JTextField(15);
     final JButton returnBack;
     final JComboBox<String> sortingMethodComboBox;
     final JComboBox<String> priceLevelComboBox;
@@ -62,6 +66,25 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         apply.addActionListener(this);
 
         SortAndFilterState state = sortAndFilterViewModel.getState();
+
+        LabelTextPanel sort_restaurant = new LabelTextPanel(new JLabel("category"), sortInputField);
+
+        sortInputField.addKeyListener(
+                new KeyListener() {
+                    @Override
+                    public void keyTyped(KeyEvent e) {
+                        String text = sortInputField.getText() + e.getKeyChar();
+                        state.setCategory(text);
+                    }
+
+                    @Override
+                    public void keyPressed(KeyEvent e) {
+                    }
+
+                    @Override
+                    public void keyReleased(KeyEvent e) {
+                    }
+                });
 
         String[] sortingMethod = {BEST_MATCH.description, RATING.description, REVIEW_COUNT.description};
         sortingMethodComboBox = new JComboBox(sortingMethod);
@@ -139,17 +162,24 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         priceLevelConstraints.insets = new Insets(5, 5, 5, 5); // Add padding
         this.add(priceLevelComboBox, priceLevelConstraints);
 
+        // GridBagConstraints for category
+        GridBagConstraints categoryConstraints = new GridBagConstraints();
+        categoryConstraints.gridx = 0;
+        categoryConstraints.gridy = 2;
+        categoryConstraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        this.add(sort_restaurant, categoryConstraints);
+
         // GridBagConstraints for apply button
         GridBagConstraints applyButtonConstraints = new GridBagConstraints();
         applyButtonConstraints.gridx = 0;
-        applyButtonConstraints.gridy = 2;
+        applyButtonConstraints.gridy = 3;
         applyButtonConstraints.gridwidth = 2; // Span 2 columns
         this.add(applyButton, applyButtonConstraints);
 
         // GridBagConstraints for return button
         GridBagConstraints returnButtonConstraints = new GridBagConstraints();
         returnButtonConstraints.gridx = 1;
-        returnButtonConstraints.gridy = 2;
+        returnButtonConstraints.gridy = 3;
         returnButtonConstraints.gridwidth = 2; // Span 2 columns
         this.add(returnButton, returnButtonConstraints);
 
@@ -170,6 +200,7 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
                 System.out.println("apply action");
                 System.out.println(sortAndFilterState.getSearchSortingMethods());
                 System.out.println(sortAndFilterState.getSearchPriceLevel());
+                System.out.println(sortAndFilterState.getCategory());
                 sortAndFilterController.execute(criteria, "view restaurants");
                 viewRestaurantState.setRestaurants(sortAndFilterState.getRestaurants());
                 viewRestaurantViewModel.setRestaurants(sortAndFilterState.getRestaurants());
@@ -182,7 +213,7 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
     public void actionPerformed(ActionEvent e) {
         System.out.println("Action performed: " + e.getActionCommand());
         SortAndFilterState state = sortAndFilterViewModel.getState();
-        if (state.getPreviousView().equals("view restaurants")) {
+        if (Objects.equals(e.getActionCommand(), "Return")) {
             viewManagerModel.setActiveView("view restaurant");
             System.out.println("return button clicked");
             viewManagerModel.firePropertyChanged();

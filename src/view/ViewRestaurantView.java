@@ -104,6 +104,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
                 }
         );
 
+
         JPanel sort_button = new JPanel();
         sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
         sort_button.add(sortAndFilter);

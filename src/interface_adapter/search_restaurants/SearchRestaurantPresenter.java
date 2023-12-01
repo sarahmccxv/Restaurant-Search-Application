@@ -26,11 +26,6 @@ public class SearchRestaurantPresenter implements SearchRestaurantOutputBoundary
     public void prepareSuccessView(SearchRestaurantOutputData searchRestaurantOutputData) {
         ViewRestaurantState viewRestaurantState = viewRestaurantViewModel.getState();
         viewRestaurantState.setRestaurants(searchRestaurantOutputData.getRestaurants());
-
-        SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
-        sortAndFilterState.setCategory(searchRestaurantOutputData.getRestaurantName());
-        this.sortAndFilterViewModel.setState(sortAndFilterState);
-        sortAndFilterViewModel.firePropertyChanged();
         viewManagerModel.setActiveView(sortAndFilterViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
 
