@@ -85,6 +85,8 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+        JLabel message = new JLabel("Please specify the type of cuisine or food you want.");
+        message.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         String[] sortingMethod = {BEST_MATCH.description, RATING.description, REVIEW_COUNT.description};
         sortingMethodComboBox = new JComboBox(sortingMethod);
@@ -169,17 +171,24 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
         categoryConstraints.insets = new Insets(5, 5, 5, 5); // Add padding
         this.add(sort_restaurant, categoryConstraints);
 
+        // GridBagConstraints for message
+        GridBagConstraints messageConstraints = new GridBagConstraints();
+        messageConstraints.gridx = 0;
+        messageConstraints.gridy = 3;
+        messageConstraints.insets = new Insets(5, 5, 5, 5); // Add padding
+        this.add(message, messageConstraints);
+
         // GridBagConstraints for apply button
         GridBagConstraints applyButtonConstraints = new GridBagConstraints();
         applyButtonConstraints.gridx = 0;
-        applyButtonConstraints.gridy = 3;
+        applyButtonConstraints.gridy = 4;
         applyButtonConstraints.gridwidth = 2; // Span 2 columns
         this.add(applyButton, applyButtonConstraints);
 
         // GridBagConstraints for return button
         GridBagConstraints returnButtonConstraints = new GridBagConstraints();
         returnButtonConstraints.gridx = 1;
-        returnButtonConstraints.gridy = 3;
+        returnButtonConstraints.gridy = 4;
         returnButtonConstraints.gridwidth = 2; // Span 2 columns
         this.add(returnButton, returnButtonConstraints);
 
@@ -201,6 +210,9 @@ public class SortAndFilterView extends JPanel implements ActionListener, Propert
                 System.out.println(sortAndFilterState.getSearchSortingMethods());
                 System.out.println(sortAndFilterState.getSearchPriceLevel());
                 System.out.println(sortAndFilterState.getCategory());
+                System.out.println(sortAndFilterState.getCriteria().getSortingMethod());
+                System.out.println(sortAndFilterState.getCriteria().getPriceLevel());
+                System.out.println(sortAndFilterState.getCriteria().getCategory());
                 sortAndFilterController.execute(criteria, "view restaurants");
                 viewRestaurantState.setRestaurants(sortAndFilterState.getRestaurants());
                 viewRestaurantViewModel.setRestaurants(sortAndFilterState.getRestaurants());
