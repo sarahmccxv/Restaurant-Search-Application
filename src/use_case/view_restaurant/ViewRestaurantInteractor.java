@@ -4,6 +4,7 @@ import api.yelp.YelpAPI;
 import entity.Restaurant;
 import entity.User;
 import use_case.register.RegisterUserDataAccessInterface;
+import use_case.search_restaurant.SearchResaturantInputData;
 
 import java.util.ArrayList;
 
@@ -25,6 +26,7 @@ public class ViewRestaurantInteractor implements ViewRestaurantInputBoundary {
         String userID = viewRestaurantInputData.getUserID();
         String username = viewRestaurantInputData.getUsername();
         String password = viewRestaurantInputData.getPassword();
+//        String restaurantName = searchResaturantInputData.getRestaurantName();
         //System.out.println("viewRestaurant Input Data received as UserID is " + userID + " , password is " + password);
         fileUserDataAccessObject.update();
         User user = fileUserDataAccessObject.getByUserID(userID);

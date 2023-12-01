@@ -2,6 +2,7 @@ package view;
 
 import entity.Restaurant;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
@@ -30,6 +31,7 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
     public final String viewName = "Restaurant";
     final JButton returnBack;
     private JButton addToFavourite;
+    private JButton addReview;
     final JPanel info;
     final JPanel buttons;
     private Restaurant restaurant;
@@ -46,8 +48,8 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     public RestaurantView(RestaurantViewModel restaurantViewModel,
                           RestaurantController restaurantController,
-                          // TODO: Add review controller later
                           ViewRestaurantController viewRestaurantController,
+                          AddReviewController addReviewController,
                           AddToFavouritesController addToFavouritesController,
                           AddToFavouritesViewModel addToFavouritesViewModel,
                           ViewFavouritesController viewFavouritesController,
@@ -90,6 +92,21 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
                     }
                 });
         buttons.add(addToFavourite);
+
+        addReview = new JButton(RestaurantViewModel.WRITE_REVIEW_LABEL);
+        buttons.add(addReview);
+        addReview.addActionListener(
+                new ActionListener() {
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(addReview)) {
+                            RestaurantState state = restaurantViewModel.getState();
+                            Restaurant restaurant = state.getRestaurant();
+                            String previousView = state.getPreviousView();
+                            String userID = state.getUserID();
+                            addReviewController.execute(userID, restaurant, previousView);
+                        }
+                    }
+                });
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -166,8 +183,6 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 //            viewRestaurantController.execute(state.getUserID(), state.getUsername(), state.getPassword(), "Beijing");
         } else if (state.getPreviousView().equals("view favourites")) {
             viewFavouritesController.execute(state.getUsername());
-        }else {
-            System.out.println("ohno");
         }
     }
 }

@@ -1,9 +1,11 @@
 package interface_adapter.view_restaurants;
 
+import entity.Restaurant;
 import interface_adapter.ViewModel;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 
 public class ViewRestaurantViewModel extends ViewModel {
     public static final String TITLE_LABEL = "View Restaurants";
@@ -25,9 +27,13 @@ public class ViewRestaurantViewModel extends ViewModel {
     public ViewRestaurantState getState() {
         return state;
     }
+    public void setRestaurants(ArrayList<Restaurant> restaurants) {
+        this.state.setRestaurants(restaurants);
+        firePropertyChanged();
+    }
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("viewRestaurant", null, this.state);
     }
 
     @Override
