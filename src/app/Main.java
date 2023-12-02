@@ -86,8 +86,9 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
          LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                viewRestaurantViewModel, apiRestaurantDataAccessObject,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject);
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, viewFavouritesViewModel,
+                 fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject,
+                 userDataAccessObject, apiRestaurantDataAccessObject);
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
@@ -119,8 +120,8 @@ public class Main {
         SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
 
-        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
-                userDataAccessObject, loginController);
+        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, apiRestaurantDataAccessObject,
+                userProfileViewModel, userDataAccessObject, loginController);
         views.add(userProfileView, userProfileView.viewName);
 
         viewManagerModel.setActiveView(registerView.viewName);

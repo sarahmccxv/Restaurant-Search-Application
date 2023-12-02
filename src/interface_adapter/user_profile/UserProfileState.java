@@ -5,12 +5,14 @@ public class UserProfileState {
     private String username = "";
     private String password = "";
     private String location = "";
+    private String errorMessage = "";
 
     public UserProfileState(UserProfileState copy) {
         userID = copy.userID;
         username = copy.username;
         password = copy.password;
         location = copy.location;
+        errorMessage = copy.errorMessage;
     }
 
     // Because of the previous copy constructor, the default constructor must be explicit.
@@ -32,6 +34,10 @@ public class UserProfileState {
         return location;
     }
 
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
     public void setUserID(String userID) {
         this.userID = userID;
     }
@@ -48,4 +54,7 @@ public class UserProfileState {
         this.location = location;
     }
 
+    public void setErrorMessage(String errorMessage){
+        this.errorMessage = errorMessage;
+    }
 }

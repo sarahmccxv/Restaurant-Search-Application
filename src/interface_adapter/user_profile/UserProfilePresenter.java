@@ -1,6 +1,7 @@
 package interface_adapter.user_profile;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.register.RegisterState;
 import use_case.user_profile.UserProfileOutputBoundary;
 import use_case.user_profile.UserProfileOutputData;
 
@@ -21,10 +22,18 @@ public class UserProfilePresenter implements UserProfileOutputBoundary {
         userProfileState.setUsername(userProfileOutputData.getUsername());
         userProfileState.setPassword(userProfileOutputData.getPassword());
         userProfileState.setLocation(userProfileOutputData.getLocation());
+        userProfileState.setErrorMessage("");
         this.userProfileViewModel.setState(userProfileState);
         this.userProfileViewModel.firePropertyChanged();
 
         this.viewManagerModel.setActiveView(userProfileViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
+    }
+
+    @Override
+    public void prepareFailView(String error) {
+        UserProfileState userProfileState = userProfileViewModel.getState();
+        userProfileState.setErrorMessage(error);
+        userProfileViewModel.firePropertyChanged();
     }
 }

@@ -1,5 +1,6 @@
 package app;
 
+import api.yelp.YelpApiServices;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.user_profile.UserProfileController;
@@ -38,7 +39,8 @@ public class LoggedInUseCaseFactory {
                                       ViewFavouritesDataAccessInterface userDataAccessObject,
                                       UserProfileViewModel userProfileViewModel,
                                       UserProfileDataAccessInterface userProfileDataAccessObject,
-                                      RegisterUserDataAccessInterface fileUserDataAccessObject) {
+                                      RegisterUserDataAccessInterface fileUserDataAccessObject,
+                                      YelpApiServices APIRestaurantDataAccessObject) {
 
         try {
             ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
@@ -46,7 +48,7 @@ public class LoggedInUseCaseFactory {
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
                     viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
             UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
-                    viewManagerModel, userProfileViewModel, userProfileDataAccessObject);
+                    viewManagerModel, APIRestaurantDataAccessObject, userProfileViewModel, userProfileDataAccessObject);
             return new LoggedInView(loggedInViewModel, viewFavouritesViewModel,
                     viewFavouritesController, viewRestaurantViewModel, viewRestaurantController, userProfileViewModel, userProfileController);
         } catch (IOException e) {
