@@ -8,10 +8,13 @@ import java.util.ArrayList;
 
 public class SortAndFilterResaturantInputData {
     SearchCriteria criteria;
+    private String previousView;
 
 
-    public SortAndFilterResaturantInputData(SearchCriteria criteria){
+    public SortAndFilterResaturantInputData(SearchCriteria criteria, String previousView){
         this.criteria = criteria;
+        this.previousView = previousView;
     }
     SearchCriteria getCriteria(){return criteria;}
+    public String getPreviousView() {return previousView;}
 }

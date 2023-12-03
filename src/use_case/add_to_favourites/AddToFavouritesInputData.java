@@ -10,7 +10,7 @@ public class AddToFavouritesInputData {
     public AddToFavouritesInputData(String username, Restaurant restaurant){
         this.username = username;
         this.restaurant = restaurant;
-    };
+    }
 
     public String getUsername() {
         return username;

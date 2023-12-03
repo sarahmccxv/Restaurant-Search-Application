@@ -49,6 +49,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
 
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
         register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
+
         register.setBackground(Color.BLUE); // for the background
         register.setForeground(Color.WHITE); // for the text
         frame.setContentPane(buttons);
@@ -77,6 +78,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         );
 
         cancel.addActionListener(this);
+
 
         // This makes a new KeyListener implementing class, instantiates it, and
         // makes it listen to keystrokes in the usernameInputField.

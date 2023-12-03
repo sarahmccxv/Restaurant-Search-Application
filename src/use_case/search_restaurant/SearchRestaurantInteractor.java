@@ -17,7 +17,7 @@ public class SearchRestaurantInteractor implements SearchRestaurantInputBoundary
         String restaurantName = searchResaturantInputData.getRestaurantName();
         String location = searchResaturantInputData.getLocation();
             ArrayList<Restaurant> restaurant = searchRestaurantDataAccessObject.getRestaurantByName(location, restaurantName);
-            SearchRestaurantOutputData searchRestaurantOutputData = new SearchRestaurantOutputData(restaurant, false);
+            SearchRestaurantOutputData searchRestaurantOutputData = new SearchRestaurantOutputData(restaurant, false, restaurantName);
             searchRestaurantPresenter.prepareSuccessView(searchRestaurantOutputData);
         }
     }

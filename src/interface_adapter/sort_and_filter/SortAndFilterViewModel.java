@@ -6,14 +6,13 @@ import java.beans.PropertyChangeSupport;
 
 public class SortAndFilterViewModel extends ViewModel{
     public static final String TITLE_LABEL = "Sort and filter";
-    public static final String CATEGORY_LABEL = "Choose category";
     public static final String RETURN_BUTTON_LABEL = "Return";
-    public static final String SEARCH_BUTTON_LABEL = "Search";
+    public static final String APPLY_BUTTON_LABEL = "Apply";
     private SortAndFilterState state = new SortAndFilterState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 
     public SortAndFilterViewModel() {
-        super("view restaurant");
+        super("sort and filter restaurant");
     }
 
     public void setState(SortAndFilterState state) {
@@ -26,7 +25,7 @@ public class SortAndFilterViewModel extends ViewModel{
 
     @Override
     public void firePropertyChanged() {
-        support.firePropertyChange("state", null, this.state);
+        support.firePropertyChange("sortAndFilter", null, this.state);
     }
 
     @Override

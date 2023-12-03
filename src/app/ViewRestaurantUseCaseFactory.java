@@ -33,8 +33,8 @@ public class ViewRestaurantUseCaseFactory {
                                             SortAndFilterController sortAndFilterController,
                                             SortAndFilterViewModel sortAndFilterViewModel) {
         ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
-                viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
-        SearchRestaurantController searchRestaurantController = createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,searchRestaurantDataAccessObject);
+                viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject, sortAndFilterViewModel);
+        SearchRestaurantController searchRestaurantController = createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,searchRestaurantDataAccessObject, sortAndFilterViewModel);
         return new ViewRestaurantView(viewRestaurantViewModel, viewRestaurantController,
                 loginController, restaurantController, sortAndFilterController, sortAndFilterViewModel, searchRestaurantController);
     }
@@ -44,18 +44,19 @@ public class ViewRestaurantUseCaseFactory {
                                                                         ViewRestaurantDataAccessInterface
                                                                         viewRestaurantDataAccessObject,
                                                                         RegisterUserDataAccessInterface
-                                                                                fileUserDataAccessObject)
+                                                                                fileUserDataAccessObject,
+                                                                       SortAndFilterViewModel sortAndFilterViewModel)
     {
         ViewRestaurantOutputBoundary viewRestaurantOutputBoundary = new ViewRestaurantPresenter(
-                viewManagerModel, viewRestaurantViewModel);
+                viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel);
         RestaurantFactory restaurantFactory = new RestaurantFactory();
         ViewRestaurantInputBoundary viewRestaurantInteractor = new ViewRestaurantInteractor(
                 viewRestaurantOutputBoundary, viewRestaurantDataAccessObject, fileUserDataAccessObject);
         return new ViewRestaurantController(viewRestaurantInteractor);
     }
 
-    public static SearchRestaurantController createSearchRestaurantUseCase(ViewManagerModel viewManagerModel, ViewRestaurantViewModel viewRestaurantViewModel, SearchRestaurantDataAccessInterface searchRestaurantDataAccessObject){
-        SearchRestaurantOutputBoundary searchRestaurantOutputBoundary = new SearchRestaurantPresenter(viewManagerModel, viewRestaurantViewModel);
+    public static SearchRestaurantController createSearchRestaurantUseCase(ViewManagerModel viewManagerModel, ViewRestaurantViewModel viewRestaurantViewModel, SearchRestaurantDataAccessInterface searchRestaurantDataAccessObject, SortAndFilterViewModel sortAndFilterViewModel){
+        SearchRestaurantOutputBoundary searchRestaurantOutputBoundary = new SearchRestaurantPresenter(viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel);
         SearchRestaurantInputBoundary searchRestaurantInteractor = new SearchRestaurantInteractor(searchRestaurantDataAccessObject, searchRestaurantOutputBoundary);
         return new SearchRestaurantController(searchRestaurantInteractor);
     }

@@ -1,10 +1,14 @@
 package app;
 
 import data_access.APIRestaurantDataAccessObject;
+import data_access.FileReviewDataAccessObject;
 import data_access.FileUserDataAccessObject;
 import data_access.FileFavouritesDataAccessObject;
+import entity.ReviewFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -19,7 +23,9 @@ import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantState;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
+import interface_adapter.write_review.WriteReviewViewModel;
 import view.*;
 
 import javax.swing.*;
@@ -76,6 +82,8 @@ public class Main {
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
         UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
         RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
+        AddReviewViewModel addReviewViewModel = new AddReviewViewModel();
+        WriteReviewViewModel writeReviewViewModel = new WriteReviewViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
@@ -94,8 +102,16 @@ public class Main {
             throw new RuntimeException(e);
         }
 
+        FileReviewDataAccessObject fileReviewDataAccessObject;
+        try {
+            fileReviewDataAccessObject = new FileReviewDataAccessObject("./reviews.csv", new ReviewFactory(),
+                    userDataAccessObject);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
         RegisterView registerView = RegisterUseCaseFactory.create(viewManagerModel, loginViewModel, registerViewModel,
-                userDataAccessObject);
+                userDataAccessObject, apiRestaurantDataAccessObject);
         views.add(registerView, registerView.viewName);
 
         LoginView loginView = LoginUseCaseFactory.create(viewManagerModel, loginViewModel, loggedInViewModel, userDataAccessObject);
@@ -103,7 +119,7 @@ public class Main {
 
          LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject);
+                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject, sortAndFilterViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
@@ -113,14 +129,14 @@ public class Main {
                 viewManagerModel, restaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject);
 
         SortAndFilterController sortAndFilterController = SortAndFilterUseCaseFactory.createSortAndFilterUseCase(viewManagerModel, sortAndFilterViewModel, apiRestaurantDataAccessObject);
-        SearchRestaurantController searchRestaurantController = ViewRestaurantUseCaseFactory.createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel, apiRestaurantDataAccessObject);
+        SearchRestaurantController searchRestaurantController = ViewRestaurantUseCaseFactory.createSearchRestaurantUseCase(viewManagerModel, viewRestaurantViewModel, apiRestaurantDataAccessObject, sortAndFilterViewModel);
         ViewRestaurantView viewRestaurantView = ViewRestaurantUseCaseFactory.create(viewManagerModel,
                 viewRestaurantViewModel, apiRestaurantDataAccessObject, userDataAccessObject, apiRestaurantDataAccessObject,
                 loginController, restaurantController, sortAndFilterController, sortAndFilterViewModel);
         views.add(viewRestaurantView, viewRestaurantView.viewName);
 
         ViewRestaurantController viewRestaurantController = ViewRestaurantUseCaseFactory.createViewRestaurantUseCase(viewManagerModel, viewRestaurantViewModel,
-                apiRestaurantDataAccessObject, userDataAccessObject);
+                apiRestaurantDataAccessObject, userDataAccessObject, sortAndFilterViewModel);
 
         ViewFavouritesView viewFavouritesView = ViewFavouritesUseCaseFactory.create(viewManagerModel, restaurantViewModel,
                 loginViewModel, loggedInViewModel, viewFavouritesViewModel, removeFavouriteViewModel, apiRestaurantDataAccessObject,
@@ -128,12 +144,18 @@ public class Main {
         views.add(viewFavouritesView, ViewFavouritesView.viewName);
 
         RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
-                addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject, viewRestaurantController,
+                addReviewViewModel, addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
+                viewRestaurantController,
                 fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
-
-        SortAndFilterView sortAndFilterView = new SortAndFilterView(sortAndFilterController, sortAndFilterViewModel, viewRestaurantViewModel);
+        ;
+        SortAndFilterView sortAndFilterView = SortAndFilterUseCaseFactory.create(viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel, apiRestaurantDataAccessObject, viewRestaurantController, restaurantController);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
+
+        WriteReviewView writeReviewView = WriteReviewUseCaseFactory.create(viewManagerModel, addReviewViewModel,
+                writeReviewViewModel, restaurantViewModel, fileReviewDataAccessObject, apiRestaurantDataAccessObject,
+                userDataAccessObject);
+        views.add(writeReviewView, writeReviewView.viewName);
 
         UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
                 userDataAccessObject, loginController);

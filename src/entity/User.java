@@ -9,7 +9,7 @@ public class User extends CommonUser implements UserInterface {
     private final LocalDateTime creationTime;
     private String location;
     private FavouritesList favouritesList;
-    private ArrayList<Review> reviewsList = new ArrayList<>();
+    private ReviewList reviewsList;
 
     public User(String userID, String username, String password, String location,
                 LocalDateTime creationTime){
@@ -18,6 +18,7 @@ public class User extends CommonUser implements UserInterface {
         this.location = location;
         this.creationTime = creationTime;
         this.favouritesList = new FavouritesList();
+        this.reviewsList = new ReviewList();
     }
 
     @Override
@@ -36,7 +37,7 @@ public class User extends CommonUser implements UserInterface {
     }
 
     @Override
-    public ArrayList<Review> getReviewsList() {
+    public ReviewList getReviewsList() {
         return reviewsList;
     }
 

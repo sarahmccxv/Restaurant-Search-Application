@@ -8,6 +8,7 @@ import java.beans.PropertyChangeSupport;
 public class RestaurantViewModel extends ViewModel {
     public static final String TITLE_LABEL = "Restaurant Info.";
     public static final String RETURN_LABEL = "Return";
+    public static final String WRITE_REVIEW_LABEL = "Write a Review";
     public static final String ADD_TO_FAVOURITE_LABEL = "Add to Favorites";
     private RestaurantState state = new RestaurantState();
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
