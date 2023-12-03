@@ -37,7 +37,6 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
         userProfileViewModel.addPropertyChangeListener(this);
-
         this.viewManagerModel = viewManagerModel;
         this.loginController = loginController;
 
@@ -191,6 +190,16 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                     ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
                     icon = new ImageIcon(icon.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
                     avatarLabel.setIcon(icon);
+
+                    try {
+                        defaultAvatar = new ImageIcon(selectedFile.getAbsolutePath());
+                        System.out.println(selectedFile.getAbsolutePath());
+
+                        defaultAvatar = new ImageIcon(defaultAvatar.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        // Handle exception if the selected image fails to load
+                    }
                 }
             }
         });
