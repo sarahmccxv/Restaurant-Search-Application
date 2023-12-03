@@ -170,7 +170,7 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         //Set font
-        Font titleFont = new Font("Arial", Font.BOLD, 18); // Change "Arial" to the desired font family
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
         title.setFont(titleFont);
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         message.setFont(message.getFont().deriveFont(Font.BOLD));

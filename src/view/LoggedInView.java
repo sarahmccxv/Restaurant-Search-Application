@@ -65,7 +65,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         //Set font
-        Font titleFont = new Font("Arial", Font.BOLD, 18); // Change "Arial" to the desired font family
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
         title.setFont(titleFont);
 
         // Add an empty border to create space above and below the title
@@ -88,12 +88,23 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JPanel buttons = new JPanel();
         viewRestaurant = new JButton(loggedInViewModel.VIEW_RESTAURANT_BUTTON_LABEL);
+        Font viewFond = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        viewRestaurant.setFont(viewFond);
         buttons.add(viewRestaurant);
+
         viewFavourites = new JButton(loggedInViewModel.VIEW_FAVOURITES_BUTTON_LABEL);
+        Font favFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        viewFavourites.setFont(favFont);
         buttons.add(viewFavourites);
+
         userProfile = new JButton(loggedInViewModel.USER_PROFILE_BUTTON_LABEL);
+        Font userFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        userProfile.setFont(userFont);
         buttons.add(userProfile);
+
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
+        Font logoutFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        logOut.setFont(logoutFont);
         buttons.add(logOut);
 
         logOut.addActionListener(this);
