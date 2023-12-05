@@ -15,5 +15,9 @@ public interface YelpApiServices {
     ArrayList<YelpReview> getReviews(ReviewCriteria reviewCriteria);
     ArrayList<YelpReview> getReviewsByID(String id);
 
+
+
+
 }
+
 

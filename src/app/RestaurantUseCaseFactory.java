@@ -3,6 +3,9 @@ package app;
 import data_access.FileFavouritesDataAccessObject;
 import entity.RestaurantFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_review.AddReviewPresenter;
+import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesController;
 import interface_adapter.add_to_favourites.AddToFavouritesPresenter;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
@@ -13,6 +16,10 @@ import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesPresenter;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.write_review.WriteReviewController;
+import use_case.add_review.AddReviewInputBoundary;
+import use_case.add_review.AddReviewInteractor;
+import use_case.add_review.AddReviewOutputBoundary;
 import use_case.add_to_favourites.AddToFavouritesDataAccessInterface;
 import use_case.add_to_favourites.AddToFavouritesInputBoundary;
 import use_case.add_to_favourites.AddToFavouritesInteractor;
@@ -26,7 +33,10 @@ import use_case.view_favourites.ViewFavouritesInputBoundary;
 import use_case.view_favourites.ViewFavouritesInteractor;
 import use_case.view_favourites.ViewFavouritesOutputBoundary;
 import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
+import use_case.write_review.WriteReviewInteractor;
+import use_case.write_review.WriteReviewOutputBoundary;
 import view.RestaurantView;
+import view.WriteReviewView;
 
 import java.io.IOException;
 
@@ -35,6 +45,7 @@ public class RestaurantUseCaseFactory {
 
     public static RestaurantView create(ViewManagerModel viewManagerModel,
                                         RestaurantViewModel restaurantViewModel,
+                                        AddReviewViewModel addReviewViewModel,
                                         AddToFavouritesViewModel addToFavouritesViewModel,
                                         ViewRestaurantDataAccessInterface RestaurantDataAccessObject,
                                         RegisterUserDataAccessInterface fileUserDataAccessObject,
@@ -48,7 +59,9 @@ public class RestaurantUseCaseFactory {
                 favouritesDataAccessObject, fileUserDataAccessObject);
         ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
                 viewFavouritesViewModel, favouritesDataAccessObject2, fileUserDataAccessObject);
+        AddReviewController addReviewController = createAddReviewUseCase(viewManagerModel, addReviewViewModel, fileUserDataAccessObject);
         return new RestaurantView(restaurantViewModel, restaurantController, viewRestaurantController,
+                addReviewController,
                 addToFavouritesController, addToFavouritesViewModel, viewFavouritesController, viewManagerModel);
     }
 
@@ -64,6 +77,15 @@ public class RestaurantUseCaseFactory {
         RestaurantInputBoundary RestaurantInteractor = new RestaurantInteractor(
                 fileUserDataAccessObject, restaurantDataAccessObject, restaurantOutputBoundary);
         return new RestaurantController(RestaurantInteractor);
+    }
+
+
+    public static AddReviewController createAddReviewUseCase(ViewManagerModel viewManagerModel,
+                                                             AddReviewViewModel addReviewViewModel,
+                                                             RegisterUserDataAccessInterface fileUserDataAccessObject) {
+        AddReviewOutputBoundary addReviewPresenter = new AddReviewPresenter(viewManagerModel, addReviewViewModel);
+        AddReviewInputBoundary addReviewInteractor = new AddReviewInteractor(addReviewPresenter, fileUserDataAccessObject);
+        return new AddReviewController(addReviewInteractor);
     }
 
     public static AddToFavouritesController createAddToFavouritesUseCase(ViewManagerModel viewManagerModel,
