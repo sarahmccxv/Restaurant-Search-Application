@@ -41,7 +41,7 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("reviewID, userID, restaurantID, rating, content, creation_time");
+                assert header.equals("reviewID,userID,restaurantID,rating,content,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {

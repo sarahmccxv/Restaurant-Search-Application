@@ -21,11 +21,11 @@ import java.util.List;
 public class YelpAPITest {
     private static final YelpApiServices yelpApiServices = new YelpAPI();
     private final String location = "Toronto";
-    private final String expectedRestaurantID = "r_BrIgzYcwo1NAuG9dLbpg";
-    private final String expectedRestaurantName = "Pai Northern Thai Kitchen";
-    private final String expectedRestaurantAddress = "18 Duncan Street, Toronto, ON M5H 3G8";
-    private final String expectedPhoneNumber = "+14169014724";
-    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("Thai"));
+    private final String expectedRestaurantID = "iGEvDk6hsizigmXhDKs2Vg";
+    private final String expectedRestaurantName = "Seven Lives Tacos y Mariscos";
+    private final String expectedRestaurantAddress = "72 Kensington Avenue, Toronto, ON M5T 2K1";
+    private final String expectedPhoneNumber = "+1 416-393-4636";
+    private final ArrayList<String> expectedRestaurantCategories = new ArrayList<>(List.of("Mexican"));
 
     @Test
     void getRestaurantsTest() {
@@ -77,7 +77,7 @@ public class YelpAPITest {
         ArrayList<YelpReview> reviews = yelpApiServices.getReviews(reviewCriteria);
 
         assertEquals(expectedRestaurantID, reviews.get(0).getRestaurantID());
-        assertEquals("Jess F.", reviews.get(0).getAuthor().getUsername());
-        assertEquals("2023-11-07T07:15:08", reviews.get(0).getCreationTime().toString());
+        assertEquals("Lina H.", reviews.get(0).getAuthor().getUsername());
+        assertEquals("2023-12-04T08:20:46", reviews.get(0).getCreationTime().toString());
     }
 }

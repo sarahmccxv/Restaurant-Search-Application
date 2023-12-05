@@ -44,7 +44,7 @@ public class FileUserDataAccessObject implements RegisterUserDataAccessInterface
             try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
                 String header = reader.readLine();
 
-                assert header.equals("userID, username, password, location, creation_time");
+                assert header.equals("userID,username,password,location,creation_time");
 
                 String row;
                 while ((row = reader.readLine()) != null) {
