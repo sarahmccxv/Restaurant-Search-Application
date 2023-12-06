@@ -1,29 +1,32 @@
 package factory_testing;
 
 import entity.Review;
+import entity.ReviewFactory;
 import entity.User;
 import org.junit.jupiter.api.Test;
+
 import java.time.LocalDateTime;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class ReviewFactoryTest {
 
     @Test
-    public void testReviewCreation() {
-        // Create sample user for the review
-        User author = new User("userID", "JohnDoe", "password", "New York", LocalDateTime.now());
-
-        // Sample review data
+    void createReview_ReturnsValidReview() {
+        // Arrange
+        ReviewFactory reviewFactory = new ReviewFactory();
         String reviewID = "123";
+        User author = new User("userID", "JohnDoe", "password", "New York", LocalDateTime.now());
         String restaurantID = "456";
         Float rating = 4.5f;
-        String content = "This is a sample review.";
+        String content = "Great place!";
         LocalDateTime creationTime = LocalDateTime.now();
 
-        // Create an instance of Review
-        Review review = new Review(reviewID, author, restaurantID, rating, content, creationTime);
+        // Act
+        Review review = reviewFactory.create(reviewID, author, restaurantID, rating, content, creationTime);
 
-        // Perform assertions to test review creation
+        // Assert
         assertNotNull(review);
         assertEquals(reviewID, review.getReviewID());
         assertEquals(author, review.getAuthor());
