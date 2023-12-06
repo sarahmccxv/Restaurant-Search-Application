@@ -25,6 +25,15 @@ public class FavouritesList implements Iterable<Restaurant>{
         return favouritesList.isEmpty();
     }
 
+    public boolean contains(String restaurantID) {
+        for (Restaurant restaurant : favouritesList) {
+            if (restaurant.getRestaurantID().equals(restaurantID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString(){
         ArrayList<String> restaurantIds = new ArrayList<>();
