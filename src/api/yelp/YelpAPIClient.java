@@ -59,7 +59,7 @@ public class YelpAPIClient implements YelpAPIClientInterface {
         }
     }
 
-    private void checkStatus(String API_URI) {
+    public void checkStatus(String API_URI) {
         try {
             if (response.code() != 200) {
                 ExceptionResponse exceptionResponse = new ExceptionResponse(response.body().string(), response.code(), API_URI);
