@@ -3,7 +3,6 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.user_profile.UserProfileController;
-import interface_adapter.user_profile.UserProfilePresenter;
 import interface_adapter.user_profile.UserProfileState;
 import interface_adapter.user_profile.UserProfileViewModel;
 
@@ -11,8 +10,10 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -22,10 +23,10 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     private final ViewManagerModel viewManagerModel;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
-    private JTextField passwordInputField = new JTextField(15);
-    private JTextField locationInputField = new JTextField(15);
+    public JTextField passwordInputField = new JTextField(15);
+    public JTextField locationInputField = new JTextField(15);
     private JLabel userID, username;
-    private JButton editButton, saveButton, cancelButton, returnButton;
+    public JButton editButton, saveButton, cancelButton, returnButton;
     private String tempPassword, tempLocation;
     private final LoginController loginController;
     private JLabel avatarLabel;
