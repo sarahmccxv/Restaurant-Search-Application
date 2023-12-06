@@ -13,7 +13,7 @@ public class RemoveFavouritePresenter implements RemoveFavouriteOutputBoundary {
     ViewManagerModel viewManagerModel;
 
     public RemoveFavouritePresenter(RemoveFavouriteViewModel removeFavouriteViewModel,
-                                     ViewManagerModel viewManagerModel, ViewFavouritesViewModel viewFavouritesViewModel){
+                                    ViewManagerModel viewManagerModel, ViewFavouritesViewModel viewFavouritesViewModel){
         this.removeFavouriteViewModel = removeFavouriteViewModel;
         this.viewManagerModel = viewManagerModel;
         this.viewFavouritesViewModel = viewFavouritesViewModel;
@@ -25,6 +25,7 @@ public class RemoveFavouritePresenter implements RemoveFavouriteOutputBoundary {
         viewFavouritesState.setFavouritesList(newFavouritesList);
         if (newFavouritesList.isEmpty()){
             viewFavouritesState.setSuccess(false);
+            viewFavouritesState.setNoFavouritesMessage("No Favourites");
         }
         viewFavouritesViewModel.setState(viewFavouritesState);
         viewFavouritesViewModel.firePropertyChanged();
