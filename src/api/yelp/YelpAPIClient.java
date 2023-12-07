@@ -9,8 +9,6 @@ import okhttp3.*;
 import java.io.IOException;
 
 public class YelpAPIClient implements YelpAPIClientInterface {
-//    private final String API_TOKEN = "5me9OPAUCuB1FfVFrMRp7LICCMeF3AZ36BHVFzMEZhfFj4_-RiJinQmaBiHynwoq75wo_4rrEie2kXKPnFS7qe-tohcLvGyOKnQmBtPPqqhhmgaxTt9s-uFqpBobZXYx";
-//    private final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
     private final String API_TOKEN = "jPFara6VHa8TewGLhVcz65UkhXQ0orEh8pSzai_B5Cjsu6EAVViXgURRLlPVUmDNZSyDZNIrb3LSKdCk6lU8fuIwKyVXdjO0tphDsAKlzhGY0QdQZh6RJaRuf_JxZXYx";
     private final YelpURIs yelpURIs;
     public Response response;
