@@ -27,6 +27,8 @@ public class WriteReviewViewModel extends ViewModel {
 
     public WriteReviewState getState() {return state;}
 
+    public WriteReviewState clearState() {return new WriteReviewState();}
+
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);

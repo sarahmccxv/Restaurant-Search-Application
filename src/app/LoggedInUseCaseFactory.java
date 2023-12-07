@@ -1,5 +1,6 @@
 package app;
 
+import api.yelp.YelpApiServices;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
@@ -22,7 +23,6 @@ import use_case.view_restaurant.ViewRestaurantInputBoundary;
 import use_case.view_restaurant.ViewRestaurantInteractor;
 import use_case.view_restaurant.ViewRestaurantOutputBoundary;
 import view.LoggedInView;
-import view.UserProfileView;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -40,7 +40,8 @@ public class LoggedInUseCaseFactory {
                                       UserProfileViewModel userProfileViewModel,
                                       UserProfileDataAccessInterface userProfileDataAccessObject,
                                       RegisterUserDataAccessInterface fileUserDataAccessObject,
-                                      SortAndFilterViewModel sortAndFilterViewModel) {
+                                      SortAndFilterViewModel sortAndFilterViewModel,
+                                      YelpApiServices apiRestaurantDataAccessObject) {
 
         try {
             ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
@@ -48,7 +49,7 @@ public class LoggedInUseCaseFactory {
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
                     viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject, sortAndFilterViewModel);
             UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
-                    viewManagerModel, userProfileViewModel, userProfileDataAccessObject);
+                    viewManagerModel, apiRestaurantDataAccessObject, userProfileViewModel, userProfileDataAccessObject);
             return new LoggedInView(loggedInViewModel, viewFavouritesViewModel,
                     viewFavouritesController, viewRestaurantViewModel, viewRestaurantController, userProfileViewModel, userProfileController);
         } catch (IOException e) {
