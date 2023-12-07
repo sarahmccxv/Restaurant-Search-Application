@@ -7,23 +7,35 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class JSONParser implements Parser {
+    private MultipleRestaurantsParser multipleRestaurantsParser;
+    private SingleRestaurantParser singleRestaurantParser;
+    private ReviewsParser reviewsParser;
+    private ExceptionParser exceptionParser;
+
+    public JSONParser() {
+        multipleRestaurantsParser = new MultipleRestaurantsParser();
+        singleRestaurantParser = new SingleRestaurantParser();
+        reviewsParser = new ReviewsParser();
+        exceptionParser = new ExceptionParser();
+    }
+
     @Override
     public ArrayList<Restaurant> parseMultipleRestaurants(String response) {
-        return MultipleRestaurantsParser.parseFrom(new JSONObject(response));
+        return multipleRestaurantsParser.parseFrom(new JSONObject(response));
     }
 
     @Override
     public Restaurant parseSingleRestaurant(String response) {
-        return SingleRestaurantParser.parseFrom(new JSONObject(response));
+        return singleRestaurantParser.parseFrom(new JSONObject(response));
     }
 
     @Override
     public ArrayList<YelpReview> parseReviews(String response, String restaurantID) {
-        return ReviewsParser.parseFrom(new JSONObject(response), restaurantID);
+        return reviewsParser.parseFrom(new JSONObject(response), restaurantID);
     }
 
     @Override
     public String parseError(String response) {
-        return ExceptionParser.parseFrom(new JSONObject(response));
+        return exceptionParser.parseFrom(new JSONObject(response));
     }
 }

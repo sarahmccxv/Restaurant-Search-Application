@@ -71,4 +71,8 @@ public class User extends CommonUser implements UserInterface {
         reviewsList.remove(review);
     }
 
+    @Override
+    public void setFavouritesList(FavouritesList favouritesList) {
+        this.favouritesList = favouritesList;
+    }
 }

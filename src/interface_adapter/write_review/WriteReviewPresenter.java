@@ -20,6 +20,7 @@ public class WriteReviewPresenter implements WriteReviewOutputBoundary {
         state.setUser(writeReviewOutputData.getUser());
         state.setRestaurant(writeReviewOutputData.getRestaurant());
         state.setMessage(writeReviewOutputData.getSuccessMessage());
+        state.setStatus(1);
         this.writeReviewViewModel.setState(state);
         this.writeReviewViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(writeReviewViewModel.getViewName());
@@ -32,6 +33,7 @@ public class WriteReviewPresenter implements WriteReviewOutputBoundary {
         state.setUser(writeReviewOutputData.getUser());
         state.setRestaurant(writeReviewOutputData.getRestaurant());
         state.setMessage(writeReviewOutputData.getFailureMessage());
+        state.setStatus(0);
         this.writeReviewViewModel.setState(state);
         this.writeReviewViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(writeReviewViewModel.getViewName());

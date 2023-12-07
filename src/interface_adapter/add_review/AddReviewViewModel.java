@@ -15,6 +15,8 @@ public class AddReviewViewModel extends ViewModel {
     public void setState(AddReviewState addReviewState){this.state = addReviewState;}
 
     public AddReviewState getState() {return state;}
+
+    public AddReviewState clearState() {return new AddReviewState();}
     @Override
     public void firePropertyChanged() {
         support.firePropertyChange("state", null, this.state);

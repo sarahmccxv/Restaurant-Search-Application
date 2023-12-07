@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class MultipleRestaurantsParser {
 
-    public static ArrayList<Restaurant> parseFrom(JSONObject jsonObject) {
+    public ArrayList<Restaurant> parseFrom(JSONObject jsonObject) {
         try {
             ArrayList<Restaurant> restaurantsList = new ArrayList<>();
             RestaurantFactory restaurantFactory = new RestaurantFactory();
