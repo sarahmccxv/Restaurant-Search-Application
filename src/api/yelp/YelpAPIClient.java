@@ -9,7 +9,7 @@ import okhttp3.*;
 import java.io.IOException;
 
 public class YelpAPIClient implements YelpAPIClientInterface {
-    private final String API_TOKEN = "5me9OPAUCuB1FfVFrMRp7LICCMeF3AZ36BHVFzMEZhfFj4_-RiJinQmaBiHynwoq75wo_4rrEie2kXKPnFS7qe-tohcLvGyOKnQmBtPPqqhhmgaxTt9s-uFqpBobZXYx";
+    private final String API_TOKEN = "m50nmIojrs9_k4NDBc7TeGaSoPFtLXERQpG1o17SNWvp29XQbhSveJAzFwvodpyx2PCZX8yLA-37ULJKxE-Dxno0Hlpb1RfsnSk_3fWjEadWEjs9MPmpOQbhwHxMZXYx";
     private final YelpURIs yelpURIs;
     public Response response;
 
@@ -59,7 +59,7 @@ public class YelpAPIClient implements YelpAPIClientInterface {
         }
     }
 
-    private void checkStatus(String API_URI) {
+    public void checkStatus(String API_URI) {
         try {
             if (response.code() != 200) {
                 ExceptionResponse exceptionResponse = new ExceptionResponse(response.body().string(), response.code(), API_URI);

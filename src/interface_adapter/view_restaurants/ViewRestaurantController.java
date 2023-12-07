@@ -1,5 +1,6 @@
 package interface_adapter.view_restaurants;
 
+import use_case.search_restaurant.SearchResaturantInputData;
 import use_case.view_restaurant.ViewRestaurantInputBoundary;
 import use_case.view_restaurant.ViewRestaurantInputData;
 

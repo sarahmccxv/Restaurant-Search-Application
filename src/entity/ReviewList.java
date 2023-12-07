@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ReviewList {
 
-    private ArrayList<Review> reviewlist = new ArrayList<>();
+    private ArrayList<Review> reviewlist;
 
     public ReviewList(){
         this.reviewlist = new ArrayList<Review>();
@@ -20,6 +20,15 @@ public class ReviewList {
 
     public void remove(Review review){
         reviewlist.remove(review);
+    }
+
+    public boolean contains(String reviewID) {
+        for (Review review : reviewlist) {
+            if (review.getReviewID().equals(reviewID)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

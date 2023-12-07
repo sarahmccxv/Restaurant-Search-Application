@@ -3,7 +3,6 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.user_profile.UserProfileController;
-import interface_adapter.user_profile.UserProfilePresenter;
 import interface_adapter.user_profile.UserProfileState;
 import interface_adapter.user_profile.UserProfileViewModel;
 
@@ -13,9 +12,8 @@ import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -25,14 +23,15 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     private final ViewManagerModel viewManagerModel;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
-    private JTextField passwordInputField = new JTextField(15);
-    private JTextField locationInputField = new JTextField(15);
-    JLabel userID, username;
-    private JButton editButton, saveButton, cancelButton, returnButton;
-
+    public JTextField passwordInputField = new JTextField(15);
+    public JTextField locationInputField = new JTextField(15);
+    private JLabel userID, username;
+    public JButton editButton, saveButton, cancelButton, returnButton;
     private String tempPassword, tempLocation;
-
     private final LoginController loginController;
+    private JLabel avatarLabel;
+    private ImageIcon defaultAvatar;
+    private int avatarSize = 100;
 
     // Constructor to set up the GUI
     public UserProfileView(ViewManagerModel viewManagerModel, UserProfileViewModel userProfileViewModel, UserProfileController userProfileController, LoginController loginController) {
@@ -171,13 +170,71 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
             }
         });
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
-        this.add(userIDInfo);
-        this.add(usernameInfo);
-        this.add(passwordInfo);
-        this.add(locationInfo);
-        this.add(buttons);
+        // Inside the constructor
+        avatarLabel = new JLabel();
+        avatarLabel.setPreferredSize(new Dimension(avatarSize, avatarSize)); // Set default size
+
+        // Load the default avatar image (assuming you have a default avatar image file)
+        try {
+            defaultAvatar = new ImageIcon("user-fill.png"); // Replace with your default image path
+            // Scale the default avatar image to fit the label
+            defaultAvatar = new ImageIcon(defaultAvatar.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
+            avatarLabel.setIcon(defaultAvatar);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            // Handle exception if the default avatar image fails to load
+        }
+
+        avatarLabel.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    java.io.File selectedFile = fileChooser.getSelectedFile();
+
+                    ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
+                    icon = new ImageIcon(icon.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
+                    avatarLabel.setIcon(icon);
+                }
+            }
+        });
+        avatarLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        this.setLayout(new BorderLayout()); // Use BorderLayout for overall structure
+
+        JPanel userInfoPanel = new JPanel(); // Panel for user info and avatar
+        userInfoPanel.setLayout(new GridLayout(1, 2, 5, 0)); // GridLayout for user info and avatar side by side
+
+        // Left side: User info
+        JPanel infoLabelsPanel = new JPanel();
+        infoLabelsPanel.setLayout(new BoxLayout(infoLabelsPanel, BoxLayout.Y_AXIS));
+        infoLabelsPanel.add(userIDInfo);
+        infoLabelsPanel.add(usernameInfo);
+        infoLabelsPanel.add(passwordInfo);
+        infoLabelsPanel.add(locationInfo);
+
+        userInfoPanel.add(infoLabelsPanel);
+
+        // Right side: Avatar
+        JPanel avatarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        avatarPanel.add(avatarLabel);
+
+        userInfoPanel.add(avatarPanel);
+
+        // Center panel for user profile label
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        centerPanel.add(title);
+
+        // Main panel layout setup
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
+        mainPanel.add(userInfoPanel, BorderLayout.SOUTH);
+
+        // Add mainPanel to the main panel (UserProfileView)
+        this.add(mainPanel, BorderLayout.CENTER);
+        this.add(buttons, BorderLayout.SOUTH);
     }
 
     @Override

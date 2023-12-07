@@ -14,7 +14,7 @@ public interface UserInterface {
 
     FavouritesList getFavouritesList();
 
-    ArrayList<Review> getReviewsList();
+    ReviewList getReviewsList();
 
     LocalDateTime getCreationTime();
 

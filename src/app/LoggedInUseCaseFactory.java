@@ -1,8 +1,10 @@
 package app;
 
 import api.yelp.YelpApiServices;
+import data_access.APIRestaurantDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.user_profile.UserProfileController;
 import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
@@ -40,15 +42,16 @@ public class LoggedInUseCaseFactory {
                                       UserProfileViewModel userProfileViewModel,
                                       UserProfileDataAccessInterface userProfileDataAccessObject,
                                       RegisterUserDataAccessInterface fileUserDataAccessObject,
-                                      YelpApiServices APIRestaurantDataAccessObject) {
+                                      SortAndFilterViewModel sortAndFilterViewModel,
+                                      YelpApiServices apiRestaurantDataAccessObject) {
 
         try {
             ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
                     viewFavouritesViewModel, userDataAccessObject, fileUserDataAccessObject);
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
-                    viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
+                    viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject, sortAndFilterViewModel);
             UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
-                    viewManagerModel, APIRestaurantDataAccessObject, userProfileViewModel, userProfileDataAccessObject);
+                    viewManagerModel, apiRestaurantDataAccessObject, userProfileViewModel, userProfileDataAccessObject);
             return new LoggedInView(loggedInViewModel, viewFavouritesViewModel,
                     viewFavouritesController, viewRestaurantViewModel, viewRestaurantController, userProfileViewModel, userProfileController);
         } catch (IOException e) {
@@ -62,10 +65,11 @@ public class LoggedInUseCaseFactory {
                                                                         ViewRestaurantDataAccessInterface
                                                                                 RestaurantDataAccessObject,
                                                                         RegisterUserDataAccessInterface
-                                                                                fileUserDataAccessObject)
+                                                                                fileUserDataAccessObject,
+                                                                        SortAndFilterViewModel sortAndFilterViewModel)
             throws IOException {
         ViewRestaurantOutputBoundary viewRestaurantOutputBoundary = new ViewRestaurantPresenter(viewManagerModel,
-                viewRestaurantViewModel);
+                viewRestaurantViewModel, sortAndFilterViewModel);
         ViewRestaurantInputBoundary viewRestaurantInteractor = new ViewRestaurantInteractor(
                 viewRestaurantOutputBoundary, RestaurantDataAccessObject, fileUserDataAccessObject);
 
