@@ -53,13 +53,13 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         this.searchRestaurantController = searchRestaurantController;
 
         viewRestaurantViewModel.addPropertyChangeListener(this);
+        JFrame frame = new JFrame("View restaurant buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JFrame frame = new JFrame("View restaurant buttons");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         restaurants = new JPanel();
         restaurants.setLayout(new BoxLayout(restaurants, BoxLayout.Y_AXIS));

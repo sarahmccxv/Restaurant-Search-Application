@@ -14,6 +14,6 @@ public class ReviewTest {
         User user = new User("100000", "user", "123", "Toronto", LocalDateTime.now());
         Review review = new Review("100001", user, "rest001", 5f, "Good",
                 LocalDateTime.now());
-        assertEquals(100001, review.getReviewID());
+        assertEquals("100001", review.getReviewID());
     }
 }
