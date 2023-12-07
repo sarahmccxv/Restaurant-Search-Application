@@ -20,7 +20,7 @@ import interface_adapter.view_favourites.ViewFavouritesState;
 public class ViewFavouritesView extends JPanel implements ActionListener, PropertyChangeListener{
     public static final String viewName = "view favourites";
     final JButton returnBack;
-    final JPanel favourites;
+    public final JPanel favourites;
     private ViewFavouritesViewModel viewFavouritesViewModel;
     private LoginController loginController;
     private RestaurantController restaurantController;

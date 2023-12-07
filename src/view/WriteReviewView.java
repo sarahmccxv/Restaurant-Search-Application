@@ -24,8 +24,8 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
     private final WriteReviewViewModel writeReviewViewModel;
     private RestaurantController restaurantController;
 
-    final JTextField ratingInputField = new JTextField(5);
-    final JTextField contentInputField = new JTextField(50);
+    public final JTextField ratingInputField = new JTextField(5);
+    public final JTextField contentInputField = new JTextField(50);
     private final JLabel ratingErrorField = new JLabel();
 
     final JButton save;

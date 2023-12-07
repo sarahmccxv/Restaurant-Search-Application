@@ -146,7 +146,7 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
     }
 
 
-    private int countRows(File csvFile) {
+    public int countRows(File csvFile) {
         int rowCount = 0;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {

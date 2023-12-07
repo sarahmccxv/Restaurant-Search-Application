@@ -1,15 +1,85 @@
 package api_testing.SearchTesting;
 
+import api.Search.SearchCriteria;
 import api.Search.SearchPriceLevel;
+import api.Search.SearchSortingMethods;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SearchPriceLevelTest {
+
+    private SearchCriteria.Builder builder;
+
+    @BeforeEach
+    void setUp() {
+        builder = new SearchCriteria.Builder();
+    }
+
+    @Test
+    void setName() {
+        SearchCriteria criteria = builder.setName("Test").build();
+        assertEquals("Test", criteria.getName());
+    }
+
+    @Test
+    void setLocation() {
+        SearchCriteria criteria = builder.setLocation("Location").build();
+        assertEquals("Location", criteria.getLocation());
+    }
+
+    @Test
+    void setLimit() {
+        SearchCriteria criteria = builder.setLimit(10).build();
+        assertEquals(10, criteria.getLimit());
+    }
+
+    @Test
+    void setSortingMethod() {
+        SearchCriteria criteria = builder.setSortingMethod(SearchSortingMethods.BEST_MATCH).build();
+        assertEquals("best_match", criteria.getSortingMethod());
+    }
+
+    @Test
+    void setPriceLevel() {
+        SearchCriteria criteria = builder.setPriceLevel(SearchPriceLevel.MODERATE).build();
+        assertEquals("2", criteria.getPriceLevel());
+    }
+
+    @Test
+    void setCategory() {
+        SearchCriteria criteria = builder.setCategory("Category").build();
+        assertEquals("Category", criteria.getCategory());
+    }
+
+    @Test
+    void constructorTest() {
+        SearchCriteria criteria = new SearchCriteria.Builder()
+                .setName("Name")
+                .setLocation("Location")
+                .setLimit(10)
+                .setSortingMethod(SearchSortingMethods.BEST_MATCH)
+                .setPriceLevel(SearchPriceLevel.CHEAP)
+                .setCategory("Category")
+                .build();
+
+        assertEquals("Name", criteria.getName());
+        assertEquals("Location", criteria.getLocation());
+        assertEquals(10, criteria.getLimit());
+        assertEquals("best_match", criteria.getSortingMethod());
+        assertEquals("1", criteria.getPriceLevel());
+        assertEquals("Category", criteria.getCategory());
+    }
+
+    @Test
+    void categoryIsTrimmedAndLowercase() {
+        SearchCriteria criteria = builder.setCategory(" Category ").build();
+        assertEquals(" Category ", criteria.getCategory());
+    }
 
     @Test
     public void searchPriceLevelBasicTest() {
