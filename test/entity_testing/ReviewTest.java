@@ -9,11 +9,28 @@ import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class ReviewTest {
+
     @Test
-    public void testReviewConstructor(){
-        User user = new User("100000", "user", "123", "Toronto", LocalDateTime.now());
-        Review review = new Review("100001", user, "rest001", 5f, "Good",
-                LocalDateTime.now());
-        assertEquals("100001", review.getReviewID());
+    public void testReviewAuthor() {
+        User user = new User("userID123", "JohnDoe", "password", "Location", LocalDateTime.now());
+        Review review = new Review("reviewID123", user, "restaurantID456", 4.5f, "Great food!", LocalDateTime.now());
+
+        assertEquals(user, review.getAuthor(), "Review author should match the user who created it");
+    }
+
+    @Test
+    public void testReviewContent() {
+        User user = new User("userID123", "JohnDoe", "password", "Location", LocalDateTime.now());
+        Review review = new Review("reviewID123", user, "restaurantID456", 4.5f, "Great food!", LocalDateTime.now());
+
+        assertEquals("Great food!", review.getContent(), "Review content should match the provided content");
+    }
+
+    @Test
+    public void testReviewRating() {
+        User user = new User("userID123", "JohnDoe", "password", "Location", LocalDateTime.now());
+        Review review = new Review("reviewID123", user, "restaurantID456", 4.5f, "Great food!", LocalDateTime.now());
+
+        assertEquals(4.5f, review.getRating(), 0.01f, "Review rating should match the provided rating");
     }
 }

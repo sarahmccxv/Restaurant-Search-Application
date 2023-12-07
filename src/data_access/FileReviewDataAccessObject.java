@@ -143,4 +143,20 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
 //            }
         }
         //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
+
+    }
+
+
+    public int countRows(File csvFile) {
+        int rowCount = 0;
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+            while (reader.readLine() != null) {
+                rowCount++;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return rowCount;
+    }
 }

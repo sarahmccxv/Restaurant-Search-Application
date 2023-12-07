@@ -75,6 +75,20 @@ public class JSONParserTest {
     }
 
     @Test
+    void parseFrom_InvalidJSONObject_ThrowsJSONException() {
+        // Prepare an invalid JSON object
+        String jsonStr = "{ \"invalid_key\": \"value\" }";
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        // Initialize the parser
+        MultipleRestaurantsParser parser = new MultipleRestaurantsParser();
+
+        // Verify that parsing an invalid JSON object throws JSONException
+        assertThrows(RuntimeException.class, () -> parser.parseFrom(jsonObject));
+    }
+
+    @Test
     public void testParseSingleRestaurant() {
                 String jsonResponse = "{\"id\": \"1\", \"name\": \"Restaurant A\", \"display_phone\": \"123-456\", \"image_url\": \"urlA\"," +
                 "\"location\": {\"display_address\": [\"Address A\", \"City A\"]}, " +
@@ -101,6 +115,21 @@ public class JSONParserTest {
         assertEquals("123-456", restaurant.getPhoneNumber(), "Restaurant phone number should match");
         assertEquals(2, restaurant.getCategories().size(), "Restaurant should have two categories");
         assertEquals("urlA", restaurant.getImageURL(), "Restaurant image URL should match");
+    }
+
+    @Test
+    void parseFromSingleRestaurant_InvalidJSONObject_ThrowsJSONException() {
+        // Prepare an invalid JSON object
+        String jsonStr = "{ \"invalid_key\": \"value\" }";
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+        String restaurantID = "restaurant123"; // Assuming a restaurant ID
+
+        // Initialize the parser
+        ReviewsParser parser = new ReviewsParser();
+
+        // Verify that parsing an invalid JSON object throws JSONException
+        assertThrows(RuntimeException.class, () -> parser.parseFrom(jsonObject, restaurantID));
     }
 
 
@@ -150,6 +179,20 @@ public class JSONParserTest {
         assertEquals("restaurantID", review2.getRestaurantID(), "Review 2 restaurant ID should match");
         assertEquals(3.0f, review2.getRating(), 0.001, "Review 2 rating should match");
         assertEquals("Nice ambiance!", review2.getContent(), "Review 2 content should match");
+    }
+
+    @Test
+    void parseFromReviews_InvalidJSONObject_ThrowsJSONException() {
+        // Prepare an invalid JSON object
+        String jsonStr = "{ \"invalid_key\": \"value\" }";
+
+        JSONObject jsonObject = new JSONObject(jsonStr);
+
+        // Initialize the parser
+        SingleRestaurantParser parser = new SingleRestaurantParser();
+
+        // Verify that parsing an invalid JSON object throws JSONException
+        assertThrows(RuntimeException.class, () -> parser.parseFrom(jsonObject));
     }
 
     @Test

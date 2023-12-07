@@ -1,23 +1,91 @@
 package view;
 
+import api.Search.SearchCriteria;
 import app.Main;
+import entity.Restaurant;
+import interface_adapter.login.LoginController;
+import interface_adapter.restaurant.RestaurantController;
+import interface_adapter.search_restaurants.SearchRestaurantController;
+import interface_adapter.sort_and_filter.SortAndFilterController;
+import interface_adapter.sort_and_filter.SortAndFilterState;
+import interface_adapter.sort_and_filter.SortAndFilterViewModel;
+import interface_adapter.view_restaurants.ViewRestaurantController;
+import interface_adapter.view_restaurants.ViewRestaurantState;
+import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import javax.swing.*;
-import javax.swing.text.View;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ViewRestaurantViewTest {
     static String message = "";
     static boolean popUpDiscovered = false;
+
+    private ViewRestaurantViewModel viewRestaurantViewModel;
+    private ViewRestaurantController viewRestaurantController;
+    private LoginController loginController;
+    private RestaurantController restaurantController;
+    private SortAndFilterController sortAndFilterController;
+    private SortAndFilterViewModel sortAndFilterViewModel;
+    private SearchRestaurantController searchRestaurantController;
+
+    private ViewRestaurantView viewRestaurantView;
+
+    @BeforeEach
+    public void setUp() {
+        viewRestaurantViewModel = mock(ViewRestaurantViewModel.class);
+        viewRestaurantController = mock(ViewRestaurantController.class);
+        loginController = mock(LoginController.class);
+        restaurantController = mock(RestaurantController.class);
+        sortAndFilterController = mock(SortAndFilterController.class);
+        sortAndFilterViewModel = mock(SortAndFilterViewModel.class);
+        searchRestaurantController = mock(SearchRestaurantController.class);
+
+        viewRestaurantView = new ViewRestaurantView(viewRestaurantViewModel, viewRestaurantController,
+                loginController, restaurantController, sortAndFilterController, sortAndFilterViewModel,
+                searchRestaurantController);
+    }
+
+    @Test
+    public void testPropertyChange_Restaurants() {
+        // Mocked event
+        PropertyChangeEvent event = mock(PropertyChangeEvent.class);
+
+        // Mock state with restaurants
+        ArrayList<Restaurant> restaurants = new ArrayList<>();
+        Restaurant restaurant = new Restaurant("1", "Restaurant 1", "Address 1", "123",  new ArrayList<>(), "https://example.com");
+        restaurants.add(restaurant);
+        restaurants.add(restaurant);
+
+        ViewRestaurantState state = new ViewRestaurantState();
+        state.setRestaurants(restaurants);
+
+        // Mock SortAndFilterState
+        SortAndFilterState sortAndFilterState = mock(SortAndFilterState.class);
+
+        // Mock SearchCriteria
+        SearchCriteria searchCriteria = mock(SearchCriteria.class);
+        when(sortAndFilterState.getCriteria()).thenReturn(searchCriteria);
+
+        // Mock SortAndFilterViewModel
+        when(sortAndFilterViewModel.getState()).thenReturn(sortAndFilterState);
+
+        // Simulate property change event with restaurants
+        when(event.getPropertyName()).thenReturn("restaurants");
+        when(event.getNewValue()).thenReturn(state);
+
+        // Invoke property change method
+        viewRestaurantView.propertyChange(event);
+    }
+
 
 
 //    private JLabel getTitle() {
