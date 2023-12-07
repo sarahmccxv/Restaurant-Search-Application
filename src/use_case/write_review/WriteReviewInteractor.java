@@ -4,9 +4,6 @@ import entity.Restaurant;
 import entity.Review;
 import entity.ReviewFactory;
 import entity.User;
-import use_case.register.RegisterUserDataAccessInterface;
-import use_case.restaurant.RestaurantOutputBoundary;
-import use_case.view_restaurant.ViewRestaurantDataAccessInterface;
 
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -38,7 +35,7 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
         if (isValidRating(rating_txt)) {
             Float rating = Float.parseFloat(rating_txt);
             //System.out.println("The rating here has string: " + rating_txt);
-            String reviewID = String.valueOf(createUserID());
+            String reviewID = String.valueOf(createReviewID());
             LocalDateTime now = LocalDateTime.now();
             Review review = reviewFactory.create(reviewID, user, restauarnt.getRestaurantID(), rating, content, now);
             writeReviewDataAccessObject.save(review);
@@ -48,7 +45,7 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
         }
     }
 
-    private Integer createUserID() {
+    private Integer createReviewID() {
         Random random = new Random();
         int reviewID = 1000000 + random.nextInt(9000000);
         // Check if this random number is already taken
@@ -56,7 +53,7 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
             return reviewID;
         }
         else {
-            return createUserID();
+            return createReviewID();
         }
     }
 

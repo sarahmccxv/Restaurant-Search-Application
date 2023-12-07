@@ -3,14 +3,13 @@ package view;
 import entity.Restaurant;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.add_review.AddReviewController;
+import interface_adapter.add_to_favourites.AddToFavouritesController;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.restaurant.RestaurantController;
 import interface_adapter.restaurant.RestaurantState;
 import interface_adapter.restaurant.RestaurantViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_restaurants.ViewRestaurantController;
-import interface_adapter.add_to_favourites.AddToFavouritesController;
-import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -30,15 +29,15 @@ public class RestaurantView extends JPanel implements ActionListener, PropertyCh
 
     public final String viewName = "Restaurant";
     final JButton returnBack;
-    private JButton addToFavourite;
-    private JButton addReview;
+    public JButton addToFavourite;
+    public JButton addReview;
     final JPanel info;
     final JPanel buttons;
     private Restaurant restaurant;
     private RestaurantViewModel restaurantViewModel;
     private RestaurantController restaurantController;
     private ViewRestaurantController viewRestaurantController;
-    // TODO: Implement Reviews later
+
     //private WriteReviewController writeReviewController;
     private AddToFavouritesController addToFavouritesController;
     private AddToFavouritesViewModel addToFavouritesViewModel;
