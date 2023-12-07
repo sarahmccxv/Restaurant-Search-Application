@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class User extends CommonUser implements UserInterface {
-    private final String password;
+    private String password;
     private final LocalDateTime creationTime;
     private String location;
     private FavouritesList favouritesList;
@@ -75,4 +75,6 @@ public class User extends CommonUser implements UserInterface {
     public void setFavouritesList(FavouritesList favouritesList) {
         this.favouritesList = favouritesList;
     }
+
+    public void setPassword(String newpassword) {this.password = newpassword;}
 }
