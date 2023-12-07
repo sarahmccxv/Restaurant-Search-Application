@@ -70,4 +70,20 @@ public class FavouritesList implements Iterable<Restaurant>{
             return res;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj.getClass() == this.getClass()) {
+            ArrayList<String> thisRestaurantIDs = new ArrayList<>();
+            ArrayList<String> objRestaurantIDs = new ArrayList<>();
+            for (Restaurant restaurant : ((FavouritesList) obj).favouritesList) {
+                objRestaurantIDs.add(restaurant.getRestaurantID());
+            }
+            for (Restaurant restaurant : this.favouritesList){
+                thisRestaurantIDs.add(restaurant.getRestaurantID());
+            }
+            return objRestaurantIDs.equals(thisRestaurantIDs);
+        }
+        return false;
+    }
 }
