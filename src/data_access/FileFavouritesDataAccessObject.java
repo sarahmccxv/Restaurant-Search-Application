@@ -61,7 +61,7 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
 
     @Override
     public boolean hasFavourites(String username){
-        if (favouritesMap.get(username) == null) {
+        if (!favouritesMap.containsKey(username)) {
             return false;
         } else return !favouritesMap.get(username).isEmpty();
     }
@@ -74,7 +74,11 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
 
     @Override
     public FavouritesList getFavouritesList(String username) {
-        return favouritesMap.get(username);
+        if (favouritesMap.containsKey(username)) {
+            return favouritesMap.get(username);
+        } else {
+            return new FavouritesList();
+        }
     }
 
     private void save() {
@@ -95,8 +99,8 @@ public class FileFavouritesDataAccessObject implements ViewFavouritesDataAccessI
         }
     }
 
-    public void removeFavourite(User user, Restaurant restaurant){
-        String username = user.getUsername();
+    @Override
+    public void removeFavourite(String username, Restaurant restaurant){
         favouritesMap.get(username).remove(restaurant.getRestaurantID());
         if (favouritesMap.get(username).isEmpty()){
             favouritesMap.remove(username);

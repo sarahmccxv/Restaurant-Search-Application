@@ -118,8 +118,11 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
          LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                viewRestaurantViewModel, apiRestaurantDataAccessObject,
-                viewFavouritesViewModel, fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject, userDataAccessObject, sortAndFilterViewModel);
+                viewRestaurantViewModel, apiRestaurantDataAccessObject, viewFavouritesViewModel,
+                 fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject,
+                 userDataAccessObject, sortAndFilterViewModel, apiRestaurantDataAccessObject);
+
+
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
@@ -145,10 +148,9 @@ public class Main {
 
         RestaurantView restaurantView = RestaurantUseCaseFactory.create(viewManagerModel, restaurantViewModel,
                 addReviewViewModel, addToFavouritesViewModel, apiRestaurantDataAccessObject, userDataAccessObject,
-                viewRestaurantController,
-                fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
+                viewRestaurantController, fileFavouritesDataAccessObject, viewFavouritesViewModel, fileFavouritesDataAccessObject);
         views.add(restaurantView, restaurantView.viewName);
-        ;
+
         SortAndFilterView sortAndFilterView = SortAndFilterUseCaseFactory.create(viewManagerModel, viewRestaurantViewModel, sortAndFilterViewModel, apiRestaurantDataAccessObject, viewRestaurantController, restaurantController);
         views.add(sortAndFilterView, sortAndFilterView.viewName);
 
@@ -157,7 +159,8 @@ public class Main {
                 userDataAccessObject);
         views.add(writeReviewView, writeReviewView.viewName);
 
-        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel, userProfileViewModel,
+        UserProfileView userProfileView = UserProfileUseCaseFactory.create(viewManagerModel,
+                apiRestaurantDataAccessObject, userProfileViewModel,
                 userDataAccessObject, loginController);
         views.add(userProfileView, userProfileView.viewName);
 
