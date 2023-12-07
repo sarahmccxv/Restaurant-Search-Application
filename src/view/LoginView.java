@@ -107,6 +107,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.add(passwordInfo);
         this.add(passwordErrorField);
         this.add(buttons);
+
+
     }
 
     /**
@@ -119,7 +121,11 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         LoginState state = (LoginState) evt.getNewValue();
-        setFields(state);
+        if (this.loginViewModel.getState().getLogout()){
+            usernameInputField.setText("");
+            passwordInputField.setText("");
+        } else {
+        setFields(state);}
     }
 
     private void setFields(LoginState state) {

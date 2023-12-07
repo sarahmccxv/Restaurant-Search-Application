@@ -9,6 +9,7 @@ import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginViewModel;
+import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.register.RegisterViewModel;
 import interface_adapter.remove_favourite.RemoveFavouriteViewModel;
 import interface_adapter.restaurant.RestaurantController;
@@ -60,6 +61,7 @@ public class Main {
         AddToFavouritesViewModel addToFavouritesViewModel = new AddToFavouritesViewModel();
         UserProfileViewModel userProfileViewModel = new UserProfileViewModel();
         RemoveFavouriteViewModel removeFavouriteViewModel = new RemoveFavouriteViewModel();
+        LogoutViewModel logoutViewModel = new LogoutViewModel();
 
 
         FileUserDataAccessObject userDataAccessObject;
@@ -86,9 +88,9 @@ public class Main {
         views.add(loginView, loginView.viewName);
 
          LoggedInView loggedInView = LoggedInUseCaseFactory.create(viewManagerModel, loggedInViewModel,
-                viewRestaurantViewModel, apiRestaurantDataAccessObject, viewFavouritesViewModel,
+                viewRestaurantViewModel, logoutViewModel, apiRestaurantDataAccessObject, viewFavouritesViewModel,
                  fileFavouritesDataAccessObject, userProfileViewModel, userDataAccessObject,
-                 userDataAccessObject, apiRestaurantDataAccessObject);
+                 userDataAccessObject, apiRestaurantDataAccessObject, loginViewModel);
         views.add(loggedInView, loggedInView.viewName);
 
         LoginController loginController = LoginUseCaseFactory.createLoginUseCase(viewManagerModel, loginViewModel, loggedInViewModel,
