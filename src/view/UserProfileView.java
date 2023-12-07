@@ -3,7 +3,6 @@ package view;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.user_profile.UserProfileController;
-import interface_adapter.user_profile.UserProfilePresenter;
 import interface_adapter.user_profile.UserProfileState;
 import interface_adapter.user_profile.UserProfileViewModel;
 
@@ -11,8 +10,10 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -22,10 +23,10 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
     private final ViewManagerModel viewManagerModel;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
-    private JTextField passwordInputField = new JTextField(15);
-    private JTextField locationInputField = new JTextField(15);
+    public JTextField passwordInputField = new JTextField(15);
+    public JTextField locationInputField = new JTextField(15);
     private JLabel userID, username;
-    private JButton editButton, saveButton, cancelButton, returnButton;
+    public JButton editButton, saveButton, cancelButton, returnButton;
     private String tempPassword, tempLocation;
     private final LoginController loginController;
     private JLabel avatarLabel;
@@ -37,27 +38,37 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
         userProfileViewModel.addPropertyChangeListener(this);
-
         this.viewManagerModel = viewManagerModel;
         this.loginController = loginController;
 
         JLabel title = new JLabel(userProfileViewModel.TITLE_LABEL);
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         userID = new JLabel();
         DoubleLabelPanel userIDInfo = new DoubleLabelPanel(
                 new JLabel(userProfileViewModel.USERID_LABEL), userID);
+        Font IDFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        userIDInfo.getComponent(1).setFont(IDFont);
+
         username = new JLabel();
         DoubleLabelPanel usernameInfo = new DoubleLabelPanel(
                 new JLabel(userProfileViewModel.USERNAME_LABEL), username);
+        Font userFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        usernameInfo.getComponent(1).setFont(userFont);
+
         passwordInputField.setEditable(false);
         passwordInputField.setCaretColor(Color.WHITE);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel(userProfileViewModel.PASSWORD_LABEL), passwordInputField);
+        passwordInfo.getLabel().setForeground(Color.GRAY);
+
         locationInputField.setEditable(false);
         locationInputField.setCaretColor(Color.WHITE);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel(userProfileViewModel.LOCATION_LABEL), locationInputField);
+        locationInfo.getLabel().setForeground(Color.GRAY);
 
         JPanel buttons = new JPanel();
         editButton = new JButton(userProfileViewModel.EDIT_BUTTON_LABEL);
@@ -87,6 +98,9 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                         saveButton.setVisible(true);
                         cancelButton.setVisible(true);
                         returnButton.setVisible(false);
+                        passwordInfo.getLabel().setForeground(Color.BLACK);
+                        locationInfo.getLabel().setForeground(Color.BLACK);
+
                     }
                 }
         );
@@ -125,23 +139,31 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
             }
         });
 
-        saveButton.addActionListener(this);
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 // Save the changes and disable editing
-                UserProfileState currentState = userProfileViewModel.getState();
-                currentState.setPassword(tempPassword);
-                currentState.setLocation(tempLocation);
-                userProfileViewModel.setState(currentState);
-                passwordInputField.setEditable(false);
-                passwordInputField.setCaretColor(Color.WHITE);
-                locationInputField.setEditable(false);
-                locationInputField.setCaretColor(Color.WHITE);
-                editButton.setVisible(true);
-                saveButton.setVisible(false);
-                cancelButton.setVisible(false);
-                returnButton.setVisible(true);
+                UserProfileState state = userProfileViewModel.getState();
+                String originalLocation = state.getLocation();
+                state.setPassword(tempPassword);
+                state.setLocation(tempLocation);
+                userProfileController.execute(state.getUserID(), state.getUsername(), state.getPassword(), state.getLocation());
+                if (!state.getErrorMessage().isEmpty()) {
+                    state.setLocation(originalLocation);
+                    JOptionPane.showMessageDialog(UserProfileView.this, state.getErrorMessage());
+                } else {
+                    userProfileViewModel.setState(state);
+                    passwordInputField.setEditable(false);
+                    passwordInputField.setCaretColor(Color.WHITE);
+                    locationInputField.setEditable(false);
+                    locationInputField.setCaretColor(Color.WHITE);
+                    editButton.setVisible(true);
+                    saveButton.setVisible(false);
+                    cancelButton.setVisible(false);
+                    returnButton.setVisible(true);
+                    passwordInfo.getLabel().setForeground(Color.GRAY);
+                    locationInfo.getLabel().setForeground(Color.GRAY);
+                }
             }
         });
 
@@ -191,6 +213,16 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                     ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
                     icon = new ImageIcon(icon.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
                     avatarLabel.setIcon(icon);
+
+                    try {
+                        defaultAvatar = new ImageIcon(selectedFile.getAbsolutePath());
+                        System.out.println(selectedFile.getAbsolutePath());
+
+                        defaultAvatar = new ImageIcon(defaultAvatar.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        // Handle exception if the selected image fails to load
+                    }
                 }
             }
         });
@@ -210,6 +242,10 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         infoLabelsPanel.add(locationInfo);
 
         userInfoPanel.add(infoLabelsPanel);
+
+        // Add vertical strut for spacing
+        userInfoPanel.add(Box.createVerticalStrut(10));
+
 
         // Right side: Avatar
         JPanel avatarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
@@ -233,12 +269,9 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
 
     @Override
     public void actionPerformed(ActionEvent evt) {
+        UserProfileState state = userProfileViewModel.getState();
         if (evt.getSource().equals(returnButton)) {
-            UserProfileState state = userProfileViewModel.getState();
             loginController.execute(state.getUsername(), state.getPassword());
-        } else if (evt.getSource().equals(saveButton)) {
-            UserProfileState state = userProfileViewModel.getState();
-            userProfileController.execute(state.getUserID(), state.getUsername(), state.getPassword(), state.getLocation());
         }
     }
 

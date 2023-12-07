@@ -53,13 +53,13 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         this.searchRestaurantController = searchRestaurantController;
 
         viewRestaurantViewModel.addPropertyChangeListener(this);
+        JFrame frame = new JFrame("View restaurant buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JFrame frame = new JFrame("View restaurant buttons");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         restaurants = new JPanel();
         restaurants.setLayout(new BoxLayout(restaurants, BoxLayout.Y_AXIS));
@@ -107,6 +107,11 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         JPanel sort_button = new JPanel();
         sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
+        sortAndFilter.setBackground(Color.BLUE); // for the background
+        sortAndFilter.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(sort_button);
+        frame.pack();
+        frame.setVisible(false);
         sort_button.add(sortAndFilter);
         sortAndFilter.addActionListener(
                 new ActionListener() {
@@ -156,8 +161,8 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-//        JFrame frame = new JFrame("View restaurant buttons");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JFrame frame = new JFrame("View restaurant buttons");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.removeAll();
         restaurants.removeAll();
         restaurants.revalidate();
@@ -165,9 +170,10 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JLabel title = new JLabel(ViewRestaurantViewModel.TITLE_LABEL);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         //Set font
-        Font titleFont = new Font("Arial", Font.BOLD, 18); // Change "Arial" to the desired font family
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
         title.setFont(titleFont);
         JLabel message = new JLabel(ViewRestaurantViewModel.MESSAGE_LABEL);
+        message.setFont(message.getFont().deriveFont(Font.BOLD));
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
         ViewRestaurantState state = (ViewRestaurantState) evt.getNewValue();
         System.out.println("property name is " + evt.getPropertyName());
@@ -221,9 +227,9 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
         JButton search = new JButton(ViewRestaurantViewModel.SEARCH_LABEL);
         search.setBackground(Color.BLUE); // for the background
         search.setForeground(Color.WHITE); // for the text
-//        frame.setContentPane(searchPanel);
-//        frame.pack();
-//        frame.setVisible(false);
+        frame.setContentPane(searchPanel);
+        frame.pack();
+        frame.setVisible(false);
         searchPanel.add(search, gbc);
         System.out.println("gbc");
         ViewRestaurantState searchRestaurantState = (ViewRestaurantState) evt.getNewValue();
@@ -257,7 +263,14 @@ public class ViewRestaurantView extends JPanel implements ActionListener, Proper
 
         JPanel sort_button = new JPanel();
         JButton sortAndFilter = new JButton(ViewRestaurantViewModel.SORTANDFILTER_LABEL);
+        sortAndFilter.setBackground(Color.BLUE); // for the background
+        sortAndFilter.setForeground(Color.WHITE); // for the text
+        frame.setContentPane(sort_button);
+        frame.pack();
+        frame.setVisible(false);
         sort_button.add(sortAndFilter);
+        // Add an empty border to create space above and below the user information panel
+        sort_button.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
         sortAndFilter.addActionListener(
                 new ActionListener() {
                     @Override

@@ -39,6 +39,10 @@ public class LoggedInViewModel extends ViewModel {
         return state;
     }
 
+    public String getImagePath() {
+        return state.getImagePath();
+    }
+
 
     public String getLoggedInUser() {
         return loggedInUser;

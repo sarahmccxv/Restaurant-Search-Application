@@ -40,6 +40,8 @@ public class ViewFavouritesView extends JPanel implements ActionListener, Proper
 
         viewFavouritesViewModel.addPropertyChangeListener(this);
         JLabel title = new JLabel(ViewFavouritesViewModel.TITLE_LABEL);
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         favourites = new JPanel();
