@@ -1,5 +1,6 @@
 package data_access;
 
+import api.Review.ReviewCriteria;
 import api.Search.SearchCriteria;
 import api.Review.ReviewCriteria;
 import api.yelp.YelpAPI;
@@ -49,8 +50,4 @@ public class APIRestaurantDataAccessObject implements YelpApiServices, ViewResta
     public ArrayList<YelpReview> getReviewsByID(String id) {
         return apiRestaurant.getReviewsByID(id);
     }
-
-
-
-
 }

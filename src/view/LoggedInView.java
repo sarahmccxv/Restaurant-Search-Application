@@ -12,12 +12,18 @@ import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import interface_adapter.user_profile.UserProfileController;
 import interface_adapter.user_profile.UserProfileViewModel;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.IOException;
+import java.net.URL;
 
 public class LoggedInView extends JPanel implements ActionListener, PropertyChangeListener {
 
@@ -34,6 +40,7 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
 
     JLabel username;
+    JLabel userImageLabel;
 
     final JButton logOut;
     final JButton viewFavourites;
@@ -65,18 +72,47 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        //Set font
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
 
-        JLabel usernameInfo = new JLabel("Currently logged in: ");
+        // Add an empty border to create space above and below the title
+        title.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+
+
+        JPanel userInfoPanel = new JPanel();
+        userInfoPanel.setLayout(new BoxLayout(userInfoPanel, BoxLayout.X_AXIS));
+
+        JLabel usernameInfo = new JLabel("Currently logged in as: ");
+//        usernameInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         username = new JLabel();
+        userImageLabel = new JLabel();
+        userInfoPanel.add(usernameInfo);
+        userInfoPanel.add(username);
+        userInfoPanel.add(userImageLabel);
+
+        // Add an empty border to create space above and below the user information panel
+        userInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
         JPanel buttons = new JPanel();
         viewRestaurant = new JButton(loggedInViewModel.VIEW_RESTAURANT_BUTTON_LABEL);
+        Font viewFond = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        viewRestaurant.setFont(viewFond);
         buttons.add(viewRestaurant);
+
         viewFavourites = new JButton(loggedInViewModel.VIEW_FAVOURITES_BUTTON_LABEL);
+        Font favFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        viewFavourites.setFont(favFont);
         buttons.add(viewFavourites);
+
         userProfile = new JButton(loggedInViewModel.USER_PROFILE_BUTTON_LABEL);
+        Font userFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        userProfile.setFont(userFont);
         buttons.add(userProfile);
+
         logOut = new JButton(loggedInViewModel.LOGOUT_BUTTON_LABEL);
+        Font logoutFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        logOut.setFont(logoutFont);
         buttons.add(logOut);
 
         logOut.addActionListener(
@@ -135,8 +171,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(usernameInfo);
-        this.add(username);
+//        this.add(usernameInfo);
+        this.add(userInfoPanel);
         this.add(buttons);
     }
 
@@ -151,5 +187,14 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     public void propertyChange(PropertyChangeEvent evt) {
         LoggedInState state = (LoggedInState) evt.getNewValue();
         username.setText(state.getUsername());
+        String imagePath = loggedInViewModel.getImagePath();
+
+        // Update the user's image label
+        if (imagePath != null && !imagePath.isEmpty()) {
+            System.out.println(imagePath);
+            ImageIcon icon = new ImageIcon(imagePath);
+            icon = new ImageIcon(icon.getImage().getScaledInstance(10, 10, Image.SCALE_DEFAULT));
+            userImageLabel.setIcon(icon);
+        }
     }
 }

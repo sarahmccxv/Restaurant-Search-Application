@@ -2,6 +2,8 @@ package use_case.login;
 
 import entity.User;
 
+import javax.swing.*;
+
 public class LoginInteractor implements LoginInputBoundary {
     final LoginUserDataAccessInterface userDataAccessObject;
     final LoginOutputBoundary loginPresenter;
@@ -18,10 +20,13 @@ public class LoginInteractor implements LoginInputBoundary {
         String password = loginInputData.getPassword();
         if (!userDataAccessObject.existsByName(username)) {
             loginPresenter.prepareFailView(username + ": Account does not exist.");
+            JOptionPane.showMessageDialog(null,  username + " does not exist.", "Login Error", JOptionPane.ERROR_MESSAGE);
         } else {
             String pwd = userDataAccessObject.getByUsername(username).getPassword();
             if (!password.equals(pwd)) {
+                System.out.println("password does is not correct");
                 loginPresenter.prepareFailView("Incorrect password for " + username + ".");
+                JOptionPane.showMessageDialog(null, "Incorrect password for " + username + ".", "Login Error", JOptionPane.ERROR_MESSAGE);
             } else {
 
                 User user = userDataAccessObject.getByUsername(loginInputData.getUsername());

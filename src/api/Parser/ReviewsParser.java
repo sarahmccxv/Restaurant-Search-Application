@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class ReviewsParser {
-    public static ArrayList<YelpReview> parseFrom(JSONObject jsonObject, String restaurantID) {
+    public ArrayList<YelpReview> parseFrom(JSONObject jsonObject, String restaurantID) {
          try {
             ArrayList<YelpReview> reviewArrayList = new ArrayList<>();
             YelpReviewFactory yelpReviewFactory = new YelpReviewFactory();

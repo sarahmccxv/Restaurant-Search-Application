@@ -3,6 +3,7 @@ package app;
 import api.yelp.YelpApiServices;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
@@ -48,6 +49,7 @@ public class LoggedInUseCaseFactory {
                                       UserProfileViewModel userProfileViewModel,
                                       UserProfileDataAccessInterface userProfileDataAccessObject,
                                       RegisterUserDataAccessInterface fileUserDataAccessObject,
+                                      SortAndFilterViewModel sortAndFilterViewModel,
                                       YelpApiServices APIRestaurantDataAccessObject,
                                       LoginViewModel loginViewModel) {
 
@@ -55,7 +57,7 @@ public class LoggedInUseCaseFactory {
             ViewFavouritesController viewFavouritesController = createViewFavouritesUseCase(viewManagerModel,
                     viewFavouritesViewModel, userDataAccessObject, fileUserDataAccessObject);
             ViewRestaurantController viewRestaurantController = createViewRestaurantUseCase(viewManagerModel,
-                    viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject);
+                    viewRestaurantViewModel, viewRestaurantDataAccessObject, fileUserDataAccessObject, sortAndFilterViewModel);
             UserProfileController userProfileController = UserProfileUseCaseFactory.createUserProfileUseCase(
                     viewManagerModel, APIRestaurantDataAccessObject, userProfileViewModel, userProfileDataAccessObject);
             LogoutController logoutController = createLogoutUseCase(viewManagerModel, logoutViewModel, loginViewModel);
@@ -73,10 +75,11 @@ public class LoggedInUseCaseFactory {
                                                                         ViewRestaurantDataAccessInterface
                                                                                 RestaurantDataAccessObject,
                                                                         RegisterUserDataAccessInterface
-                                                                                fileUserDataAccessObject)
+                                                                                fileUserDataAccessObject,
+                                                                        SortAndFilterViewModel sortAndFilterViewModel)
             throws IOException {
         ViewRestaurantOutputBoundary viewRestaurantOutputBoundary = new ViewRestaurantPresenter(viewManagerModel,
-                viewRestaurantViewModel);
+                viewRestaurantViewModel, sortAndFilterViewModel);
         ViewRestaurantInputBoundary viewRestaurantInteractor = new ViewRestaurantInteractor(
                 viewRestaurantOutputBoundary, RestaurantDataAccessObject, fileUserDataAccessObject);
 

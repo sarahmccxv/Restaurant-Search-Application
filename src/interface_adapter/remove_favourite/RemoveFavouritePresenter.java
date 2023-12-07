@@ -13,7 +13,7 @@ public class RemoveFavouritePresenter implements RemoveFavouriteOutputBoundary {
     ViewManagerModel viewManagerModel;
 
     public RemoveFavouritePresenter(RemoveFavouriteViewModel removeFavouriteViewModel,
-                                     ViewManagerModel viewManagerModel, ViewFavouritesViewModel viewFavouritesViewModel){
+                                    ViewManagerModel viewManagerModel, ViewFavouritesViewModel viewFavouritesViewModel){
         this.removeFavouriteViewModel = removeFavouriteViewModel;
         this.viewManagerModel = viewManagerModel;
         this.viewFavouritesViewModel = viewFavouritesViewModel;
