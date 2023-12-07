@@ -2,6 +2,8 @@ package view;
 
 import interface_adapter.logged_in.LoggedInState;
 import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.logout.LogoutController;
+import interface_adapter.logout.LogoutViewModel;
 import interface_adapter.view_favourites.ViewFavouritesController;
 import interface_adapter.view_favourites.ViewFavouritesState;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
@@ -31,6 +33,8 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
     private final ViewFavouritesController viewFavouritesController;
     private final ViewRestaurantViewModel viewRestaurantViewModel;
     private final ViewRestaurantController viewRestaurantController;
+    private final LogoutViewModel logoutViewModel;
+    private final LogoutController logoutController;
     private final UserProfileViewModel userProfileViewModel;
     private final UserProfileController userProfileController;
 
@@ -48,19 +52,23 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
      */
     public LoggedInView(LoggedInViewModel loggedInViewModel,
                         ViewFavouritesViewModel viewFavouritesViewModel,
+                        LogoutViewModel logoutViewModel,
                         ViewFavouritesController viewFavouritesController,
                         ViewRestaurantViewModel viewRestaurantViewModel,
                         ViewRestaurantController viewRestaurantController,
                         UserProfileViewModel userProfileViewModel,
-                        UserProfileController userProfileController) {
+                        UserProfileController userProfileController,
+                        LogoutController logoutController) {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
+        this.logoutViewModel = logoutViewModel;
         this.viewFavouritesViewModel = viewFavouritesViewModel;
         this.viewFavouritesController = viewFavouritesController;
         this.viewRestaurantViewModel = viewRestaurantViewModel;
         this.viewRestaurantController = viewRestaurantController;
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
+        this.logoutController = logoutController;
 
         JLabel title = new JLabel("Logged In Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -107,7 +115,20 @@ public class LoggedInView extends JPanel implements ActionListener, PropertyChan
         logOut.setFont(logoutFont);
         buttons.add(logOut);
 
-        logOut.addActionListener(this);
+        logOut.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(logOut)) {
+                            String username = loggedInViewModel.getState().getUsername();
+                            logoutController.execute(username);
+                            String message = logoutViewModel.getState().getMessage();
+                            JOptionPane.showMessageDialog(null, message);
+                        }
+                    }
+                }
+        );
+
         viewFavourites.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent evt) {
