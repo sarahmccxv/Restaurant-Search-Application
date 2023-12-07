@@ -1,7 +1,6 @@
 package app;
 
 import api.yelp.YelpApiServices;
-import data_access.APIRestaurantDataAccessObject;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.sort_and_filter.SortAndFilterViewModel;
@@ -24,7 +23,6 @@ import use_case.view_restaurant.ViewRestaurantInputBoundary;
 import use_case.view_restaurant.ViewRestaurantInteractor;
 import use_case.view_restaurant.ViewRestaurantOutputBoundary;
 import view.LoggedInView;
-import view.UserProfileView;
 
 import javax.swing.*;
 import java.io.IOException;
