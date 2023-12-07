@@ -1,12 +1,11 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import interface_adapter.register.RegisterController;
 import interface_adapter.register.RegisterState;
 import interface_adapter.register.RegisterViewModel;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
@@ -22,14 +21,18 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
 
     private final JTextField locationInputField = new JTextField(15);
     private final RegisterController registerController;
+    private final ViewManagerModel viewManagerModel;
 
     private final JButton register;
-    private final JButton cancel;
+    private final JButton login;
 
-    public RegisterView(RegisterController controller, RegisterViewModel registerViewModel) {
+    public RegisterView(RegisterController registerController, RegisterViewModel registerViewModel,
+                        ViewManagerModel viewManagerModel) {
 
-        this.registerController = controller;
+        this.registerController = registerController;
         this.registerViewModel = registerViewModel;
+        this.viewManagerModel = viewManagerModel;
+
         registerViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel(RegisterViewModel.TITLE_LABEL);
@@ -58,8 +61,8 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         frame.pack();
         frame.setVisible(false);
         buttons.add(register);
-        cancel = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(cancel);
+        login = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(login);
 
         register.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -79,13 +82,18 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                 }
         );
 
-        cancel.addActionListener(this);
+        login.addActionListener(
+                new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evt) {
+                        if (evt.getSource().equals(login)) {
+                            viewManagerModel.setActiveView("log in");
+                            viewManagerModel.firePropertyChanged();
+                        }
+                    }
+                }
+        );
 
-
-        // This makes a new KeyListener implementing class, instantiates it, and
-        // makes it listen to keystrokes in the usernameInputField.
-        //
-        // Notice how it has access to instance variables in the enclosing class!
         usernameInputField.addKeyListener(
                 new KeyListener() {
                     @Override

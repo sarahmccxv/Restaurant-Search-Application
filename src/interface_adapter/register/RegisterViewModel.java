@@ -14,7 +14,7 @@ public class RegisterViewModel extends ViewModel {
     public static final String LOCATION_LABEL = "Choose your city";
 
     public static final String REGISTER_BUTTON_LABEL = "Register";
-    public static final String CANCEL_BUTTON_LABEL = "Cancel";
+    public static final String CANCEL_BUTTON_LABEL = "Log in";
 
     private RegisterState state = new RegisterState();
 

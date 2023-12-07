@@ -2,12 +2,11 @@ package app;
 
 import api.yelp.YelpApiServices;
 import entity.UserFactory;
-import entity.UserInterface;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.register.RegisterViewModel;
 import interface_adapter.register.RegisterController;
 import interface_adapter.register.RegisterPresenter;
+import interface_adapter.register.RegisterViewModel;
 import use_case.register.RegisterInputBoundary;
 import use_case.register.RegisterInteractor;
 import use_case.register.RegisterOutputBoundary;
@@ -29,7 +28,7 @@ public class RegisterUseCaseFactory {
             RegisterController registerController = createUserRegisterUseCase(viewManagerModel, registerViewModel,
                     loginViewModel, userDataAccessObject, apiRestaurantDataAccessObject);
 
-            return new RegisterView(registerController, registerViewModel);
+            return new RegisterView(registerController, registerViewModel, viewManagerModel);
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Could not open user data file.");
         }
