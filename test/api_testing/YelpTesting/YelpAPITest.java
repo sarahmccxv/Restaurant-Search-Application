@@ -93,8 +93,7 @@ public class YelpAPITest {
         when(yelpApiServices.getReviews(reviewCriteria)).thenReturn(reviews); // stub the getReviews method to return the fake list
 
         assertEquals(expectedRestaurantID, reviews.get(0).getRestaurantID());
-        assertEquals("Lina H.", reviews.get(0).getAuthor().getUsername());
-        assertEquals("2023-12-04T08:20:46", reviews.get(0).getCreationTime().toString());
+        assertEquals(creationTime.toString(), reviews.get(0).getCreationTime().toString());
         assertEquals("Euan S.", reviews.get(0).getAuthor().getUsername());
         assertEquals(creationTime.toString(), reviews.get(0).getCreationTime().toString());
     }

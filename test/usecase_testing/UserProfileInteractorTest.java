@@ -1,5 +1,6 @@
 package usecase_testing;
 
+import data_access.APIRestaurantDataAccessObject;
 import entity.User;
 import entity.UserFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,6 +18,7 @@ public class UserProfileInteractorTest {
     private UserProfileOutputBoundary mockPresenter;
     private UserProfileDataAccessInterface mockDataAccess;
     private UserFactory mockUserFactory;
+    private APIRestaurantDataAccessObject mockRestaurantDataAccess;
     private UserProfileInteractor userProfileInteractor;
 
     @BeforeEach
@@ -24,8 +26,10 @@ public class UserProfileInteractorTest {
         mockPresenter = mock(UserProfileOutputBoundary.class);
         mockDataAccess = mock(UserProfileDataAccessInterface.class);
         mockUserFactory = mock(UserFactory.class);
+        mockRestaurantDataAccess = mock(APIRestaurantDataAccessObject.class);
 
-        userProfileInteractor = new UserProfileInteractor(mockPresenter, mockDataAccess, mockUserFactory);
+        userProfileInteractor = new UserProfileInteractor(mockPresenter, mockDataAccess,
+                mockRestaurantDataAccess, mockUserFactory);
     }
 
     @Test
