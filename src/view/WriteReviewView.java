@@ -75,6 +75,21 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
                                     newState.getContent());
                             String message = writeReviewViewModel.getState().getMessage();
                             JOptionPane.showMessageDialog(null, message);
+                            // Navigate back to restaurant page if review added successfully
+                            if (writeReviewViewModel.getState().getStatus() == 1) {
+                                AddReviewState state = addReviewViewModel.getState();
+                                addReviewViewModel.clearState();
+                                writeReviewViewModel.clearState();
+                                ratingInputField.setText("");
+                                contentInputField.setText("");
+                                String userID = state.getUser().getUserID();
+                                String username = state.getUser().getUsername();
+                                String password = state.getUser().getPassword();
+                                String restaurantID = state.getRestaurant().getRestaurantID();
+                                String previous_view = state.getPrevious_view();
+                                //System.out.println("previous view was " + previous_view);
+                                restaurantController.execute(userID, username, password, restaurantID, previous_view);
+                            }
                         }
                     }
                 }
@@ -138,15 +153,21 @@ public class WriteReviewView extends JPanel implements ActionListener, PropertyC
         String restaurantID = state.getRestaurant().getRestaurantID();
         String previous_view = state.getPrevious_view();
         //System.out.println("previous view was " + previous_view);
+        addReviewViewModel.clearState();
+        writeReviewViewModel.clearState();
+        ratingInputField.setText("");
+        contentInputField.setText("");
         restaurantController.execute(userID, username, password, restaurantID, previous_view);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+        //WriteReviewState state = (WriteReviewState) evt.getNewValue();
+        //this.writeReviewViewModel.setState(state);
         System.out.println("Property changed at write review");
     }
 
     //private void setFields(WriteReviewState state) {
-        //usernameInputField.setText(state.getUsername());
+    //usernameInputField.setText(state.getUsername());
     //}
 }
