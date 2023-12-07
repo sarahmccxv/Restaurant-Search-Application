@@ -22,6 +22,15 @@ public class ReviewList {
         reviewlist.remove(review);
     }
 
+    public boolean contains(String reviewID) {
+        for (Review review : reviewlist) {
+            if (review.getReviewID().equals(reviewID)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString(){
         StringBuilder result = new StringBuilder();

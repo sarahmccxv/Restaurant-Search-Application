@@ -25,6 +25,7 @@ public class RemoveFavouritePresenter implements RemoveFavouriteOutputBoundary {
         viewFavouritesState.setFavouritesList(newFavouritesList);
         if (newFavouritesList.isEmpty()){
             viewFavouritesState.setSuccess(false);
+            viewFavouritesState.setNoFavouritesMessage("No Favourites");
         }
         viewFavouritesViewModel.setState(viewFavouritesState);
         viewFavouritesViewModel.firePropertyChanged();

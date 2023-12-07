@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class SingleRestaurantParser {
-     public static Restaurant parseFrom(JSONObject jsonObject) {
+     public Restaurant parseFrom(JSONObject jsonObject) {
          try {
              RestaurantFactory restaurantFactory = new RestaurantFactory();
 
