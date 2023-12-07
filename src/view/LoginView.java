@@ -6,10 +6,7 @@ import interface_adapter.login.LoginViewModel;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -35,6 +32,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         this.loginViewModel.addPropertyChangeListener(this);
 
         JLabel title = new JLabel("Login Screen");
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel usernameInfo = new LabelTextPanel(
@@ -78,6 +77,7 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                 LoginState currentState = loginViewModel.getState();
                 currentState.setUsername(usernameInputField.getText() + e.getKeyChar());
                 loginViewModel.setState(currentState);
+                usernameInfo.getLabel().setForeground(Color.GRAY);
             }
 
             @Override
@@ -89,6 +89,20 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
             }
         });
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        usernameInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                usernameInfo.getLabel().setForeground(Color.GRAY);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                usernameInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
 
         passwordInputField.addKeyListener(
                 new KeyListener() {
@@ -107,6 +121,19 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
                     public void keyReleased(KeyEvent e) {
                     }
                 });
+        passwordInputField.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                // Set text color to black when focused
+                passwordInfo.getLabel().setForeground(Color.BLACK);
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                // Set text color to gray when not focused
+                passwordInfo.getLabel().setForeground(Color.GRAY);
+            }
+        });
 
         this.add(title);
         this.add(usernameInfo);

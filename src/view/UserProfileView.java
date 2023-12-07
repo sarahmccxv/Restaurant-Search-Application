@@ -38,27 +38,37 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         this.userProfileViewModel = userProfileViewModel;
         this.userProfileController = userProfileController;
         userProfileViewModel.addPropertyChangeListener(this);
-
         this.viewManagerModel = viewManagerModel;
         this.loginController = loginController;
 
         JLabel title = new JLabel(userProfileViewModel.TITLE_LABEL);
+        Font titleFont = new Font("Arial", Font.BOLD, 13); // Change "Arial" to the desired font family
+        title.setFont(titleFont);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         userID = new JLabel();
         DoubleLabelPanel userIDInfo = new DoubleLabelPanel(
                 new JLabel(userProfileViewModel.USERID_LABEL), userID);
+        Font IDFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        userIDInfo.getComponent(1).setFont(IDFont);
+
         username = new JLabel();
         DoubleLabelPanel usernameInfo = new DoubleLabelPanel(
                 new JLabel(userProfileViewModel.USERNAME_LABEL), username);
+        Font userFont = new Font("Arial", Font.BOLD, 12); // Change "Arial" to the desired font family
+        usernameInfo.getComponent(1).setFont(userFont);
+
         passwordInputField.setEditable(false);
         passwordInputField.setCaretColor(Color.WHITE);
         LabelTextPanel passwordInfo = new LabelTextPanel(
                 new JLabel(userProfileViewModel.PASSWORD_LABEL), passwordInputField);
+        passwordInfo.getLabel().setForeground(Color.GRAY);
+
         locationInputField.setEditable(false);
         locationInputField.setCaretColor(Color.WHITE);
         LabelTextPanel locationInfo = new LabelTextPanel(
                 new JLabel(userProfileViewModel.LOCATION_LABEL), locationInputField);
+        locationInfo.getLabel().setForeground(Color.GRAY);
 
         JPanel buttons = new JPanel();
         editButton = new JButton(userProfileViewModel.EDIT_BUTTON_LABEL);
@@ -88,6 +98,9 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                         saveButton.setVisible(true);
                         cancelButton.setVisible(true);
                         returnButton.setVisible(false);
+                        passwordInfo.getLabel().setForeground(Color.BLACK);
+                        locationInfo.getLabel().setForeground(Color.BLACK);
+
                     }
                 }
         );
@@ -129,6 +142,7 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         saveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Save the changes and disable editing
                 UserProfileState state = userProfileViewModel.getState();
                 String originalLocation = state.getLocation();
                 state.setPassword(tempPassword);
@@ -147,6 +161,8 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                     saveButton.setVisible(false);
                     cancelButton.setVisible(false);
                     returnButton.setVisible(true);
+                    passwordInfo.getLabel().setForeground(Color.GRAY);
+                    locationInfo.getLabel().setForeground(Color.GRAY);
                 }
             }
         });
@@ -197,6 +213,16 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
                     ImageIcon icon = new ImageIcon(selectedFile.getAbsolutePath());
                     icon = new ImageIcon(icon.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
                     avatarLabel.setIcon(icon);
+
+                    try {
+                        defaultAvatar = new ImageIcon(selectedFile.getAbsolutePath());
+                        System.out.println(selectedFile.getAbsolutePath());
+
+                        defaultAvatar = new ImageIcon(defaultAvatar.getImage().getScaledInstance(avatarSize, avatarSize, Image.SCALE_DEFAULT));
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                        // Handle exception if the selected image fails to load
+                    }
                 }
             }
         });
@@ -216,6 +242,10 @@ public class UserProfileView extends JPanel implements ActionListener, PropertyC
         infoLabelsPanel.add(locationInfo);
 
         userInfoPanel.add(infoLabelsPanel);
+
+        // Add vertical strut for spacing
+        userInfoPanel.add(Box.createVerticalStrut(10));
+
 
         // Right side: Avatar
         JPanel avatarPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
