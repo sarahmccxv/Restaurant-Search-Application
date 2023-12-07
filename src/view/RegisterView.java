@@ -15,16 +15,16 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
     public final String viewName = "sign up";
 
     private final RegisterViewModel registerViewModel;
-    private final JTextField usernameInputField = new JTextField(15);
-    private final JPasswordField passwordInputField = new JPasswordField(15);
-    private final JPasswordField repeatPasswordInputField = new JPasswordField(15);
+    public final JTextField usernameInputField = new JTextField(15);
+    public final JPasswordField passwordInputField = new JPasswordField(15);
+    public final JPasswordField repeatPasswordInputField = new JPasswordField(15);
 
-    private final JTextField locationInputField = new JTextField(15);
+    public final JTextField locationInputField = new JTextField(15);
     private final RegisterController registerController;
     private final ViewManagerModel viewManagerModel;
 
-    private final JButton register;
-    private final JButton login;
+    public final JButton register;
+    public final JButton login;
 
     public RegisterView(RegisterController registerController, RegisterViewModel registerViewModel,
                         ViewManagerModel viewManagerModel) {
@@ -88,6 +88,7 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                     public void actionPerformed(ActionEvent evt) {
                         if (evt.getSource().equals(login)) {
                             viewManagerModel.setActiveView("log in");
+                            //System.out.println("Active view is now " + viewManagerModel.getActiveView());
                             viewManagerModel.firePropertyChanged();
                         }
                     }
