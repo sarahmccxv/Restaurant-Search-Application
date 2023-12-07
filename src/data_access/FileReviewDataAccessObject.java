@@ -3,6 +3,7 @@ package data_access;
 import entity.Review;
 import entity.ReviewFactory;
 import entity.User;
+import use_case.register.RegisterUserDataAccessInterface;
 import use_case.write_review.WriteReviewDataAccessInterface;
 
 import java.io.*;
@@ -16,14 +17,15 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
     private final Map<String, Integer> headers = new LinkedHashMap<>();
     private final Map<String, Review> reviewsID = new LinkedHashMap<>();
 
-    private FileUserDataAccessObject fileUserDataAccessObject;
+    private RegisterUserDataAccessInterface fileUserDataAccessObject;
     private ReviewFactory reviewFactory;
 
     private Integer length = 1; // By default, the csv file should contain the row of column names
 
     public FileReviewDataAccessObject(String csvPath, ReviewFactory reviewFactory,
-                                      FileUserDataAccessObject fileUserDataAccessObject) throws IOException {
+                                      RegisterUserDataAccessInterface fileUserDataAccessObject) throws IOException {
         this.reviewFactory = reviewFactory;
+        this.fileUserDataAccessObject = fileUserDataAccessObject;
 
         csvFile = new File(csvPath);
         headers.put("reviewID", 0);
@@ -72,8 +74,8 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
     }
 
     @Override
-    public Review getByUserID(String userID) {
-        return reviewsID.get(userID);
+    public Review getByReviewID(String reviewID) {
+        return reviewsID.get(reviewID);
     }
 
     private void save() {
@@ -101,7 +103,7 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
 
     @Override
     public boolean existsByID(String identifier) {
-        return reviewsID.containsValue(identifier);
+        return reviewsID.containsKey(identifier);
     }
 
     @Override
@@ -115,10 +117,10 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
                 while ((line = reader.readLine()) != null) {
                     // Process the line
                     String[] col = line.split(",");
-                    //System.out.println("Reading csv file again to check updates");
-                    //System.out.println("The user read has ID of " + col[headers.get("userID")]);
+                    System.out.println("Reading csv file again to check updates");
+                    System.out.println("The user read has ID of " + col[headers.get("userID")]);
                     String reviewID = String.valueOf(col[headers.get("reviewID")]);
-                    // Identify the new user and put into accounts
+                    // Identify the new review and put into reviewIDs
                     if (!reviewsID.containsKey(reviewID)) {
                         String userID = String.valueOf(col[headers.get("userID")]);
                         //System.out.println("New user named " + username + "found");
@@ -131,7 +133,7 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
 
                         Review review = reviewFactory.create(reviewID, user, restaurantID, rating, content, ldt);
                         reviewsID.put(reviewID, review);
-                        //System.out.println("user named: " + username + " is in the factory");
+                        System.out.println("review id: " + review.getReviewID() + " is in the factory");
                         length++;
                     }
                 }

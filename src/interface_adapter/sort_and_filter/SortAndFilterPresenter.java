@@ -1,8 +1,5 @@
 package interface_adapter.sort_and_filter;
 
-import api.Search.SearchCriteria;
-import api.Search.SearchPriceLevel;
-import api.Search.SearchSortingMethods;
 import interface_adapter.ViewManagerModel;
 import use_case.sortandfilter.SortAndFilterRestaurantOutputBoundary;
 import use_case.sortandfilter.SortAndFilterRestaurantOutputData;
@@ -21,16 +18,16 @@ public class SortAndFilterPresenter implements SortAndFilterRestaurantOutputBoun
     @Override
     public void prepareSuccessView(SortAndFilterRestaurantOutputData sortAndFilterRestaurantOutputData) {
         SortAndFilterState sortAndFilterState = sortAndFilterViewModel.getState();
-        System.out.println("sort and filter presenter executed");
+        //System.out.println("sort and filter presenter executed");
         sortAndFilterState.setCriteria(sortAndFilterRestaurantOutputData.getCriteria());
         sortAndFilterState.setRestaurants(sortAndFilterRestaurantOutputData.getRestaurants());
         sortAndFilterState.setPreviousView(sortAndFilterRestaurantOutputData.getPreviousView());
-        System.out.println("previous view is" + sortAndFilterRestaurantOutputData.getPreviousView());
+        //System.out.println("previous view is" + sortAndFilterRestaurantOutputData.getPreviousView());
         this.sortAndFilterViewModel.setState(sortAndFilterState);
         this.sortAndFilterViewModel.firePropertyChanged();
         this.viewManagerModel.setActiveView(sortAndFilterViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
-        System.out.println("sort and filter view should change");
+        //System.out.println("sort and filter view should change");
     }
 
     public void prepareFailView(String error) {

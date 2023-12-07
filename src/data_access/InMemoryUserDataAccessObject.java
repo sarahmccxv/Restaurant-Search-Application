@@ -37,6 +37,8 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
     @Override
     public void save(User user) {
         users.put(user.getUsername(), user);
+        usersID.put(user.getUserID(), user);
+        //System.out.println("User " + user.getUsername() + " saved in memory.");
     }
 
     private void clear() {
@@ -50,7 +52,7 @@ public class InMemoryUserDataAccessObject implements RegisterUserDataAccessInter
 
     @Override
     public User getByUserID(String userID) {
-        return users.get(userID);
+        return usersID.get(userID);
     }
 
     @Override
