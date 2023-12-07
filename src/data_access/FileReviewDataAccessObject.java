@@ -110,39 +110,40 @@ public class FileReviewDataAccessObject implements WriteReviewDataAccessInterfac
     public void update() {
         //System.out.println("Length of current account in memory is " + length);
         //System.out.println("Length of csv file is " + countRows(csvFile));
-        if (length < countRows(csvFile)) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
-                String header = reader.readLine();
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    // Process the line
-                    String[] col = line.split(",");
-                    System.out.println("Reading csv file again to check updates");
-                    System.out.println("The user read has ID of " + col[headers.get("userID")]);
-                    String reviewID = String.valueOf(col[headers.get("reviewID")]);
-                    // Identify the new review and put into reviewIDs
-                    if (!reviewsID.containsKey(reviewID)) {
-                        String userID = String.valueOf(col[headers.get("userID")]);
-                        //System.out.println("New user named " + username + "found");
-                        User user = fileUserDataAccessObject.getByUserID(userID);
-                        String restaurantID = String.valueOf(col[headers.get("restaurantID")]);
-                        Float rating = Float.valueOf(String.valueOf(col[headers.get("rating")]));
-                        String content = String.valueOf(col[headers.get("content")]);
-                        String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
-                        LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
-
-                        Review review = reviewFactory.create(reviewID, user, restaurantID, rating, content, ldt);
-                        reviewsID.put(reviewID, review);
-                        System.out.println("review id: " + review.getReviewID() + " is in the factory");
-                        length++;
-                    }
-                }
-            }
-            catch (IOException e) {
-                throw new RuntimeException();
-            }
+//        if (length < countRows(csvFile)) {
+//            try (BufferedReader reader = new BufferedReader(new FileReader(csvFile))) {
+//                String header = reader.readLine();
+//                String line;
+//                while ((line = reader.readLine()) != null) {
+//                    // Process the line
+//                    String[] col = line.split(",");
+//                    System.out.println("Reading csv file again to check updates");
+//                    System.out.println("The user read has ID of " + col[headers.get("userID")]);
+//                    String reviewID = String.valueOf(col[headers.get("reviewID")]);
+//                    // Identify the new review and put into reviewIDs
+//                    if (!reviewsID.containsKey(reviewID)) {
+//                        String userID = String.valueOf(col[headers.get("userID")]);
+//                        //System.out.println("New user named " + username + "found");
+//                        User user = fileUserDataAccessObject.getByUserID(userID);
+//                        String restaurantID = String.valueOf(col[headers.get("restaurantID")]);
+//                        Float rating = Float.valueOf(String.valueOf(col[headers.get("rating")]));
+//                        String content = String.valueOf(col[headers.get("content")]);
+//                        String creationTimeText = String.valueOf(col[headers.get("creation_time")]);
+//                        LocalDateTime ldt = LocalDateTime.parse(creationTimeText);
+//
+//                        Review review = reviewFactory.create(reviewID, user, restaurantID, rating, content, ldt);
+//                        reviewsID.put(reviewID, review);
+//                        System.out.println("review id: " + review.getReviewID() + " is in the factory");
+//                        length++;
+//                    }
+//                }
+//            }
+//            catch (IOException e) {
+//                throw new RuntimeException();
+//            }
         }
         //System.out.println("After update, now accounts in memory have " + accounts.size() + " users");
+
     }
 
 
