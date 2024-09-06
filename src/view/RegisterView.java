@@ -53,16 +53,18 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel buttons = new JPanel(new FlowLayout(FlowLayout.CENTER, 30, 10));
-        register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
 
+        login = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(login);
+
+        register = new JButton(RegisterViewModel.REGISTER_BUTTON_LABEL);
         register.setBackground(Color.BLUE); // for the background
         register.setForeground(Color.WHITE); // for the text
         frame.setContentPane(buttons);
         frame.pack();
         frame.setVisible(false);
         buttons.add(register);
-        login = new JButton(RegisterViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(login);
+
 
         register.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -77,6 +79,11 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                                     currentState.getRepeatPassword(),
                                     currentState.getLocation()
                             );
+                            // Clear the text fields after registration
+                            usernameInputField.setText("");
+                            passwordInputField.setText("");
+                            repeatPasswordInputField.setText("");
+                            locationInputField.setText("");
                         }
                     }
                 }
@@ -90,6 +97,10 @@ public class RegisterView extends JPanel implements ActionListener, PropertyChan
                             viewManagerModel.setActiveView("log in");
                             //System.out.println("Active view is now " + viewManagerModel.getActiveView());
                             viewManagerModel.firePropertyChanged();
+                            usernameInputField.setText("");
+                            passwordInputField.setText("");
+                            repeatPasswordInputField.setText("");
+                            locationInputField.setText("");
                         }
                     }
                 }

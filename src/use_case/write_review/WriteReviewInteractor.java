@@ -32,7 +32,7 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
         String rating_txt = writeReviewInputData.getRating();
         WriteReviewOutputData writeReviewOutputData = new WriteReviewOutputData(user, restauarnt);
         // check if rating is legit
-        if (isValidRating(rating_txt)) {
+        if (!rating_txt.isEmpty() && !content.isEmpty() && isValidRating(rating_txt)) {
             Float rating = Float.parseFloat(rating_txt);
             //System.out.println("The rating here has string: " + rating_txt);
             String reviewID = String.valueOf(createReviewID());
@@ -58,7 +58,8 @@ public class WriteReviewInteractor implements WriteReviewInputBoundary {
     }
 
     private boolean isValidRating(String rating_txt) {
-        if (rating_txt.matches("^(0(\\.0|\\.5)?|1(\\.0|\\.5)?|2(\\.0|\\.5)?|3(\\.0|\\.5)?|4(\\.0|\\.5)?|5(\\.0)?)$")) {
+        // Matches a number that is either a whole number between 0 and 5, or a .5 value between them
+        if (rating_txt.matches("^[0-5](\\.5)?$")) {
             try {
                 Float rating = Float.parseFloat(rating_txt);
                 return rating >= 0 && rating <= 5;

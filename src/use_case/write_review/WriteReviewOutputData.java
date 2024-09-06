@@ -14,7 +14,7 @@ public class WriteReviewOutputData {
         this.restaurant = restaurant;
         this.successMessage = "Review for " + restaurant.getRestaurantName() +
                 "successfully saved.";
-        this.failureMessage = "Illegal rating given. Please specify rating from 0-5 with 1 decimal place, and the last digit should be 0 or 5.";
+        this.failureMessage = "Please specify rating from 0-5 with 1 decimal place, and the last digit should be 0 or 5. Review content must be not empty.";
     }
 
     public User getUser() {return user;}

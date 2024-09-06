@@ -48,6 +48,10 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel buttons = new JPanel();
+
+        register = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
+        buttons.add(register);
+
         logIn = new JButton(loginViewModel.LOGIN_BUTTON_LABEL);
         logIn.setBackground(Color.BLUE); // for the background
         logIn.setForeground(Color.WHITE); // for the text
@@ -55,8 +59,8 @@ public class LoginView extends JPanel implements ActionListener, PropertyChangeL
         frame.pack();
         frame.setVisible(false);
         buttons.add(logIn);
-        register = new JButton(loginViewModel.CANCEL_BUTTON_LABEL);
-        buttons.add(register);
+
+
 
         logIn.addActionListener(                // This creates an anonymous subclass of ActionListener and instantiates it.
                 new ActionListener() {

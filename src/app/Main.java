@@ -7,7 +7,6 @@ import data_access.FileFavouritesDataAccessObject;
 import entity.ReviewFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.add_review.AddReviewController;
 import interface_adapter.add_review.AddReviewViewModel;
 import interface_adapter.add_to_favourites.AddToFavouritesViewModel;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -24,7 +23,6 @@ import interface_adapter.sort_and_filter.SortAndFilterViewModel;
 import interface_adapter.user_profile.UserProfileViewModel;
 import interface_adapter.view_favourites.ViewFavouritesViewModel;
 import interface_adapter.view_restaurants.ViewRestaurantController;
-import interface_adapter.view_restaurants.ViewRestaurantState;
 import interface_adapter.view_restaurants.ViewRestaurantViewModel;
 import interface_adapter.write_review.WriteReviewViewModel;
 import view.*;
@@ -57,6 +55,8 @@ public class Main {
         }
         JFrame application = new JFrame("Restaurant Search Application");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        application.setPreferredSize(new Dimension(800, 400));
+
 
         CardLayout cardLayout = new CardLayout();
 
