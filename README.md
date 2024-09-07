@@ -1,20 +1,43 @@
-# CSC207Project
-For the project, we would like to design a **restaurant searching software**.
+# Restaurant Search Application
 
-Our software specifications are as follows:
+## Description
+An application designed to allow users to browse restaurants in their area, save their favourite restaurants, and leave ratings and reviews. 
 
-- New users can register their accounts by inputting a username, a password, a confirmation password and a city name.=
-- Existing users can log in with their username and password, and log out if they want.
-- Existing users can modify the city they are in.
-- List out restaurants in the city where the user is, and more specifically:
-  - Display reviews including the ratings, and other relevant information (such as restaurant category and consumption per person)
-  - Rank the restaurants by the user’s preference， like which kind of restaurant.
-  - Users can sort and filter restaurants by the category of restaurant, the consumption per person, and other options.
-  - Users can add and remove certain restaurants from their Favourites Lists.
-  - Users can write reviews and add ratings to restaurants.
-  - Users can review their history of reviews and ratings (Not implemented yet).
+## Tech Stack
+This project is a local-data driven application. It makes use of the [Yelp Fusion API](https://docs.developer.yelp.com/docs/fusion-intro) for real-time data retrieval. This app was written in Java with the frontend graphical user interface being written with Swing.
 
-https://api.yelp.com this is the **link of the API** our team can use related to the domain.
+## Features
+This application support the following functionalities:
+- User register and login
+- View nearby/recommended restaurants
+- Search for restaurants using keywords
+- Sort and filter search results
+- Add a restaurant to favourites, view favourites, remove a restaurant from favourites
+- Leave a review and rating for a restaurant
+- Edit password, location, and user avatar
+- Log out of user account
+- 
+## Test Coverage
+This project was tested with the testing framework TestAPI. It had an overall class coverage of 99%, and a method coverage of 67%.
 
-The software currently is functioning. One may run the main class to launch the software.
-The software currently is submitted for evaluation.
+## Installation
+It is recommended to use Java 22 and Maven 11 for installation and running. 
+1. Clone this repository.
+    ```
+    git clone https://github.com/sarahmccxv/Restaurant-Search-Application.git
+    ```
+2. Navigate to the project directory
+    ```
+    cd Restaurant-Search-Application
+    ```
+3. Build the project with Maven.
+    ```
+    mvn clean install
+    ```
+4. Run the application
+    ```
+    mvn exec:java -Dexec.mainClass="app.Main"
+    ```
+
+## Demo
+For a demo of the functionality of this project, refer to the videos in [this slide deck](https://docs.google.com/presentation/d/1MU2N5LntnoYWtfqQMKW0ER8yH8w6-wVqe-4Idiv6Vzk/edit?usp=sharing).
