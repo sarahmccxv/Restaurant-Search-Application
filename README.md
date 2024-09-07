@@ -16,7 +16,7 @@ This application support the following functionalities:
 - Leave a review and rating for a restaurant
 - Edit password, location, and user avatar
 - Log out of user account
-- 
+  
 ## Test Coverage
 This project was tested with the testing framework TestAPI. It had an overall class coverage of 99%, and a method coverage of 67%.
 
