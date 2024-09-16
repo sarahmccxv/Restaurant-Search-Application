@@ -21,7 +21,7 @@ This application support the following functionalities:
 This project was tested with the testing framework TestAPI. It had an overall class coverage of 99%, and a method coverage of 67%.
 
 ## Installation
-It is recommended to use Java 22 and Maven 11 for installation and running. 
+It is recommended to use Java 22 and Maven 3.9 for installation and running. 
 1. Clone this repository.
     ```
     git clone https://github.com/sarahmccxv/Restaurant-Search-Application.git
